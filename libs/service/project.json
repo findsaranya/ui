@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/service",
+  "sourceRoot": "libs/service/src",
+  "prefix": "tt-webapp",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/service"],
+      "options": {
+        "jestConfig": "libs/service/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/service/src/**/*.ts",
+          "libs/service/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

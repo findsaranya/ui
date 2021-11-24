@@ -3,6 +3,7 @@
   "projects": {
     "auth": "apps/auth",
     "fashion": "apps/fashion",
+    "service": "libs/service",
     "ui": "libs/ui"
   }
 }
