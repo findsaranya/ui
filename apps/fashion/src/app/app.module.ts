@@ -8,7 +8,16 @@ import { RouterModule } from '@angular/router';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+    RouterModule.forRoot(
+      [
+        {
+          path: 'auth',
+          loadChildren: () =>
+            import('auth/Module').then((m) => m.RemoteEntryModule),
+        },
+      ],
+      { initialNavigation: 'enabledBlocking' }
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent],

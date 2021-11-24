@@ -27,7 +27,7 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: 'fashion',
+    uniqueName: 'auth',
     publicPath: 'auto',
   },
   optimization: {
@@ -41,8 +41,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      remotes: {
-        auth: 'auth@http://localhost:4201/remoteEntry.js',
+      name: 'auth',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Module': 'apps/auth/src/app/remote-entry/entry.module.ts',
       },
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },

@@ -1,24 +1,24 @@
 {
   "projectType": "application",
-  "root": "apps/fashion",
-  "sourceRoot": "apps/fashion/src",
+  "root": "apps/auth",
+  "sourceRoot": "apps/auth/src",
   "prefix": "tt-webapp",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/fashion",
-        "index": "apps/fashion/src/index.html",
-        "main": "apps/fashion/src/main.ts",
-        "polyfills": "apps/fashion/src/polyfills.ts",
-        "tsConfig": "apps/fashion/tsconfig.app.json",
+        "outputPath": "dist/apps/auth",
+        "index": "apps/auth/src/index.html",
+        "main": "apps/auth/src/main.ts",
+        "polyfills": "apps/auth/src/polyfills.ts",
+        "tsConfig": "apps/auth/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/fashion/src/favicon.ico", "apps/fashion/src/assets"],
-        "styles": ["apps/fashion/src/styles.scss"],
+        "assets": ["apps/auth/src/favicon.ico", "apps/auth/src/assets"],
+        "styles": ["apps/auth/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/fashion/webpack.config.js"
+          "path": "apps/auth/webpack.config.js"
         }
       },
       "configurations": {
@@ -37,13 +37,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/fashion/src/environments/environment.ts",
-              "with": "apps/fashion/src/environments/environment.prod.ts"
+              "replace": "apps/auth/src/environments/environment.ts",
+              "with": "apps/auth/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/fashion/webpack.prod.config.js"
+            "path": "apps/auth/webpack.prod.config.js"
           }
         },
         "development": {
@@ -61,42 +61,35 @@
       "executor": "@nrwl/angular:webpack-server",
       "configurations": {
         "production": {
-          "browserTarget": "fashion:build:production"
+          "browserTarget": "auth:build:production"
         },
         "development": {
-          "browserTarget": "fashion:build:development"
+          "browserTarget": "auth:build:development"
         }
       },
       "defaultConfiguration": "development",
-      "options": {}
+      "options": {
+        "port": 4201
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "fashion:build"
+        "browserTarget": "auth:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/fashion/src/**/*.ts",
-          "apps/fashion/src/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/auth/src/**/*.ts", "apps/auth/src/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/fashion"],
+      "outputs": ["coverage/apps/auth"],
       "options": {
-        "jestConfig": "apps/fashion/jest.config.js",
+        "jestConfig": "apps/auth/jest.config.js",
         "passWithNoTests": true
-      }
-    },
-    "serve-mfe": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": ["nx serve auth", "nx serve fashion"]
       }
     }
   },
