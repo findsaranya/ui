@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tt-webapp/service": ["libs/service/src/index.ts"],
-      "@tt-webapp/ui": ["libs/ui/src/index.ts"]
+      "@tt-webapp/service": ["libs/service/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
