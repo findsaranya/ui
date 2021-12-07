@@ -11,8 +11,8 @@
     "postbuild:css": "yarn postcss libs/ui/src/styles.scss -o libs/ui/src/styles.css",
     "prebuild:css": "yarn postcss:build --env=production",
     "css:build": "NODE_ENV=production yarn tailwindcss -i libs/ui/src/styles.scss -o libs/ui/src/styles.css --watch",
-    "lib:build": "concurrently yarn nx build test --watch\n && yarn css:build",
-    "libs": "concurrently --kill-others \"yarn css:build\" \"yarn nx build test --watch\""
+    "lib:build": "concurrently yarn nx build ui --watch\n && yarn css:build",
+    "libs": "concurrently --kill-others \"yarn css:build\" \"yarn nx build ui --watch\""
   },
   "private": true,
   "dependencies": {
