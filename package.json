@@ -25,10 +25,7 @@
     "@ngrx/entity": "13.0.1",
     "@ngrx/router-store": "13.0.1",
     "@ngrx/store": "13.0.1",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.3.11",
     "rxjs": "~7.4.0",
-    "tailwindcss": "^2.2.19",
     "tslib": "^2.0.0",
     "zone.js": "0.11.4"
   },
