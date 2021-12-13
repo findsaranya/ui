@@ -3,7 +3,7 @@ module.exports = {
     './apps/**/*.html',
     './apps/**/*.ts',
     './libs/**/*.html',
-    './apps/**/*.ts',
+    './libs/**/*.ts',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

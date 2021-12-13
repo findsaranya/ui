@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'tt-webapp-button',
-  templateUrl: './button.component.html',
+  template: `
+   <p>button works!!</p>
+  `,
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent{
-
-  
-
-}
+export class ButtonComponent{}
