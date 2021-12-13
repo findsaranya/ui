@@ -23,8 +23,7 @@
           "test",
           "e2e",
           "build-storybook"
-        ],
-        "parallel": 1
+        ]
       }
     }
   },
@@ -41,8 +40,7 @@
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
-      "e2eTestRunner": "none",
-      "strict": false
+      "e2eTestRunner": "none"
     },
     "@nrwl/angular:library": {
       "style": "scss",
