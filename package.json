@@ -9,10 +9,10 @@
     "postinstall": "ngcc --properties es2015 browser module main",
     "preinstall": "npx only-allow yarn",
     "postbuild:css": "yarn postcss libs/ui/src/styles.scss -o libs/ui/src/styles.css",
-    "prebuild:css": "yarn postcss:build --env=production",
-    "css:build": "NODE_ENV=production yarn tailwindcss -i libs/ui/src/styles.scss -o libs/ui/src/styles.css --watch",
-    "lib:build": "concurrently yarn nx build ui --watch\n && yarn css:build",
-    "libs": "concurrently --kill-others \"yarn css:build\" \"yarn nx build ui --watch\""
+    "prebuild:css": "yarn postbuild:css --env=production",
+    "css:watch": "NODE_ENV=production yarn tailwindcss -i libs/ui/src/styles.scss -o libs/ui/src/styles.css --watch",
+    "lib:build": "concurrently yarn nx build ui --watch\n && yarn css:watch",
+    "libs": "concurrently --kill-others \"yarn css:watch\" \"yarn nx build ui --watch\""
   },
   "private": true,
   "dependencies": {
