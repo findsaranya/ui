@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'tt-webapp-button',
+  selector: 'tt-button',
   template: `
    <p>button works!!</p>
   `,
