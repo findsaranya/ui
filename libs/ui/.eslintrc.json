@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "tt-webapp",
+            "prefix": "tt",
             "style": "kebab-case"
           }
         ]
