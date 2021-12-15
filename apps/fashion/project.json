@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/fashion",
         "index": "apps/fashion/src/index.html",
@@ -16,13 +14,8 @@
         "polyfills": "apps/fashion/src/polyfills.ts",
         "tsConfig": "apps/fashion/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/fashion/src/favicon.ico",
-          "apps/fashion/src/assets"
-        ],
-        "styles": [
-          "apps/fashion/src/styles.scss"
-        ],
+        "assets": ["apps/fashion/src/favicon.ico", "apps/fashion/src/assets"],
+        "styles": ["apps/fashion/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/fashion/webpack.config.js"
@@ -75,7 +68,9 @@
         }
       },
       "defaultConfiguration": "development",
-      "options": {}
+      "options": {
+        "publicHost": "http://localhost:4200"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -94,9 +89,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/fashion"
-      ],
+      "outputs": ["coverage/apps/fashion"],
       "options": {
         "jestConfig": "apps/fashion/jest.config.js",
         "passWithNoTests": true

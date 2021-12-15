@@ -1,0 +1,69 @@
+image: node:16.13.1
+pipelines:
+    pull-requests:
+        release/*:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        staging: #this runs as default for any branch not elsewhere defined
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        production:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+
+    branches:
+        staging:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        feature/*:
+            - step:
+                  name: Build fashion-staging
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        bugfix/*:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        hotfix/*:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
+        support/*:
+            - step:
+                  name: Build from source
+                  caches:
+                      - node
+                  script:
+                      - yarn install
+                      - yarn nx affected:build
