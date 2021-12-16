@@ -4,6 +4,7 @@
     "auth": "apps/auth",
     "fashion": "apps/fashion",
     "service": "libs/service",
+    "shared-components": "libs/shared-components",
     "ui": "libs/ui"
   }
 }
