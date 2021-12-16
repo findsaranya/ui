@@ -1,8 +1,10 @@
 export * from './lib/+state/app/config.models';
 export * from './lib/+state/app/config.selectors';
 export * from './lib/+state/app/config.reducer';
+export * from './lib/+state/app/config.effects';
 export * from './lib/+state/app/config.actions';
 export * from './lib/bootstrap/bootstrap.service';
+export * from './lib/+state/app.store';
 // export * from './lib/+state/auth/auth.models';
 // export * from './lib/+state/auth/auth.selectors';
 // export * from './lib/+state/auth/auth.reducer';

@@ -48,10 +48,30 @@ module.exports = {
         './Module': 'apps/auth/src/app/remote-entry/entry.module.ts',
       },
       shared: {
-        '@angular/core': { singleton: true, strictVersion: true },
-        '@angular/common': { singleton: true, strictVersion: true },
-        '@angular/common/http': { singleton: true, strictVersion: true },
-        '@angular/router': { singleton: true, strictVersion: true },
+        '@angular/core': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/common': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/common/http': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/router': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@ngrx/store': {
+          singleton: true,
+          requiredVersion: '^13.0.0',
+        },
         ...sharedMappings.getDescriptors(),
       },
     }),

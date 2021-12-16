@@ -4,10 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { loadRemoteModule } from '@angular-architects/module-federation';
 import { BootstrapService } from '@tt-webapp/service';
 import { environment } from '../environments/environment';
 import { PageNotFoundComponent } from '@tt-webapp/shared-components';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+
+import { ROOT_REDUCER, ConfigEffects } from '@tt-webapp/service';
 
 function initApplication(bsService: BootstrapService): () => Promise<void> {
   return () => bsService.init(environment);
@@ -20,21 +25,22 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
     RouterModule.forRoot(
       [
         {
-          path: 'auth',
-          loadChildren: () =>
-            loadRemoteModule({
-              remoteName: 'auth',
-              remoteEntry: 'http://localhost:4201/remoteEntry.js',
-              exposedModule: './Module',
-            }).then((m) => m.RemoteEntryModule),
-        },
-        {
           path: '**',
           component: PageNotFoundComponent,
         },
       ],
       { initialNavigation: 'enabledBlocking' }
     ),
+    StoreModule.forRoot(ROOT_REDUCER, {
+      metaReducers: !environment.production ? [] : [],
+      runtimeChecks: {
+        strictActionImmutability: true,
+        strictStateImmutability: true,
+      },
+    }),
+    EffectsModule.forRoot([ConfigEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     BootstrapService,
