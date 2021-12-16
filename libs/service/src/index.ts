@@ -1,5 +1,10 @@
-export * from './lib/+state/auth.models';
-export * from './lib/+state/auth.selectors';
-export * from './lib/+state/auth.reducer';
-export * from './lib/+state/auth.actions';
+export * from './lib/+state/app/config.models';
+export * from './lib/+state/app/config.selectors';
+export * from './lib/+state/app/config.reducer';
+export * from './lib/+state/app/config.actions';
+export * from './lib/bootstrap/bootstrap.service';
+// export * from './lib/+state/auth/auth.models';
+// export * from './lib/+state/auth/auth.selectors';
+// export * from './lib/+state/auth/auth.reducer';
+// export * from './lib/+state/auth/auth.actions';
 export * from './lib/service.module';
