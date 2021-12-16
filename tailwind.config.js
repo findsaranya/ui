@@ -1,4 +1,3 @@
-const colors = require('tailwindcss/colors');
 module.exports = {
   content: [
     './apps/**/*.html',
@@ -9,7 +8,7 @@ module.exports = {
   theme: {
     colors: {
       deepSaffron: {
-        0: '#FFF3E5',
+        50: '#FFF3E5',
         100: '#FFDBB3',
         200: '#FFC280',
         300: '#FFAA4D',
