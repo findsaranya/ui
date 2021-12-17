@@ -1,18 +1,14 @@
-<h2>Buttons in active state</h2>
+<div class="container mx-auto">
+  <button tt-primary-btn [disabled]="true">Primary Button</button><br />
+  <button tt-secondary-btn [disabled]="true">Secondary Button</button><br />
 
-<button tt-primary-btn>primary button</button><br>
-<button tt-primary-btn>button</button><br>
-<button tt-primary-btn>button</button><br>
-<button tt-primaryTwo>Button Text</button><br>
-<button tt-secondaryOne>Button</button><br>
-<button tt-secondaryTwo>Button</button><br>
-<button tt-withIcon>Button</button><br>
-<button class="tt-btn tt-primary" disabled> +</button>
-<h2>Buttons disabled state</h2>
-<button tt-primaryOne disabled=true>click mk</button><br>
-<button tt-primaryTwo [disabled]=true>Button Text</button><br>
-<button tt-secondaryOne [disabled]=true>Button</button><br>
-<button tt-secondaryTwo [disabled]=true>Button</button><br>
-<button tt-withIcon [disabled]=true>Button</button><br>
+  <button tt-primary-btn size="sm">Primary Button</button><br />
+  <button tt-primary-btn size="md">Primary Button</button><br />
+  <button tt-primary-btn size="lg">Primary Button</button><br />
+
+  <button tt-secondary-btn size="sm">Secondary Button</button><br />
+  <button tt-secondary-btn size="md">Secondary Button</button><br />
+  <button tt-secondary-btn size="lg">Secondary Button</button><br />
+</div>
 
 <router-outlet></router-outlet>
