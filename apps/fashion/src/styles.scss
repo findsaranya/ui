@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body{
+        @apply font-inter;
+    }
+    *,::before,::after{
+        @apply box-border;
+    }
+}
+@layer components{
+    .tt-primaryOne{
+       @apply text-white-default bg-black-750 rounded-lg text-sm min-w-[420px] h-[50px]
+       hover:bg-black-500  transition-colors disabled:bg-gray-500 capitalize
+        active:bg-deepSaffron-700 font-bold;
+
+    }
+    .tt-primaryTwo{
+        @apply text-white-default bg-deepSaffron-default rounded-lg text-sm min-w-[144px] h-[40px]
+        hover:bg-deepSaffron-300  transition-colors disabled:opacity-20 capitalize;
+    }
+    .tt-secondaryOne{
+        @apply text-black-default bg-deepSaffron-200 rounded-lg text-sm min-w-[144px] h-[40px]
+        hover:bg-deepSaffron-300  transition-colors disabled:opacity-20 capitalize;
+    }
+    .tt-secondaryTwo{
+        @apply text-white-default bg-black-750 rounded-lg text-sm min-w-[104px] h-[30px]
+        hover:bg-black-500  transition-colors disabled:opacity-20 capitalize;
+ 
+     }
+     .tt-withIcon{
+        @apply text-black-default bg-white-default rounded-lg text-sm min-w-[104px] h-[30px]
+        hover:bg-white-750  transition-all shadow-sm disabled:opacity-20 capitalize;
+ 
+     }
+     .tt-btn{
+         @apply font-bold text-sm transition-colors flex justify-center
+         focus:ring-2 focus:ring-blue-500 rounded-lg min-w-[50px] capitalize;
+     }
+     .tt-primary-btn{
+         @apply bg-deepSaffron-default hover:bg-deepSaffron-500 text-white-default
+          disabled:bg-gray-500 disabled:text-gray-700 active:bg-deepSaffron-700;
+     }
+     .tt-secondary-btn{
+        @apply bg-gray-1000 hover:bg-gray-900 text-white-default
+         disabled:bg-gray-500 disabled:text-gray-700 active:bg-gray-700;
+    } 
+     .tt-lg{
+         @apply p-4;
+     }
+     .tt-md{
+       @apply py-3 px-4
+     }
+     .tt-sm{
+         @apply py-2 px-2;
+     }
+}

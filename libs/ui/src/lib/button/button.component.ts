@@ -1,51 +1,65 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostBinding,
   Input,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 
 const HOST_BUTTON_ATTRIBUTES = [
-  'tt-primaryOne',
-  'tt-primaryTwo',
-  'tt-secondaryOne',
-  'tt-secondaryTwo',
-  'tt-withIcon',
+  'tt-primary-btn',
+  'tt-secondary-btn',
+  'tt-transparent-btn',
+  'tt-ghost-btn',
+  'tt-warning-btn',
 ];
 @Component({
   selector: `
-  button[tt-primaryOne],
-  button[tt-primaryTwo],
-  button[tt-secondaryOne],
-  button[tt-secondaryTwo],
-  button[tt-withIcon]
+  button[tt-primary-btn],
+  button[tt-secondary-btn],
+  button[tt-transparent-btn],
+  button[tt-ghost-btn],
+  button[tt-warning-btn]
   `,
   exportAs: 'tt-button',
   template: `
-    <span>
       <ng-content></ng-content>
-    </span>
   `,
   styleUrls: ['./button.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent {
-  @Input() disabled = false;
-  @HostBinding('attr.disabled') get getdisabled(): any {
-    return this.disabled || null;
+export class ButtonComponent implements OnInit,AfterViewInit{
+  @Input() size : 'md'|'sm'|'lg' = 'md';
+  @Input()
+  set disabled(value:boolean){
+    this._disabled = value;
   }
+  protected _disabled = false;
 
-  constructor(private elementRef: ElementRef) {
+  @HostBinding('disabled') get disable(){
+    return this._disabled || null;
+  }
+  constructor(private elementRef: ElementRef) {}
+  
+  ngOnInit(): void {
     for (const attr of HOST_BUTTON_ATTRIBUTES) {
       if (this.hasHostAttributes(attr)) {
-        this.getHostElement().classList.add(attr);
+        this.getHostElement().classList.add(attr,'tt-btn');
       }
     }
   }
 
+  ngAfterViewInit(): void {
+    if (this.size === 'md') {
+      this.getHostElement().classList.add('tt-md');
+      console.log('tt-'+this.size); 
+      
+    }
+  }
   getHostElement(): HTMLElement {
     return this.elementRef.nativeElement;
   }
@@ -55,7 +69,5 @@ export class ButtonComponent {
       this.getHostElement().hasAttribute(attribute)
     );
   }
-  onClick(): void {
-    alert('btn clicked');
-  }
+ 
 }
