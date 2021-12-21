@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DoCheck,
   ElementRef,
   HostBinding,
   Input,
@@ -35,13 +34,12 @@ type Sizes = 'md' | 'sm' | 'lg';
   button[tt-warning-btn]
   `,
   exportAs: 'tt-button',
-  template: ` <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   styleUrls: ['./button.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
   @Input()
   set size(value: Sizes) {
     this._size = value;
@@ -60,39 +58,27 @@ export class ButtonComponent implements OnInit {
   }
   protected _disabled = false;
 
-  //@HostBinding('disabled') disable?: boolean | null;
-@HostBinding('disabled')
-get disable(){
-  return this._disabled;
-}
-  constructor(private elementRef: ElementRef) {
-    console.log("constructor!!")
-  }
-  toggle(){
-    alert("clicked")
-    if(this.size == 'md'){
-      this.size='sm'
-    }else{
-      this.size="md";
+  @HostBinding('disabled') disable?: boolean | null;
+
+  constructor(private elementRef: ElementRef) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes', changes);
+    const classList = this.getHostElement().classList;
+    if (!changes.size.firstChange) {
+      classList.replace(
+        'tt-' + changes?.size.previousValue,
+        'tt-' + changes?.size.currentValue
+      );
     }
-    //this.size = 'lg' || 'sm';
+    if (!changes.disabled.firstChange) {
+      this.disable = changes?.disabled.currentValue || null;
+    }
   }
-  ngOnChanges(changes:SimpleChanges){
-    console.log();
-    
-        this.getHostElement().classList.toggle(HOST_BUTTON_SIZES[this.size]);  
-  }
-  // ngDoCheck(): void {
-  //   console.log("docheck")
-  //   //console.log("disable",this.disable);
-  //   console.log(this.size);
-  //   this.getHostElement().classList.toggle(HOST_BUTTON_SIZES[this.size]);
-  //   //this.disable = this.disabled || null;
-    
-  // }
-  
+
   ngOnInit(): void {
-    console.log("ngoninit")
+    console.log('ngoninit');
+    this.disable = this.disabled || null;
     for (const attr of HOST_BUTTON_ATTRIBUTES) {
       if (this.hasHostAttributes(attr)) {
         this.getHostElement().classList.add(
@@ -112,8 +98,5 @@ get disable(){
     return attributes.some((attribute) =>
       this.getHostElement().hasAttribute(attribute)
     );
-  }
-  hasHostContainsClass(className:string):boolean{
-    return this.getHostElement().classList.contains(className);
   }
 }
