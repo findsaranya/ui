@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'fashion';
+  title:"sm"|"lg"|"md" = 'sm';
+  hide =false;
+  toggle(){
+    if(this.title == 'md'){
+      this.title='sm'
+    }else{
+      this.title="md";
+    }
+    this.hide = !this.hide;
+  }
+  
 }

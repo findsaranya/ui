@@ -1,6 +1,7 @@
 <div class="container pt-1 mx-auto">
-  <button tt-primary-btn size="sm">Primary Button</button><br />
-  <button tt-secondary-btn size="sm">Secondary Button</button><br />
+  <button tt-primary-btn [size]="title" [disabled]="hide">Primary Button</button><br />
+  <button (click) = "toggle()">Click</button>
+  <!-- <button tt-secondary-btn size="sm">Secondary Button</button><br />
   <button tt-warning-btn size="sm">Warning Button</button><br />
   <button tt-ghost-btn size="sm">Ghost Button</button><br />
   <button tt-transparent-btn size="sm">Transparent Button</button><br />
@@ -13,7 +14,7 @@
   <button tt-primary-btn size="lg">Primary Button</button><br />
   <button tt-secondary-btn size="lg" [disabled]="true">Secondary Button</button
   ><br />
-  <hr class="h-1 bg-gray-700" />
+  <hr class="h-1 bg-gray-700" /> -->
 </div>
 
 <router-outlet></router-outlet>
