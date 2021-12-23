@@ -62,7 +62,7 @@ export class ButtonComponent implements OnInit, OnChanges {
 
   constructor(private elementRef: ElementRef) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const classList = this.getHostElement().classList;
     if (changes['size'] && !changes.size.firstChange) {
       classList.replace(
@@ -73,10 +73,9 @@ export class ButtonComponent implements OnInit, OnChanges {
     if (changes['disabled'] && !changes.disabled.firstChange) {
       this.disable = changes?.disabled.currentValue || null;
     }
-  
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.disable = this.disabled || null;
     for (const attr of HOST_BUTTON_ATTRIBUTES) {
       if (this.hasHostAttributes(attr)) {
@@ -93,7 +92,7 @@ export class ButtonComponent implements OnInit, OnChanges {
     return this.elementRef.nativeElement;
   }
 
-  hasHostAttributes(...attributes: string[]) {
+  hasHostAttributes(...attributes: string[]): boolean {
     return attributes.some((attribute) =>
       this.getHostElement().hasAttribute(attribute)
     );
