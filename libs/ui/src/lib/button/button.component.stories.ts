@@ -8,13 +8,13 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [CommonModule],
-      declarations:[ButtonComponent]
-    })
+      declarations: [ButtonComponent],
+    }),
   ],
-  argTypes:{
+  argTypes: {
     size: {
       name: 'size',
-      type: { name: 'string'},
+      type: { name: 'string' },
       defaultValue: 'md',
       description: 'Button Sizes',
       table: {
@@ -23,14 +23,12 @@ export default {
       },
       control: {
         type: 'select',
-        options:['sm','md','lg'],
-        
-
-      }
+        options: ['sm', 'md', 'lg'],
+      },
     },
     disabled: {
       name: 'disabled',
-      type: { name: 'string'},
+      type: { name: 'string' },
       defaultValue: false,
       description: 'Enable button disable property',
       table: {
@@ -38,17 +36,14 @@ export default {
         defaultValue: { summary: false },
       },
       control: {
-        type: 'boolean'
-
-      }
+        type: 'boolean',
+      },
     },
-    
-  
   },
 } as Meta<ButtonComponent>;
 
-export const Primary = (args:ButtonComponent) => ({
-  template:`
+export const Primary = (args: ButtonComponent) => ({
+  template: `
   <button
   tt-btn-primary
   [size]="size"
@@ -56,16 +51,15 @@ export const Primary = (args:ButtonComponent) => ({
   >
   Button Primary
   </button>`,
-  props:args
-
+  props: args,
 });
 Primary.args = {
-  size : "md",
-  disabled : false
-} as Partial <ButtonComponent>
+  size: 'md',
+  disabled: false,
+} as Partial<ButtonComponent>;
 
-export const Secondary = (args:ButtonComponent) => ({
-  template:`
+export const Secondary = (args: ButtonComponent) => ({
+  template: `
   <button
   tt-btn-secondary
   [size]="size"
@@ -73,34 +67,33 @@ export const Secondary = (args:ButtonComponent) => ({
   >
   Button Primary
   </button>`,
-  props:args
-
+  props: args,
 });
 Secondary.args = {
-  size : "md",
-  disabled : false
-} as Partial <ButtonComponent>
+  size: 'md',
+  disabled: false,
+} as Partial<ButtonComponent>;
 
-export const Warning = (args:ButtonComponent) => ({
-  template:`
+export const Warning = (args: ButtonComponent) => ({
+  template: `
   <button
   tt-btn-warning
   [size]="size"
   >
   Button Label
   </button>`,
- props:args,
-})
+  props: args,
+});
 Warning.parameters = {
-controls: { include:['size'] } 
+  controls: { include: ['size'] },
 };
 
 Warning.args = {
-  size : "md",
-} as Partial <ButtonComponent>
+  size: 'md',
+} as Partial<ButtonComponent>;
 
-export const Ghost = (args:ButtonComponent) => ({
-  template:`
+export const Ghost = (args: ButtonComponent) => ({
+  template: `
   <button
   tt-btn-ghost
   [size]="size"
@@ -108,32 +101,28 @@ export const Ghost = (args:ButtonComponent) => ({
   >
   Button
   </button>`,
- props : args
-})
+  props: args,
+});
 Ghost.args = {
-  size : "md",
-  disabled : false
-} as Partial <ButtonComponent>
+  size: 'md',
+  disabled: false,
+} as Partial<ButtonComponent>;
 
-export const Transparent = (args:ButtonComponent) => ({
-  template:`
+export const Transparent = (args: ButtonComponent) => ({
+  template: `
   <button
   tt-btn-transparent
   [size]="size"
   >
   Button
   </button>`,
-props:args
+  props: args,
 });
 
 Transparent.parameters = {
-  controls: { include:['size'] } 
-  };
+  controls: { include: ['size'] },
+};
 
 Transparent.args = {
-  size:'md'
-} as Partial <ButtonComponent>
-
-
-
-
+  size: 'md',
+} as Partial<ButtonComponent>;
