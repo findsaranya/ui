@@ -11,11 +11,11 @@ import {
 } from '@angular/core';
 
 const HOST_BUTTON_ATTRIBUTES = [
-  'tt-primary-btn',
-  'tt-secondary-btn',
-  'tt-transparent-btn',
-  'tt-ghost-btn',
-  'tt-warning-btn',
+  'tt-btn-primary',
+  'tt-btn-secondary',
+  'tt-btn-transparent',
+  'tt-btn-ghost',
+  'tt-btn-warning',
 ];
 
 const HOST_BUTTON_SIZES = {
@@ -27,11 +27,11 @@ const HOST_BUTTON_SIZES = {
 type Sizes = 'md' | 'sm' | 'lg';
 @Component({
   selector: `
-  button[tt-primary-btn],
-  button[tt-secondary-btn],
-  button[tt-transparent-btn],
-  button[tt-ghost-btn],
-  button[tt-warning-btn]
+  button[tt-btn-primary],
+  button[tt-btn-secondary],
+  button[tt-btn-transparent],
+  button[tt-btn-ghost],
+  button[tt-btn-warning]
   `,
   exportAs: 'tt-button',
   template: ` <ng-content></ng-content> `,

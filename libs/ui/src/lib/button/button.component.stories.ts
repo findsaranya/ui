@@ -50,7 +50,7 @@ export default {
 export const Primary = (args:ButtonComponent) => ({
   template:`
   <button
-  tt-primary-btn
+  tt-btn-primary
   [size]="size"
   [disabled]="disabled"
   >
@@ -67,7 +67,7 @@ Primary.args = {
 export const Secondary = (args:ButtonComponent) => ({
   template:`
   <button
-  tt-secondary-btn
+  tt-btn-secondary
   [size]="size"
   [disabled]="disabled"
   >
@@ -84,7 +84,7 @@ Secondary.args = {
 export const Warning = (args:ButtonComponent) => ({
   template:`
   <button
-  tt-warning-btn
+  tt-btn-warning
   [size]="size"
   >
   Button Label
@@ -102,7 +102,7 @@ Warning.args = {
 export const Ghost = (args:ButtonComponent) => ({
   template:`
   <button
-  tt-ghost-btn
+  tt-btn-ghost
   [size]="size"
   [disabled]="disabled"
   >
@@ -118,7 +118,7 @@ Ghost.args = {
 export const Transparent = (args:ButtonComponent) => ({
   template:`
   <button
-  tt-transparent-btn
+  tt-btn-transparent
   [size]="size"
   >
   Button
