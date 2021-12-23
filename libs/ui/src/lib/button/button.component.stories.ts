@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { moduleMetadata, Meta } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
 export default {
@@ -42,42 +42,34 @@ export default {
 
       }
     },
+    
   
   },
-  args:{
-    size:'md',
-    disabled:false
-  }
-
 } as Meta<ButtonComponent>;
-
-// const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
-//   component: ButtonComponent,
-//   props: args,
-// });
-
 
 export const Primary = (args:ButtonComponent) => ({
   template:`
   <button
   tt-primary-btn
+  [size]="size"
+  [disabled]="disabled"
   >
   Button Primary
   </button>`,
   props:args
 
 });
-// Primary.args = {
-//   size : "md",
-//   disabled : false
-// }
+Primary.args = {
+  size : "md",
+  disabled : false
+} as Partial <ButtonComponent>
 
 export const Secondary = (args:ButtonComponent) => ({
   template:`
   <button
   tt-secondary-btn
-  size="md"
-  [disabled]=false
+  [size]="size"
+  [disabled]="disabled"
   >
   Button Primary
   </button>`,
@@ -87,45 +79,61 @@ export const Secondary = (args:ButtonComponent) => ({
 Secondary.args = {
   size : "md",
   disabled : false
-}
+} as Partial <ButtonComponent>
+
 export const Warning = (args:ButtonComponent) => ({
   template:`
   <button
   tt-warning-btn
-  size="sm"
-  [disabled]=false
+  [size]="size"
   >
   Button Label
   </button>`,
-
+ props:args,
 })
+Warning.parameters = {
+controls: { include:['size'] } 
+};
+
+Warning.args = {
+  size : "md",
+} as Partial <ButtonComponent>
+
 export const Ghost = (args:ButtonComponent) => ({
   template:`
   <button
   tt-ghost-btn
-  size="sm"
-  [disabled]=false
+  [size]="size"
+  [disabled]="disabled"
   >
   Button
   </button>`,
-
+ props : args
 })
+Ghost.args = {
+  size : "md",
+  disabled : false
+} as Partial <ButtonComponent>
 
 export const Transparent = (args:ButtonComponent) => ({
   template:`
   <button
   tt-transparent-btn
-  size="sm"
-  [disabled]=false
+  [size]="size"
   >
   Button
   </button>`,
+props:args
+});
 
-})
+Transparent.parameters = {
+  controls: { include:['size'] } 
+  };
+
 Transparent.args = {
-  size:'md',
-  disabled:false
-}
+  size:'md'
+} as Partial <ButtonComponent>
+
 
 
 
