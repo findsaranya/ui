@@ -16,6 +16,7 @@ const HOST_BUTTON_ATTRIBUTES = [
   'tt-btn-transparent',
   'tt-btn-ghost',
   'tt-btn-warning',
+  'tt-btn-outline',
 ];
 
 const HOST_BUTTON_SIZES = {
@@ -31,7 +32,8 @@ type Sizes = 'md' | 'sm' | 'lg';
   button[tt-btn-secondary],
   button[tt-btn-transparent],
   button[tt-btn-ghost],
-  button[tt-btn-warning]
+  button[tt-btn-warning],
+  button[tt-btn-outline]
   `,
   exportAs: 'tt-button',
   template: ` <ng-content></ng-content> `,

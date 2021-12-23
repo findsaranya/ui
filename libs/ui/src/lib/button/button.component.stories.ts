@@ -126,3 +126,20 @@ Transparent.parameters = {
 Transparent.args = {
   size: 'md',
 } as Partial<ButtonComponent>;
+
+export const Outline = (args: ButtonComponent) => ({
+  template: `
+  <button
+  tt-btn-outline
+  [size]="size"
+  [disabled]="disabled"
+  >
+  Button
+  </button>`,
+  props: args,
+});
+
+Outline.args = {
+  size: 'md',
+  disabled: false,
+} as Partial<ButtonComponent>;
