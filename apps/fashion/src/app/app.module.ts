@@ -6,13 +6,17 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BootstrapService } from '@tt-webapp/service';
 import { environment } from '../environments/environment';
-import { PageNotFoundComponent } from '@tt-webapp/shared-components';
+import {
+  PageNotFoundComponent,
+  FailedToLoadApplicationComponent,
+} from '@tt-webapp/shared-components';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
-import { ROOT_REDUCER, ConfigEffects } from '@tt-webapp/service';
+import { ROOT_REDUCER, ConfigEffects, AuthEffects } from '@tt-webapp/service';
+import { HttpClientModule } from '@angular/common/http';
 
 function initApplication(bsService: BootstrapService): () => Promise<void> {
   return () => bsService.init(environment);
@@ -22,15 +26,17 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
   imports: [
     BrowserModule,
     CommonModule,
-    RouterModule.forRoot(
-      [
-        {
-          path: '**',
-          component: PageNotFoundComponent,
-        },
-      ],
-      { initialNavigation: 'enabledBlocking' }
-    ),
+    HttpClientModule,
+    RouterModule.forRoot([
+      {
+        path: 'error',
+        component: FailedToLoadApplicationComponent,
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
+    ]),
     StoreModule.forRoot(ROOT_REDUCER, {
       metaReducers: !environment.production ? [] : [],
       runtimeChecks: {
@@ -38,7 +44,7 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
         strictStateImmutability: true,
       },
     }),
-    EffectsModule.forRoot([ConfigEffects]),
+    EffectsModule.forRoot([ConfigEffects, AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
   ],

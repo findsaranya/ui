@@ -9,4 +9,5 @@ export * from './lib/+state/app.store';
 // export * from './lib/+state/auth/auth.selectors';
 // export * from './lib/+state/auth/auth.reducer';
 // export * from './lib/+state/auth/auth.actions';
+export * from './lib/+state/auth/auth.effects';
 export * from './lib/service.module';

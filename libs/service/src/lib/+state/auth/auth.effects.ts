@@ -12,7 +12,6 @@ export class AuthEffects {
       ofType(AuthActions.init),
       fetch({
         run: (action) => {
-          // Your custom service 'load' logic goes here. For now just return a success action...
           return AuthActions.loadAuthSuccess({ auth: [] });
         },
         onError: (action, error) => {

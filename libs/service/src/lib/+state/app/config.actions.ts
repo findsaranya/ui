@@ -1,14 +1,17 @@
 import { createAction, props } from '@ngrx/store';
-import { ConfigEntity } from './config.models';
+import { IMicroFrontendConfig } from '../../mfe/mfe.model';
 
-export const init = createAction('[Config Page] Init');
+export const init = createAction(
+  '[Config] Init',
+  props<{ envConfig: { [key in string]: unknown } }>()
+);
 
 export const loadConfigSuccess = createAction(
   '[Config/API] Load Config Success',
-  props<{ config: ConfigEntity[] }>()
+  props<{ config: IMicroFrontendConfig[] }>()
 );
 
 export const loadConfigFailure = createAction(
   '[Config/API] Load Config Failure',
-  props<{ error: any }>()
+  props<{ error: string }>()
 );

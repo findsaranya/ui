@@ -1,4 +1,4 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as ConfigActions from './config.actions';
@@ -6,10 +6,9 @@ import { ConfigEntity } from './config.models';
 
 export const CONFIG_FEATURE_KEY = 'config';
 
-export interface State extends EntityState<ConfigEntity> {
-  selectedId?: string | number; // which Config record has been selected
-  loaded: boolean; // has the Config list been loaded
-  error?: string | null; // last known error (if any)
+export interface State extends ConfigEntity {
+  loaded: boolean;
+  error?: string | null;
 }
 
 export interface ConfigPartialState {
@@ -20,18 +19,26 @@ export const configAdapter: EntityAdapter<ConfigEntity> =
   createEntityAdapter<ConfigEntity>();
 
 export const initialState: State = configAdapter.getInitialState({
-  // set initial required properties
   loaded: false,
+  coreApplications: null,
 });
 
 const configReducer = createReducer(
   initialState,
-  on(ConfigActions.init, (state) => ({ ...state, loaded: false, error: null })),
-  on(ConfigActions.loadConfigSuccess, (state, { config }) =>
-    configAdapter.setAll(config, { ...state, loaded: true })
-  ),
+  on(ConfigActions.init, (state) => ({
+    ...state,
+    loaded: false,
+    error: null,
+    coreApplications: null,
+  })),
+  on(ConfigActions.loadConfigSuccess, (state, { config }) => ({
+    error: null,
+    loaded: true,
+    coreApplications: config,
+  })),
   on(ConfigActions.loadConfigFailure, (state, { error }) => ({
     ...state,
+    loaded: true,
     error,
   }))
 );
