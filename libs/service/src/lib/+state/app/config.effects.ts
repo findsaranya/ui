@@ -25,8 +25,7 @@ export class ConfigEffects {
             })
           );
         },
-        onError: (action, e) => {
-          console.error('Error', e);
+        onError: () => {
           const error = 'Failed to load application config';
           return ConfigActions.loadConfigFailure({ error });
         },

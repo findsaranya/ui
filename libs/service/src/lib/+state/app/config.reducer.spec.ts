@@ -1,27 +1,48 @@
 import { Action } from '@ngrx/store';
+import { IMicroFrontendConfig } from '../../mfe/mfe.model';
 
 import * as ConfigActions from './config.actions';
 import { ConfigEntity } from './config.models';
 import { State, initialState, reducer } from './config.reducer';
 
+import { apps } from './config.data';
+
 describe('Config Reducer', () => {
-  const createConfigEntity = (id: string, name = ''): ConfigEntity => ({
-    id,
-    name: name || `name-${id}`,
+  const createConfigEntity = (
+    coreApplications: IMicroFrontendConfig[] | null
+  ): ConfigEntity => ({
+    coreApplications,
   });
 
   describe('valid Config actions', () => {
+    it('init config should reset the config', () => {
+      const action = ConfigActions.init({ envConfig: { TEST: 'TEST' } });
+      const result: State = reducer(initialState, action);
+      expect(result.loaded).toBe(false);
+      expect(result.coreApplications).toBe(null);
+      expect(result.error).toBe(null);
+    });
+
     it('loadConfigSuccess should return the list of known Config', () => {
-      const config = [
-        createConfigEntity('PRODUCT-AAA'),
-        createConfigEntity('PRODUCT-zzz'),
-      ];
-      const action = ConfigActions.loadConfigSuccess({ config });
+      const config = createConfigEntity(apps);
+      const action = ConfigActions.loadConfigSuccess({
+        config: config.coreApplications as IMicroFrontendConfig[],
+      });
 
       const result: State = reducer(initialState, action);
 
       expect(result.loaded).toBe(true);
-      expect(result.ids.length).toBe(2);
+      expect(result.coreApplications?.length).toBe(1);
+      expect(result.error).toBe(null);
+    });
+
+    it('loadConfigError should return the error message', () => {
+      const errorMessage = 'Failed to load application config';
+      const action = ConfigActions.loadConfigFailure({ error: errorMessage });
+      const result = reducer(initialState, action);
+      expect(result.loaded).toBeTruthy();
+      expect(result.coreApplications).toBeNull();
+      expect(result.error).toBe(errorMessage);
     });
   });
 

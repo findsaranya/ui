@@ -1,66 +1,30 @@
-import { ConfigEntity } from './config.models';
+import { errorMessage } from './config.data';
 import {
-  configAdapter,
   ConfigPartialState,
+  CONFIG_FEATURE_KEY,
   initialState,
 } from './config.reducer';
 import * as ConfigSelectors from './config.selectors';
 
 describe('Config Selectors', () => {
-  const ERROR_MSG = 'No Error Available';
-  const getConfigId = (it: ConfigEntity) => it.id;
-  const createConfigEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as ConfigEntity);
-
   let state: ConfigPartialState;
 
   beforeEach(() => {
     state = {
-      config: configAdapter.setAll(
-        [
-          createConfigEntity('PRODUCT-AAA'),
-          createConfigEntity('PRODUCT-BBB'),
-          createConfigEntity('PRODUCT-CCC'),
-        ],
-        {
-          ...initialState,
-          selectedId: 'PRODUCT-BBB',
-          error: ERROR_MSG,
-          loaded: true,
-        }
-      ),
+      [CONFIG_FEATURE_KEY]: initialState,
     };
   });
 
   describe('Config Selectors', () => {
-    it('getAllConfig() should return the list of Config', () => {
-      const results = ConfigSelectors.getAllConfig(state);
-      const selId = getConfigId(results[1]);
-
-      expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
-    });
-
-    it('getSelected() should return the selected Entity', () => {
-      const result = ConfigSelectors.getSelected(state) as ConfigEntity;
-      const selId = getConfigId(result);
-
-      expect(selId).toBe('PRODUCT-BBB');
-    });
-
     it('getConfigLoaded() should return the current "loaded" status', () => {
       const result = ConfigSelectors.getConfigLoaded(state);
-
-      expect(result).toBe(true);
+      expect(result).toBeFalsy();
     });
 
     it('getConfigError() should return the current "error" state', () => {
+      state[CONFIG_FEATURE_KEY].error = errorMessage;
       const result = ConfigSelectors.getConfigError(state);
-
-      expect(result).toBe(ERROR_MSG);
+      expect(result).toBe(errorMessage);
     });
   });
 });
