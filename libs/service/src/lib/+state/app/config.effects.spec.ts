@@ -59,7 +59,7 @@ describe('ConfigEffects', () => {
         a: ConfigActions.init({ envConfig: { API_BASE_URL: 'ERROR' } }),
       });
 
-      const expected = hot('-a-|', {
+      const expected = hot('-(a|)', {
         a: ConfigActions.loadConfigFailure({ error: errorMessage }),
       });
 
