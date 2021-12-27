@@ -49,7 +49,7 @@ export class ButtonComponent implements OnInit, OnChanges {
   get size(): Sizes {
     return this._size;
   }
-  protected _size: Sizes = 'md';
+  private _size: Sizes = 'md';
 
   @Input()
   set disabled(value: boolean) {
@@ -58,7 +58,7 @@ export class ButtonComponent implements OnInit, OnChanges {
   get disabled(): boolean {
     return this._disabled;
   }
-  protected _disabled = false;
+  private _disabled = false;
 
   @HostBinding('disabled') disable?: boolean | null;
 
