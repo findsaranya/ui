@@ -1,0 +1,40 @@
+@layer components {
+  .tt-btn {
+    @apply text-sm transition-colors flex justify-items-center items-center
+             focus:ring-4 focus:ring-deepSaffron-100 capitalize;
+  }
+  .tt-btn-primary {
+    @apply bg-deepSaffron-default hover:bg-deepSaffron-500 text-white-default
+              disabled:bg-gray-500 disabled:text-gray-700 active:bg-deepSaffron-700;
+  }
+  .tt-btn-secondary {
+    @apply bg-gray-1000 hover:bg-gray-900 text-white-default
+             disabled:bg-gray-500 disabled:text-gray-700 active:bg-gray-700;
+  }
+  .tt-btn-warning {
+    @apply bg-red-600 hover:bg-red-700 text-white-default;
+  }
+  .tt-btn-ghost {
+    @apply bg-gray-100 hover:bg-gray-200 text-black-default active:bg-gray-300 disabled:text-gray-500 disabled:bg-gray-200;
+  }
+  .tt-btn-transparent {
+    @apply text-black-default;
+  }
+  .tt-btn-outline {
+    @apply border border-gray-800 text-gray-1000 
+         disabled:bg-gray-200 disabled:border-gray-500 disabled:text-gray-500
+         active:border-0 hover:bg-gray-200;
+  }
+  .tt-lg {
+    @apply px-6  rounded-7px min-w-50 min-h-50 font-bold;
+  }
+  .tt-md {
+    @apply px-4 rounded-7px min-w-40 min-h-40 font-bold;
+  }
+  .tt-sm {
+    @apply px-3  rounded-5px min-w-30 min-h-30 font-medium;
+  }
+  .tt-btn-block {
+    @apply block w-full;
+  }
+}
