@@ -1,2 +1,9 @@
-<tt-webapp-nx-welcome></tt-webapp-nx-welcome>
+<div class="container pt-1 mx-auto">
+  <button tt-btn-secondary [size]="title" [disabled]="hide">
+    Primary Button</button
+  ><br />
+  <button (click)="toggle()">Click</button>
+  <button tt-btn-outline size="sm" [disabled]="true">outline</button>
+</div>
+
 <router-outlet></router-outlet>

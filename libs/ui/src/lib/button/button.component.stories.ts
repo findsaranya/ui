@@ -39,6 +39,19 @@ export default {
         type: 'boolean',
       },
     },
+    block: {
+      name: 'Button Full width',
+      type: { name: 'string' },
+      defaultValue: false,
+      description: 'Enable container button with full width',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 } as Meta<ButtonComponent>;
 
@@ -48,11 +61,15 @@ export const Primary = (args: ButtonComponent) => ({
   tt-btn-primary
   [size]="size"
   [disabled]="disabled"
+  
   >
   Button Primary
   </button>`,
   props: args,
 });
+Primary.parameters = {
+  controls: { include: ['size', 'disabled'] },
+};
 Primary.args = {
   size: 'md',
   disabled: false,
@@ -64,6 +81,7 @@ export const Secondary = (args: ButtonComponent) => ({
   tt-btn-secondary
   [size]="size"
   [disabled]="disabled"
+  [btnBlock]="block"
   >
   Button Primary
   </button>`,
@@ -72,6 +90,7 @@ export const Secondary = (args: ButtonComponent) => ({
 Secondary.args = {
   size: 'md',
   disabled: false,
+  block: false,
 } as Partial<ButtonComponent>;
 
 export const Warning = (args: ButtonComponent) => ({
@@ -103,6 +122,9 @@ export const Ghost = (args: ButtonComponent) => ({
   </button>`,
   props: args,
 });
+Ghost.parameters = {
+  controls: { include: ['size', 'disabled'] },
+};
 Ghost.args = {
   size: 'md',
   disabled: false,
@@ -138,6 +160,10 @@ export const Outline = (args: ButtonComponent) => ({
   </button>`,
   props: args,
 });
+
+Outline.parameters = {
+  controls: { include: ['size', 'disabled'] },
+};
 
 Outline.args = {
   size: 'md',

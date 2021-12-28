@@ -4,9 +4,6 @@ import {
   ElementRef,
   HostBinding,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -41,7 +38,7 @@ type Sizes = 'md' | 'sm' | 'lg';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent {
   @Input()
   set size(value: Sizes) {
     this._size = value;
@@ -60,36 +57,39 @@ export class ButtonComponent implements OnInit, OnChanges {
   }
   private _disabled = false;
 
-  @HostBinding('disabled') disable?: boolean | null;
+  @Input()
+  set btnBlock(value: boolean) {
+    this._btnBlock = value;
+  }
+  get btnBlock(): boolean {
+    return this._btnBlock;
+  }
+  private _btnBlock = false;
+
+  @HostBinding('disabled') get hasDisabled() {
+    return this.disabled || null;
+  }
+
+  @HostBinding('class') get className() {
+    return [
+      'tt-btn',
+      HOST_BUTTON_SIZES[this.size],
+      this.btnBlock ? 'tt-btn-block' : '',
+      this.hostAttribute,
+    ].join(' ');
+  }
 
   constructor(private elementRef: ElementRef) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const classList = this.getHostElement().classList;
-    if (changes['size'] && !changes.size.firstChange) {
-      classList.replace(
-        'tt-' + changes?.size.previousValue,
-        'tt-' + changes?.size.currentValue
-      );
-    }
-    if (changes['disabled'] && !changes.disabled.firstChange) {
-      this.disable = changes?.disabled.currentValue || null;
-    }
-  }
-
-  ngOnInit(): void {
-    this.disable = this.disabled || null;
+  get hostAttribute(): string {
+    let hostattr = '';
     for (const attr of HOST_BUTTON_ATTRIBUTES) {
       if (this.hasHostAttributes(attr)) {
-        this.getHostElement().classList.add(
-          'tt-btn',
-          attr,
-          HOST_BUTTON_SIZES[this.size]
-        );
+        hostattr = attr;
       }
     }
+    return hostattr;
   }
-
   getHostElement(): HTMLElement {
     return this.elementRef.nativeElement;
   }
