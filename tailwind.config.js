@@ -135,19 +135,19 @@ module.exports = {
     },
     extend: {
       minWidth: {
-        '30': '1.875rem',
-        '40': '2.5rem',
-        '50' : '3.125rem',    
+        30: '1.875rem',
+        40: '2.5rem',
+        50: '3.125rem',
       },
       minHeight: {
-        '30': '1.875rem',
-        '40': '2.5rem',
-        '50' : '3.125rem', 
+        30: '1.875rem',
+        40: '2.5rem',
+        50: '3.125rem',
       },
       borderRadius: {
-        '7px' : '0.438rem',
-        '5px' : '0.313rem'
-      }
+        '7px': '0.438rem',
+        '5px': '0.313rem',
+      },
     },
   },
   variants: {
