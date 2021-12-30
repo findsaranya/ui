@@ -75,13 +75,13 @@ export class ButtonComponent {
       'tt-btn',
       HOST_BUTTON_SIZES[this.size],
       this.btnBlock ? 'tt-btn-block' : '',
-      this.hostAttribute,
+      this.hostAttribute(),
     ].join(' ');
   }
 
   constructor(private elementRef: ElementRef) {}
 
-  get hostAttribute(): string {
+  hostAttribute(): string {
     let hostattr = '';
     for (const attr of HOST_BUTTON_ATTRIBUTES) {
       if (this.hasHostAttributes(attr)) {
