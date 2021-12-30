@@ -81,7 +81,7 @@ export const Secondary = (args: ButtonComponent) => ({
   tt-btn-secondary
   [size]="size"
   [disabled]="disabled"
-  [btnBlock]="block"
+  [isBlockElement]="block"
   >
   Button Primary
   </button>`,

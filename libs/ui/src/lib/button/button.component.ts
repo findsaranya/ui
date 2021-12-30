@@ -7,7 +7,15 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-const HOST_BUTTON_ATTRIBUTES = [
+type BtnAttr =
+  | 'tt-btn-primary'
+  | 'tt-btn-secondary'
+  | 'tt-btn-transparent'
+  | 'tt-btn-ghost'
+  | 'tt-btn-warning'
+  | 'tt-btn-outline';
+
+const HOST_BUTTON_ATTRIBUTES: Array<BtnAttr> = [
   'tt-btn-primary',
   'tt-btn-secondary',
   'tt-btn-transparent',
@@ -16,13 +24,17 @@ const HOST_BUTTON_ATTRIBUTES = [
   'tt-btn-outline',
 ];
 
-const HOST_BUTTON_SIZES = {
+type Sizes = 'md' | 'sm' | 'lg';
+
+type BtnSizes = {
+  [index in Sizes]: string;
+};
+
+const HOST_BUTTON_SIZES: BtnSizes = {
   md: 'tt-md',
   sm: 'tt-sm',
   lg: 'tt-lg',
 };
-
-type Sizes = 'md' | 'sm' | 'lg';
 @Component({
   selector: `
   button[tt-btn-primary],
@@ -58,13 +70,13 @@ export class ButtonComponent {
   private _disabled = false;
 
   @Input()
-  set btnBlock(value: boolean) {
-    this._btnBlock = value;
+  set isBlockElement(value: boolean) {
+    this._isBlockElement = value;
   }
-  get btnBlock(): boolean {
-    return this._btnBlock;
+  get isBlockElement(): boolean {
+    return this._isBlockElement;
   }
-  private _btnBlock = false;
+  private _isBlockElement = false;
 
   @HostBinding('disabled') get hasDisabled() {
     return this.disabled || null;
@@ -74,7 +86,7 @@ export class ButtonComponent {
     return [
       'tt-btn',
       HOST_BUTTON_SIZES[this.size],
-      this.btnBlock ? 'tt-btn-block' : '',
+      this.isBlockElement ? 'tt-btn-block' : '',
       this.hostAttribute(),
     ].join(' ');
   }
@@ -82,13 +94,11 @@ export class ButtonComponent {
   constructor(private elementRef: ElementRef) {}
 
   hostAttribute(): string {
-    let hostattr = '';
-    for (const attr of HOST_BUTTON_ATTRIBUTES) {
-      if (this.hasHostAttributes(attr)) {
-        hostattr = attr;
-      }
-    }
-    return hostattr;
+    const hostattr = HOST_BUTTON_ATTRIBUTES.filter((attr) =>
+      this.getHostElement().hasAttribute(attr)
+    );
+
+    return hostattr.length > 0 ? hostattr[0] : '';
   }
   getHostElement(): HTMLElement {
     return this.elementRef.nativeElement;
