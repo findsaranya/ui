@@ -4,7 +4,6 @@ import {
   ElementRef,
   HostBinding,
   Input,
-  ViewEncapsulation,
 } from '@angular/core';
 
 type BtnAttr =
@@ -47,7 +46,6 @@ const HOST_BUTTON_SIZES: BtnSizes = {
   exportAs: 'tt-button',
   template: ` <ng-content></ng-content> `,
   styleUrls: ['./button.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
@@ -94,11 +92,11 @@ export class ButtonComponent {
   constructor(private elementRef: ElementRef) {}
 
   hostAttribute(): string {
-    const hostattr = HOST_BUTTON_ATTRIBUTES.filter((attr) =>
+    const hostattr = HOST_BUTTON_ATTRIBUTES.find((attr) =>
       this.getHostElement().hasAttribute(attr)
     );
 
-    return hostattr.length > 0 ? hostattr[0] : '';
+    return hostattr ? hostattr : '';
   }
   getHostElement(): HTMLElement {
     return this.elementRef.nativeElement;
