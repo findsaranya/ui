@@ -42,14 +42,33 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      remotes: {
-        auth: 'auth@http://localhost:4201/remoteEntry.js',
-      },
+      remotes: {},
       shared: {
-        '@angular/core': { singleton: true, strictVersion: true },
-        '@angular/common': { singleton: true, strictVersion: true },
-        '@angular/common/http': { singleton: true, strictVersion: true },
-        '@angular/router': { singleton: true, strictVersion: true },
+        '@angular/core': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/common': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/common/http': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@angular/router': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
+        '@ngrx/store': {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '^13.0.0',
+        },
         ...sharedMappings.getDescriptors(),
       },
     }),
