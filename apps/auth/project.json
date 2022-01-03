@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/auth",
         "index": "apps/auth/src/index.html",
@@ -16,13 +14,8 @@
         "polyfills": "apps/auth/src/polyfills.ts",
         "tsConfig": "apps/auth/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/auth/src/favicon.ico",
-          "apps/auth/src/assets"
-        ],
-        "styles": [
-          "apps/auth/src/styles.scss"
-        ],
+        "assets": ["apps/auth/src/favicon.ico", "apps/auth/src/assets"],
+        "styles": ["apps/auth/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/auth/webpack.config.js"
@@ -88,17 +81,12 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/auth/src/**/*.ts",
-          "apps/auth/src/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/auth/src/**/*.ts", "apps/auth/src/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/auth"
-      ],
+      "outputs": ["coverage/apps/auth"],
       "options": {
         "jestConfig": "apps/auth/jest.config.js",
         "passWithNoTests": true

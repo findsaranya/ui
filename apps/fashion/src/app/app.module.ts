@@ -1,28 +1,62 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
-import { UiModule } from '@tt-webapp/ui';
+import { CommonModule } from '@angular/common';
+import { BootstrapService } from '@tt-webapp/service';
+import { environment } from '../environments/environment';
+import {
+  PageNotFoundComponent,
+  FailedToLoadApplicationComponent,
+} from '@tt-webapp/shared-components';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
+import { ROOT_REDUCER, ConfigEffects, AuthEffects } from '@tt-webapp/service';
+import { HttpClientModule } from '@angular/common/http';
+
+function initApplication(bsService: BootstrapService): () => Promise<void> {
+  return () => bsService.init(environment);
+}
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    UiModule,
-    RouterModule.forRoot(
-      [
-        {
-          path: 'auth',
-          loadChildren: () =>
-            import('auth/Module').then((m) => m.RemoteEntryModule),
-        },
-      ],
-      { initialNavigation: 'enabledBlocking' }
-    ),
+    CommonModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      {
+        path: 'error',
+        component: FailedToLoadApplicationComponent,
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
+    ]),
+    StoreModule.forRoot(ROOT_REDUCER, {
+      metaReducers: !environment.production ? [] : [],
+      runtimeChecks: {
+        strictActionImmutability: true,
+        strictStateImmutability: true,
+      },
+    }),
+    EffectsModule.forRoot([ConfigEffects, AuthEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    BootstrapService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApplication,
+      multi: true,
+      deps: [BootstrapService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
