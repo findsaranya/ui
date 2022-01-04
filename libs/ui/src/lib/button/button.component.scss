@@ -3,7 +3,7 @@
 }
 :host.tt-btn {
   @apply text-sm transition-colors flex justify-items-center items-center cursor-pointer
-             focus:shadow-default capitalize disabled:cursor-default;
+             focus:shadow-default disabled:cursor-default;
 }
 :host.tt-btn-primary {
   @apply bg-deepSaffron-default hover:bg-deepSaffron-500 text-white-default

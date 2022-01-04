@@ -96,7 +96,7 @@ export class ButtonComponent {
       this.getHostElement().hasAttribute(attr)
     );
 
-    return hostattr ? hostattr : '';
+    return hostattr ?? '';
   }
   getHostElement(): HTMLElement {
     return this.elementRef.nativeElement;

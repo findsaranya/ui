@@ -56,13 +56,7 @@ export default {
 } as Meta<ButtonComponent>;
 
 export const Primary = (args: ButtonComponent) => ({
-  template: `
-  <button
-  tt-btn-primary
-  [size]="size"
-  [disabled]="disabled"
-  
-  >
+  template: `<button tt-btn-primary [size]="size" [disabled]="disabled">
   Button Primary
   </button>`,
   props: args,
@@ -77,12 +71,7 @@ Primary.args = {
 
 export const Secondary = (args: ButtonComponent) => ({
   template: `
-  <button
-  tt-btn-secondary
-  [size]="size"
-  [disabled]="disabled"
-  [isBlockElement]="block"
-  >
+  <button tt-btn-secondary [size]="size" [disabled]="disabled" [isBlockElement]="block">
   Button Primary
   </button>`,
   props: args,
@@ -95,12 +84,7 @@ Secondary.args = {
 
 export const Warning = (args: ButtonComponent) => ({
   template: `
-  <button
-  tt-btn-warning
-  [size]="size"
-  >
-  Button Label
-  </button>`,
+  <button tt-btn-warning [size]="size">Button Label</button>`,
   props: args,
 });
 Warning.parameters = {
@@ -113,13 +97,7 @@ Warning.args = {
 
 export const Ghost = (args: ButtonComponent) => ({
   template: `
-  <button
-  tt-btn-ghost
-  [size]="size"
-  [disabled]="disabled"
-  >
-  Button
-  </button>`,
+  <button tt-btn-ghost [size]="size" [disabled]="disabled">Button</button>`,
   props: args,
 });
 Ghost.parameters = {
@@ -132,12 +110,7 @@ Ghost.args = {
 
 export const Transparent = (args: ButtonComponent) => ({
   template: `
-  <button
-  tt-btn-transparent
-  [size]="size"
-  >
-  Button
-  </button>`,
+  <button tt-btn-transparent [size]="size">Button</button>`,
   props: args,
 });
 
@@ -151,13 +124,7 @@ Transparent.args = {
 
 export const Outline = (args: ButtonComponent) => ({
   template: `
-  <button
-  tt-btn-outline
-  [size]="size"
-  [disabled]="disabled"
-  >
-  Button
-  </button>`,
+  <button tt-btn-outline [size]="size" [disabled]="disabled">Button</button>`,
   props: args,
 });
 
