@@ -6,10 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BootstrapService } from '@tt-webapp/service';
 import { environment } from '../environments/environment';
-import {
-  PageNotFoundComponent,
-  FailedToLoadApplicationComponent,
-} from '@tt-webapp/shared-components';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -30,11 +27,13 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
     RouterModule.forRoot([
       {
         path: 'error',
-        component: FailedToLoadApplicationComponent,
+        loadChildren: () =>
+          import('@tt-webapp/ui').then((m) => m.FailedToLoadApplicationModule),
       },
       {
         path: '**',
-        component: PageNotFoundComponent,
+        loadChildren: () =>
+          import('@tt-webapp/ui').then((m) => m.PageNotFoundModule),
       },
     ]),
     StoreModule.forRoot(ROOT_REDUCER, {
