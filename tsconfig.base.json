@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@tt-webapp/service": ["libs/service/src/index.ts"],
-      "@tt-webapp/shared-components": ["libs/shared-components/src/index.ts"],
       "@tt-webapp/ui": ["libs/ui/src/index.ts"]
     }
   },
