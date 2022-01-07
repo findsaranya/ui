@@ -1,0 +1,112 @@
+.ttui-checkbox-layout {
+  @apply font-medium text-sm;
+}
+
+@mixin fill {
+  @apply top-0 bottom-0 left-0 right-0 absolute;
+}
+
+%ttui-checkbox-outer-box {
+  @include fill;
+  @apply rounded-[5px] box-border pointer-events-none;
+}
+
+.ttui-checkbox-layout {
+  @apply items-baseline align-middle inline-flex whitespace-nowrap;
+}
+
+.ttui-checkbox-inner-container {
+  @apply inline-block m-auto mr-[10px] h-[18px] w-[18px] leading-[0];
+  @apply relative order-none align-middle whitespace-nowrap;
+}
+
+.ttui-checkbox-without-margin {
+  @apply mx-0;
+}
+
+.ttui-checkbox {
+  @apply bottom-0 left-1/2 hidden;
+}
+
+.ttui-checkbox-frame {
+  @extend %ttui-checkbox-outer-box;
+  @apply border-2 border-solid;
+  @apply bg-white-default border-gray-1000;
+}
+
+.ttui-checkbox-background {
+  @extend %ttui-checkbox-outer-box;
+  @apply py-[5px] px-1;
+}
+
+.ttui-checkbox-checkmark-path {
+  @apply fill-white-default;
+}
+
+.ttui-checkbox-inner-container:focus-visible {
+  @apply outline-none;
+  @apply shadow-default rounded-[5px];
+}
+
+.ttui-checkbox-layout {
+  &.ttui-checkbox-checked:not(.ttui-checkbox-disabled) {
+    &:hover {
+      @apply cursor-pointer;
+    }
+    .ttui-checkbox-inner-container {
+      .ttui-checkbox-frame {
+        @apply bg-deepSaffron-default border-none;
+      }
+    }
+  }
+
+  &:not(.ttui-checkbox-checked):not(.ttui-checkbox-disabled) {
+    &:hover {
+      @apply cursor-pointer;
+      .ttui-checkbox-inner-container {
+        .ttui-checkbox-frame {
+          @apply bg-gray-200;
+        }
+        .ttui-checkbox-background {
+          .ttui-checkbox-checkmark-path {
+            @apply fill-gray-200;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ttui-checkbox-layout {
+  &.ttui-checkbox-disabled:not(.ttui-checkbox-checked) {
+    .ttui-checkbox-inner-container {
+      .ttui-checkbox-frame {
+        @apply border-gray-500 bg-white-default;
+      }
+    }
+    .ttui-checkbox-inner-container:focus-visible {
+      @apply shadow-none;
+    }
+  }
+
+  &.ttui-checkbox-disabled {
+    &.ttui-checkbox-checked {
+      .ttui-checkbox-inner-container {
+        .ttui-checkbox-frame {
+          @apply border-gray-500 bg-gray-500;
+        }
+        .ttui-checkbox-background {
+          .ttui-checkbox-checkmark-path {
+            @apply fill-gray-600;
+          }
+        }
+      }
+      .ttui-checkbox-inner-container:focus-visible {
+        @apply shadow-none;
+      }
+    }
+    .ttui-checkbox-label {
+      @apply text-gray-500;
+    }
+  }
+}
