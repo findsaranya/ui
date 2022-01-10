@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, takeWhile } from 'rxjs';
+import { takeWhile } from 'rxjs';
 import { AppState } from '../+state/app.store';
 import * as AppConfig from '../+state/app';
 import * as Auth from '../+state/auth';
@@ -26,24 +26,27 @@ export class BootstrapService {
     return new Promise((resolve) => {
       this.appInitialized = resolve;
       this.appConfigLoaded = false;
-      this.store.dispatch(AppConfig.init({ envConfig }));
-      this.store.dispatch(Auth.init());
+
+      // check authentication status -> callback mfe application config
+      const callback = AppConfig.init({ envConfig });
+      this.store.dispatch(Auth.init({ envConfig, callback }));
       this.listenConfigUpdates();
     });
   }
 
   private listenConfigUpdates(): void {
-    const appData = [this.store.select('appConfig'), this.store.select('auth')];
-    combineLatest(appData)
+    this.store
+      .select('appConfig')
       .pipe(takeWhile(() => !this.appConfigLoaded))
       .subscribe((config) => {
-        const [appConfig, auth] = config;
-        if (!appConfig.loaded || !auth.loaded) return;
-        if (appConfig.error) this.configErrorHandler(appConfig.error);
-        if (auth.error) this.authErrorHandler(auth.error);
+        if (!config.loaded) return;
+        if (config.error) {
+          this.configErrorHandler(config.error);
+          return;
+        }
 
         this.appConfigLoaded = true;
-        this.loadApplicationConfig(appConfig as AppConfig.State)
+        this.loadApplicationConfig(config as AppConfig.State)
           .then(this.appInitialized)
           .catch(this.configErrorHandler.bind(this));
       });

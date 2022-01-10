@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'tt-webapp-failed-to-load-application',
@@ -6,4 +7,11 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./failed-to-load-application.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FailedToLoadApplicationComponent {}
+export class FailedToLoadApplicationComponent implements OnInit {
+  message = '';
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.message = this.route.snapshot.queryParams['message'] || '';
+  }
+}

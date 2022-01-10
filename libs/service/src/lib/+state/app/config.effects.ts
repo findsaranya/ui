@@ -13,11 +13,11 @@ export class ConfigEffects {
       ofType(ConfigActions.init),
       switchMap((action) => {
         const env = action.envConfig;
-        const URL = env['API_BASE_URL'] + 'api/mfe/config';
+        const URL = env['API_BASE_URL'] + 'ui/app-config';
         return this.http.get<IApplicationConfigResponce>(URL).pipe(
           map((config: IApplicationConfigResponce) => {
             return ConfigActions.loadConfigSuccess({
-              config: config.appConfig,
+              config: config.data,
             });
           })
         );

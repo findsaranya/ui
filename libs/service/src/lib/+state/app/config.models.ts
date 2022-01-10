@@ -9,5 +9,5 @@ export interface ConfigEntity {
 
 export interface IApplicationConfigResponce {
   // ToDo
-  appConfig: IMicroFrontendConfig[];
+  data: IMicroFrontendConfig[];
 }

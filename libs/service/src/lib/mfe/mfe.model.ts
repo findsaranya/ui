@@ -4,9 +4,8 @@ export interface IMicroFrontendConfig extends LoadRemoteModuleOptions {
   id: string;
   routePath: string;
   ngModuleName: string;
-  companyType: string | null;
+  subscribed: boolean;
   pathMatch?: string;
-  subscription: string | null;
   canActivate?: string[];
   canDeactivate?: string[];
 }
