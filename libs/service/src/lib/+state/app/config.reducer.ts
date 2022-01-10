@@ -25,7 +25,7 @@ export const initialState: State = configAdapter.getInitialState({
 
 const configReducer = createReducer(
   initialState,
-  on(ConfigActions.init, (state) => ({
+  on(ConfigActions.init, (state: State) => ({
     ...state,
     loaded: false,
     error: null,

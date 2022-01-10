@@ -21,16 +21,21 @@ export const authAdapter: EntityAdapter<AuthEntity> =
 export const initialState: State = authAdapter.getInitialState({
   loaded: false,
   token: null,
+  loggedIn: null,
+  userConfig: null,
 });
 
 const authReducer = createReducer(
   initialState,
-  on(AuthActions.init, (state) => ({ ...state, loaded: false, error: null })),
-  on(AuthActions.loadAuthSuccess, (state, { auth }) => ({
+  on(AuthActions.initSession, () => ({
+    ...initialState,
+  })),
+  on(AuthActions.loadSessionSuccess, (state, { token }) => ({
     ...state,
+    token,
     loaded: true,
   })),
-  on(AuthActions.loadAuthFailure, (state, { error }) => ({ ...state, error }))
+  on(AuthActions.loadSessionFailed, (state) => ({ ...state, loaded: true }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

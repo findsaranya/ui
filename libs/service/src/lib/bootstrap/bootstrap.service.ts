@@ -28,8 +28,16 @@ export class BootstrapService {
       this.appConfigLoaded = false;
 
       // check authentication status -> callback mfe application config
-      const callback = AppConfig.init({ envConfig });
-      this.store.dispatch(Auth.init({ envConfig, callback }));
+      const callback = {
+        success: [
+          AppConfig.init({ envConfig }),
+          Auth.initUserConfig({
+            API_BASE_URL: envConfig.API_BASE_URL as string,
+          }),
+        ],
+        failure: [AppConfig.init({ envConfig })],
+      };
+      this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();
     });
   }
