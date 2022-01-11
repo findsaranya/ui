@@ -8,6 +8,10 @@ export const getAuthLoaded = createSelector(
   getAuthState,
   (state: State) => state.loaded
 );
+export const getSession = createSelector(
+  getAuthState,
+  (state: State) => state.token
+);
 
 export const getAuthError = createSelector(
   getAuthState,

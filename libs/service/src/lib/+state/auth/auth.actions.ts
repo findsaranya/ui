@@ -15,10 +15,7 @@ export const loadSessionSuccess = createAction(
 
 export const loadSessionFailed = createAction('[Auth] No active sessions');
 
-export const initUserConfig = createAction(
-  '[Auth] Init User config',
-  props<{ API_BASE_URL: string }>()
-);
+export const initUserConfig = createAction('[Auth] Init User config');
 
 export const userConfigLoadSuccess = createAction(
   '[Auth] User Config Load Success',

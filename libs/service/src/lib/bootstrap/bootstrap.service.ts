@@ -8,9 +8,7 @@ import { Router, Routes } from '@angular/router';
 import { IMicroFrontendConfig } from '../mfe/mfe.model';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BootstrapService {
   appInitialized: ((value: void | PromiseLike<void>) => void) | undefined;
   appConfigLoaded = false;
@@ -22,20 +20,15 @@ export class BootstrapService {
    * @param envConfig
    * @returns
    */
-  init(envConfig: { [key in string]: unknown }): Promise<void> {
+  init(): Promise<void> {
     return new Promise((resolve) => {
       this.appInitialized = resolve;
       this.appConfigLoaded = false;
 
       // check authentication status -> callback mfe application config
       const callback = {
-        success: [
-          AppConfig.init({ envConfig }),
-          Auth.initUserConfig({
-            API_BASE_URL: envConfig.API_BASE_URL as string,
-          }),
-        ],
-        failure: [AppConfig.init({ envConfig })],
+        success: [AppConfig.init(), Auth.initUserConfig()],
+        failure: [AppConfig.init()],
       };
       this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();

@@ -35,9 +35,8 @@ export class AuthEffects {
   initUserConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.initUserConfig),
-      switchMap((action) => {
-        console.log(action);
-        return this.authService.getUserConfig(action.API_BASE_URL).pipe(
+      switchMap(() => {
+        return this.authService.getUserConfig().pipe(
           map((data) => {
             return AuthActions.userConfigLoadSuccess({ data });
           }),
