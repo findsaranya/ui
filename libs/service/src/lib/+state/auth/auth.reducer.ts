@@ -23,6 +23,7 @@ export const initialState: State = authAdapter.getInitialState({
   token: null,
   loggedIn: null,
   userConfig: null,
+  authenticating: false,
 });
 
 const authReducer = createReducer(
@@ -35,7 +36,24 @@ const authReducer = createReducer(
     token,
     loaded: true,
   })),
-  on(AuthActions.loadSessionFailed, (state) => ({ ...state, loaded: true }))
+  on(AuthActions.loadSessionFailed, (state) => ({ ...state, loaded: true })),
+  on(AuthActions.loginStart, (state) => ({
+    ...state,
+    authenticating: true,
+    error: null,
+  })),
+  on(AuthActions.loginSuccess, (state, { sessionToken }) => ({
+    ...state,
+    authenticating: true,
+    error: null,
+    token: sessionToken,
+  })),
+  on(AuthActions.loginError, (state, { error }) => ({
+    ...state,
+    authenticating: false,
+    loggedIn: false,
+    error,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

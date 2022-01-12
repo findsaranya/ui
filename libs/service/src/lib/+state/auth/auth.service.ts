@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { RefreshTokenResponse, UserConfig } from '.';
+import { ILoginPayload, RefreshTokenResponse, UserConfig } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
 
 @Injectable()
@@ -10,6 +10,13 @@ export class AuthService {
     @Inject(API_BASE_URL) private apiBaseUrl: string,
     private http: HttpClient
   ) {}
+
+  login(credentials: ILoginPayload) {
+    return this.http.post(`${this.apiBaseUrl}login`, credentials, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
 
   getUserConfig(): Observable<UserConfig> {
     return this.http.get<UserConfig>(`${this.apiBaseUrl}api/secured/user/`);

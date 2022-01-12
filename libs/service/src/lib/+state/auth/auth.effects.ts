@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { createEffect, Actions, ofType, act } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { catchError, map, switchMap } from 'rxjs';
+import { LoginPayload } from '.';
 
 import * as AuthActions from './auth.actions';
 import { AuthService } from './auth.service';
@@ -43,6 +44,34 @@ export class AuthEffects {
           catchError((e) => [AuthActions.userConfigLoadFailed({ error: e })])
         );
       })
+    )
+  );
+
+  loginStart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginStart),
+      switchMap((action) => {
+        const payload = new LoginPayload(action.email, action.password).parse();
+        return this.authService.login(payload).pipe(
+          map((loginResponse) => {
+            const sessionToken = loginResponse.headers.get('X-token') || '';
+            localStorage.setItem('_session', sessionToken);
+            return AuthActions.loginSuccess({ sessionToken });
+          }),
+          catchError((e) => {
+            // Todo
+            const error = e;
+            return [AuthActions.loginError({ error: 'Failed to login' })];
+          })
+        );
+      })
+    )
+  );
+
+  $loginSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginSuccess),
+      switchMap(() => [AuthActions.initUserConfig()])
     )
   );
 

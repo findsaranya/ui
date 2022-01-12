@@ -5,6 +5,37 @@ export interface AuthEntity {
   token: string | null;
   userConfig: UserConfig | null;
   loggedIn: boolean | null;
+  authenticating: boolean;
+}
+
+abstract class Password {
+  constructor(private readonly _passWd: string) {}
+  get password(): string {
+    return btoa(this._passWd);
+  }
+}
+abstract class Payload {
+  abstract parse(): void;
+}
+
+export interface ILoginPayload {
+  username: string;
+  password: string;
+}
+export class LoginPayload extends Password implements Payload {
+  constructor(
+    private readonly _username: string,
+    private readonly _password: string
+  ) {
+    super(_password);
+  }
+  parse(): ILoginPayload {
+    return { username: this.username, password: this.password };
+  }
+
+  get username(): string {
+    return this._username;
+  }
 }
 
 // TODO

@@ -10,7 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { ROOT_REDUCER, ConfigEffects, AuthEffects } from '@tt-webapp/service';
+import { ROOT_REDUCER, AppConfig, Auth } from '@tt-webapp/service';
 import { CoreModule } from './core.module';
 import { environment } from '../environments/environment';
 
@@ -39,7 +39,7 @@ import { environment } from '../environments/environment';
         strictStateImmutability: true,
       },
     }),
-    EffectsModule.forRoot([ConfigEffects, AuthEffects]),
+    EffectsModule.forRoot([AppConfig.ConfigEffects, Auth.AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     CoreModule,
   ],

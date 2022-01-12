@@ -13,7 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { ConfigEffects, ROOT_REDUCER } from '@tt-webapp/service';
+import { AppConfig, ROOT_REDUCER } from '@tt-webapp/service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
         strictStateImmutability: true,
       },
     }),
-    EffectsModule.forRoot([ConfigEffects]),
+    EffectsModule.forRoot([AppConfig.ConfigEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
   ],

@@ -26,3 +26,17 @@ export const userConfigLoadFailed = createAction(
   '[Auth] User Config Load Failed',
   props<{ error: string }>()
 );
+
+export const loginStart = createAction(
+  '[Auth] Login Start',
+  props<{ email: string; password: string }>()
+);
+
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{ sessionToken: string }>()
+);
+export const loginError = createAction(
+  '[Auth] Login Error',
+  props<{ error: string }>()
+);
