@@ -15,16 +15,13 @@ export interface AuthPartialState {
   readonly [AUTH_FEATURE_KEY]: State;
 }
 
-export const authAdapter: EntityAdapter<AuthEntity> =
-  createEntityAdapter<AuthEntity>();
-
-export const initialState: State = authAdapter.getInitialState({
+export const initialState: State = {
   loaded: false,
   token: null,
   loggedIn: null,
   userConfig: null,
   authenticating: false,
-});
+};
 
 const authReducer = createReducer(
   initialState,
@@ -53,6 +50,12 @@ const authReducer = createReducer(
     authenticating: false,
     loggedIn: false,
     error,
+  })),
+  on(AuthActions.userConfigLoadSuccess, (state, { data }) => ({
+    ...state,
+    authenticating: false,
+    loggedIn: true,
+    userConfig: data,
   }))
 );
 

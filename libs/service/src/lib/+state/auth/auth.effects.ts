@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, act } from '@ngrx/effects';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { catchError, map, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { LoginPayload } from '.';
 
 import * as AuthActions from './auth.actions';
@@ -19,14 +19,14 @@ export class AuthEffects {
           const actions: Action[] = [AuthActions.loadSessionFailed()];
           if (action.callback?.failure?.length)
             actions.push(...(action.callback.failure as Action[]));
-          return actions;
+          return of(...actions);
         } else {
           const actions: Action[] = [
             AuthActions.loadSessionSuccess({ token: jwt }),
           ];
           if (action.callback?.success?.length)
             actions.push(...action.callback.success);
-          return actions;
+          return of(...actions);
         }
       })
     )
@@ -41,7 +41,7 @@ export class AuthEffects {
           map((data) => {
             return AuthActions.userConfigLoadSuccess({ data });
           }),
-          catchError((e) => [AuthActions.userConfigLoadFailed({ error: e })])
+          catchError((e) => of(AuthActions.userConfigLoadFailed({ error: e })))
         );
       })
     )
@@ -59,9 +59,8 @@ export class AuthEffects {
             return AuthActions.loginSuccess({ sessionToken });
           }),
           catchError((e) => {
-            // Todo
-            const error = e;
-            return [AuthActions.loginError({ error: 'Failed to login' })];
+            const error = e.error.message || 'Failed to login';
+            return of(AuthActions.loginError({ error }));
           })
         );
       })
@@ -71,7 +70,7 @@ export class AuthEffects {
   $loginSuccess = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
-      switchMap(() => [AuthActions.initUserConfig()])
+      switchMap(() => of(AuthActions.initUserConfig()))
     )
   );
 

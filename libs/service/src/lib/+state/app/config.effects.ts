@@ -8,9 +8,9 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class ConfigEffects {
-  init$ = createEffect(() =>
+  initApplicationConfig$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConfigActions.init),
+      ofType(ConfigActions.initApplicationConfig),
       switchMap(() => {
         return this.configService.applicationConfig().pipe(
           map((config: IApplicationConfigResponce) => {
@@ -23,6 +23,23 @@ export class ConfigEffects {
       catchError(() => {
         const error = 'Failed to load application config';
         return of(ConfigActions.loadConfigFailure({ error }));
+      })
+    )
+  );
+  initApplicationConfigWithAuth$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ConfigActions.initApplicationConfigWithAuth),
+      switchMap(() => {
+        return this.configService.applicationConfigWithAuth().pipe(
+          map((config: IApplicationConfigResponce) => {
+            return ConfigActions.loadConfigSuccess({
+              config: config.data,
+            });
+          })
+        );
+      }),
+      catchError(() => {
+        return of(ConfigActions.initApplicationConfig());
       })
     )
   );

@@ -15,4 +15,9 @@ export class ConfigService {
       `${this.apiBaseUrl}ui/app-config`
     );
   }
+  applicationConfigWithAuth() {
+    return this.http.get<IApplicationConfigResponce>(
+      `${this.apiBaseUrl}api/ui/app-config`
+    );
+  }
 }

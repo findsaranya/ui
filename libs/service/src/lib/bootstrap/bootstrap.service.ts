@@ -27,8 +27,11 @@ export class BootstrapService {
 
       // check authentication status -> callback mfe application config
       const callback = {
-        success: [AppConfig.init(), Auth.initUserConfig()],
-        failure: [AppConfig.init()],
+        success: [
+          AppConfig.initApplicationConfigWithAuth(),
+          Auth.initUserConfig(),
+        ],
+        failure: [AppConfig.initApplicationConfig()],
       };
       this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();

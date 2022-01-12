@@ -12,7 +12,6 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppConfig, ROOT_REDUCER } from '@tt-webapp/service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -42,7 +41,6 @@ import { HttpClientModule } from '@angular/common/http';
     }),
     EffectsModule.forRoot([AppConfig.ConfigEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
