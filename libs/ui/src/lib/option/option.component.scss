@@ -1,0 +1,79 @@
+.ttui-option {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  max-width: 100%;
+  height: 40px;
+  white-space: nowrap;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border-radius: 7px;
+  transition: all 150ms ease;
+
+  .ttui-option-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #212121;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0px 10px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    &::after {
+      position: absolute;
+      opacity: 0;
+      content: '';
+      border-bottom: 2px solid white;
+      transition: opacity 90ms;
+      top: 5.3px;
+      left: 4px;
+      width: 8px;
+      height: 3px;
+      border-left: 2px solid white;
+      transform: rotate(-45deg);
+      box-sizing: content-box;
+    }
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &.active {
+    background-color: #eee;
+  }
+
+  &.ttui-option-text {
+    display: inline-block;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.ttui-option.ttui-option-disabled {
+  color: #bdbdbd;
+  cursor: default;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.ttui-option.selected {
+  .ttui-option-checkbox {
+    border-color: transparent;
+    background-color: #ffa440;
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.ttui-option.multiple {
+  &.active {
+    background: #fff3e5;
+  }
+}
