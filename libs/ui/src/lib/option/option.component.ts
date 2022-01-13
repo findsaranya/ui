@@ -10,6 +10,7 @@ import {
   Input,
   Optional,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { coerceBooleanProperty, BooleanInput } from '@angular/cdk/coercion';
 import { Highlightable } from '@angular/cdk/a11y';
@@ -140,6 +141,7 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
 @Component({
   selector: 'tt-option',
   templateUrl: './option.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./option.component.scss'],
 })
 export class OptionComponent extends TTOptionBase {
