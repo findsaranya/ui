@@ -27,38 +27,46 @@ const authReducer = createReducer(
   on(AuthActions.initSession, () => ({
     ...initialState,
   })),
-  on(AuthActions.loadSessionSuccess, (state, { token }) => ({
+  on(AuthActions.loadSessionSuccess, (state, { sessionToken, isRefresh }) => ({
     ...state,
-    token,
+    token: sessionToken,
+    authenticating: isRefresh ? state.authenticating : true,
     loaded: true,
   })),
-  on(AuthActions.loadSessionFailed, (state) => ({
+  on(AuthActions.loadSessionFailed, (state, { error }) => ({
     ...state,
     loaded: true,
+    authenticating: false,
     loggedIn: false,
+    token: null,
+    error,
   })),
   on(AuthActions.loginStart, (state) => ({
     ...state,
     authenticating: true,
     error: null,
   })),
-  on(AuthActions.loginSuccess, (state, { sessionToken }) => ({
+  on(AuthActions.resetSession, (state) => ({
     ...state,
-    authenticating: true,
-    error: null,
-    token: sessionToken,
-  })),
-  on(AuthActions.loginError, (state, { error }) => ({
-    ...state,
+    loaded: true,
     authenticating: false,
     loggedIn: false,
-    error,
+    token: null,
+    userConfig: null,
   })),
+
   on(AuthActions.userConfigLoadSuccess, (state, { data }) => ({
     ...state,
     authenticating: false,
     loggedIn: true,
     userConfig: data,
+  })),
+  on(AuthActions.userConfigLoadFailed, (state, { error }) => ({
+    ...state,
+    authenticating: false,
+    loggedIn: false,
+    userConfig: null,
+    error,
   }))
 );
 

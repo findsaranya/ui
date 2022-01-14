@@ -15,18 +15,36 @@ export class AuthEffects {
       ofType(AuthActions.initSession),
       switchMap((action) => {
         const jwt = localStorage.getItem('_session');
-        if (!jwt) {
-          const actions: Action[] = [AuthActions.loadSessionFailed()];
-          if (action.callback?.failure?.length)
-            actions.push(...(action.callback.failure as Action[]));
-          return of(...actions);
-        } else {
-          const actions: Action[] = [
-            AuthActions.loadSessionSuccess({ token: jwt }),
+
+        //success
+        if (action.callback?.success?.length)
+          this.#loginSuccessCallback = [...action.callback.success];
+        this.#loginSuccessCallback?.push(AuthActions.initUserConfig());
+
+        // failure
+        if (action.callback?.failure?.length)
+          this.#loginFailedCallBack = [
+            ...(action.callback.failure as Action[]),
           ];
-          if (action.callback?.success?.length)
-            actions.push(...action.callback.success);
-          return of(...actions);
+
+        // logout
+        if (action.callback?.logout?.length)
+          this.#logoutCallback = [...(action.callback.logout as Action[])];
+        this.#logoutCallback?.push(AuthActions.resetSession());
+
+        if (!jwt) {
+          return of(
+            AuthActions.loadSessionFailed({
+              error: null,
+            })
+          );
+        } else {
+          return of(
+            AuthActions.loadSessionSuccess({
+              sessionToken: jwt,
+              isRefresh: false,
+            })
+          );
         }
       })
     )
@@ -56,24 +74,99 @@ export class AuthEffects {
           map((loginResponse) => {
             const sessionToken = loginResponse.headers.get('X-token') || '';
             localStorage.setItem('_session', sessionToken);
-            return AuthActions.loginSuccess({ sessionToken });
+            return AuthActions.loadSessionSuccess({
+              sessionToken,
+              isRefresh: false,
+            });
           }),
           catchError((e) => {
             const error = e.error.message || 'Failed to login';
-            return of(AuthActions.loginError({ error }));
+            return of(AuthActions.loadSessionFailed({ error }));
           })
         );
       })
     )
   );
 
-  $loginSuccess = createEffect(() =>
+  logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.loginSuccess),
-      switchMap(() => of(AuthActions.initUserConfig()))
+      ofType(AuthActions.logout),
+      switchMap(() => {
+        return this.authService.logout().pipe(
+          map(() => {
+            localStorage.removeItem('_session');
+            return AuthActions.logoutSuccess();
+          }),
+          catchError(() => {
+            localStorage.removeItem('_session');
+            window.location.reload();
+            return of(AuthActions.logoutFailed());
+          })
+        );
+      })
     )
   );
 
+  $loadSessionSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loadSessionSuccess),
+      switchMap((action) => {
+        if (action.isRefresh && !this.loginSuccessCallback) return of();
+        return of(...this.loginSuccessCallback);
+      })
+    )
+  );
+
+  $loadSessionFailed = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loadSessionFailed),
+      switchMap(() => {
+        if (!this.loginFailedCallback) return of();
+        return of(...this.loginFailedCallback);
+      })
+    )
+  );
+
+  $logoutSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logoutSuccess),
+      switchMap(() => {
+        if (!this.logoutCallback) return of();
+        return of(...this.logoutCallback);
+      })
+    )
+  );
+
+  $refreshSession = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.refreshSession),
+      switchMap((action) => {
+        localStorage.removeItem('_session');
+        localStorage.setItem('_session', action?.sessionToken);
+        return of(
+          AuthActions.loadSessionSuccess({
+            sessionToken: action.sessionToken,
+            isRefresh: true,
+          })
+        );
+      })
+    )
+  );
+
+  #loginSuccessCallback: Action[] = [];
+  get loginSuccessCallback() {
+    return this.#loginSuccessCallback;
+  }
+
+  #loginFailedCallBack: Action[] = [];
+  get loginFailedCallback() {
+    return this.#loginFailedCallBack;
+  }
+
+  #logoutCallback: Action[] = [];
+  get logoutCallback() {
+    return this.#logoutCallback;
+  }
   constructor(
     private readonly actions$: Actions,
     private authService: AuthService

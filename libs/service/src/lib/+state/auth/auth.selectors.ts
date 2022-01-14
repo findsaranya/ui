@@ -17,6 +17,12 @@ export const loggedIn = createSelector(
   (state: State) => state.loggedIn
 );
 
+export const fullName = createSelector(
+  getAuthState,
+  (state: State) =>
+    `${state.userConfig?.firstName} ${state.userConfig?.lastName}`
+);
+
 export const getAuthError = createSelector(
   getAuthState,
   (state: State) => state.error

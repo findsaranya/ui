@@ -43,7 +43,9 @@ export class BasicAuthComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.store.dispatch(Auth.loginError({ error: 'Form validation fails' }));
+      this.store.dispatch(
+        Auth.loadSessionFailed({ error: 'Form validation fails' })
+      );
       return;
     }
     const { email = null, password = null } = this.loginForm.value;

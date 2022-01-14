@@ -4,16 +4,24 @@ import { UserConfig } from './auth.models';
 export const initSession = createAction(
   '[Auth] Init Session',
   props<{
-    callback?: { success?: Action[]; failure: Action[] };
+    callback?: { success?: Action[]; failure: Action[]; logout: Action[] };
   }>()
 );
 
 export const loadSessionSuccess = createAction(
   '[Auth] Load Session Success',
-  props<{ token: string }>()
+  props<{ sessionToken: string; isRefresh: boolean }>()
 );
 
-export const loadSessionFailed = createAction('[Auth] No active sessions');
+export const loadSessionFailed = createAction(
+  '[Auth] Load Session Failed',
+  props<{ error: string | null }>()
+);
+
+export const refreshSession = createAction(
+  '[Auth] Refresh Session',
+  props<{ sessionToken: string }>()
+);
 
 export const initUserConfig = createAction('[Auth] Init User config');
 
@@ -32,11 +40,7 @@ export const loginStart = createAction(
   props<{ email: string; password: string }>()
 );
 
-export const loginSuccess = createAction(
-  '[Auth] Login Success',
-  props<{ sessionToken: string }>()
-);
-export const loginError = createAction(
-  '[Auth] Login Error',
-  props<{ error: string }>()
-);
+export const logout = createAction('[Auth] Logout');
+export const logoutSuccess = createAction('[Auth] Logout Success');
+export const resetSession = createAction('[Auth] Reset Session');
+export const logoutFailed = createAction('[Auth] Logout Failed');

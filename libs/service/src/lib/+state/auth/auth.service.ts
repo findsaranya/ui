@@ -27,36 +27,24 @@ export class AuthService {
   }
 
   refreshToken(): Observable<RefreshTokenResponse> {
-    this.stopRefreshTokenTimer();
     return this.http
       .get<RefreshTokenResponse>(`${this.apiBaseUrl}user/refreshtoken`, {
         withCredentials: true,
       })
       .pipe(
         tap((response: RefreshTokenResponse) => {
-          localStorage.removeItem('_session');
-          localStorage.setItem('_session', response?.accessToken);
-          if (response?.accessToken == undefined) {
-            this.attemptLogout();
-            return;
-          }
           this.store.dispatch(
-            AuthActions.loadSessionSuccess({ token: response?.accessToken })
+            AuthActions.refreshSession({ sessionToken: response.accessToken })
           );
-          this.startRefreshTokenTimer();
         })
       );
   }
 
-  attemptLogout() {
-    // Todo
-  }
-
-  startRefreshTokenTimer(): void {
-    // Todo
-  }
-
-  stopRefreshTokenTimer(): void {
-    // Todo
+  logout() {
+    return this.http.post(
+      `${this.apiBaseUrl}logout`,
+      {},
+      { withCredentials: true }
+    );
   }
 }

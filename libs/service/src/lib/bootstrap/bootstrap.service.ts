@@ -39,11 +39,9 @@ export class BootstrapService {
 
       // check authentication status -> callback mfe application config
       const callback = {
-        success: [
-          Config.initApplicationConfigWithAuth(),
-          Auth.initUserConfig(),
-        ],
+        success: [Config.initApplicationConfigWithAuth()],
         failure: [Config.initApplicationConfig()],
+        logout: [Config.initApplicationConfig()],
       };
       this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();
@@ -62,22 +60,27 @@ export class BootstrapService {
           return;
         }
         this.listenLoginLogout(!(auth as Auth.State).loggedIn);
-
         this.appConfigLoaded = true;
         this.loadApplicationConfig(appConfig as Config.State)
-          .then(this.startApplication.bind(this))
+          .then(this.startApplication.bind(this, auth as Auth.State))
           .catch(this.configErrorHandler.bind(this));
       });
   }
 
-  private startApplication() {
+  private startApplication(auth: Auth.State) {
     const next = this.activatedRoute.snapshot.queryParams.next;
+    this.appInitialized?.();
+    if (!auth.loggedIn) return;
     if (next) {
       this.router.navigate([next]);
       return;
     }
-    // Default landing page setup
-    this.appInitialized?.();
+    if (
+      window.location.pathname === '/' ||
+      window.location.pathname === '/login'
+    )
+      // ToDo Default landing page setup
+      this.router.navigate(['/settings']);
   }
 
   private loadApplicationConfig(appConfig: Config.State): Promise<void> {
@@ -126,8 +129,8 @@ export class BootstrapService {
 
   private initAppConfig(expected: boolean, currentState: boolean | null) {
     if (currentState !== expected) return;
+    if (currentState === false) this.router.navigate(['login']);
     this.loginLogoutLoaded = true;
-    this.store.dispatch(Config.initApplicationConfigWithAuth());
-    setTimeout(this.listenConfigUpdates.bind(this));
+    this.listenConfigUpdates();
   }
 }
