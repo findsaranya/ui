@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { ILoginPayload, RefreshTokenResponse, UserConfig } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
+import { AppState } from '../app.store';
+import * as AuthActions from './auth.actions';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject(API_BASE_URL) private apiBaseUrl: string,
-    private http: HttpClient
+    private http: HttpClient,
+    private store: Store<AppState>
   ) {}
 
   login(credentials: ILoginPayload) {
@@ -36,6 +40,9 @@ export class AuthService {
             this.attemptLogout();
             return;
           }
+          this.store.dispatch(
+            AuthActions.loadSessionSuccess({ token: response?.accessToken })
+          );
           this.startRefreshTokenTimer();
         })
       );

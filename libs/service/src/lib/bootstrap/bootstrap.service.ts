@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { takeWhile } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { combineLatest, Observable, takeWhile } from 'rxjs';
 import { AppState } from '../+state/app.store';
-import * as AppConfig from '../+state/app';
+import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
-import { Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { IMicroFrontendConfig } from '../mfe/mfe.model';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 
@@ -12,8 +12,20 @@ import { loadRemoteModule } from '@angular-architects/module-federation';
 export class BootstrapService {
   appInitialized: ((value: void | PromiseLike<void>) => void) | undefined;
   appConfigLoaded = false;
-
-  constructor(private store: Store<AppState>, private router: Router) {}
+  appConfig: (Observable<Config.State> | Observable<Auth.State>)[];
+  loginLogoutLoaded = false;
+  initialRoutes: Routes;
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.appConfig = [
+      this.store.select('appConfig'),
+      this.store.select('auth'),
+    ];
+    this.initialRoutes = this.router.config;
+  }
 
   /**
    * init
@@ -28,10 +40,10 @@ export class BootstrapService {
       // check authentication status -> callback mfe application config
       const callback = {
         success: [
-          AppConfig.initApplicationConfigWithAuth(),
+          Config.initApplicationConfigWithAuth(),
           Auth.initUserConfig(),
         ],
-        failure: [AppConfig.initApplicationConfig()],
+        failure: [Config.initApplicationConfig()],
       };
       this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();
@@ -39,31 +51,43 @@ export class BootstrapService {
   }
 
   private listenConfigUpdates(): void {
-    this.store
-      .select('appConfig')
+    this.appConfigLoaded = false;
+    combineLatest(this.appConfig)
       .pipe(takeWhile(() => !this.appConfigLoaded))
-      .subscribe((config) => {
-        if (!config.loaded) return;
-        if (config.error) {
-          this.configErrorHandler(config.error);
+      .subscribe((state) => {
+        const [appConfig, auth] = state;
+        if (!appConfig.loaded || (auth as Auth.State).loggedIn === null) return;
+        if (appConfig.error) {
+          this.configErrorHandler(appConfig.error);
           return;
         }
+        this.listenLoginLogout(!(auth as Auth.State).loggedIn);
 
         this.appConfigLoaded = true;
-        this.loadApplicationConfig(config as AppConfig.State)
-          .then(this.appInitialized)
+        this.loadApplicationConfig(appConfig as Config.State)
+          .then(this.startApplication.bind(this))
           .catch(this.configErrorHandler.bind(this));
       });
   }
 
-  private loadApplicationConfig(appConfig: AppConfig.State): Promise<void> {
+  private startApplication() {
+    const next = this.activatedRoute.snapshot.queryParams.next;
+    if (next) {
+      this.router.navigate([next]);
+      return;
+    }
+    // Default landing page setup
+    this.appInitialized?.();
+  }
+
+  private loadApplicationConfig(appConfig: Config.State): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         this.router.resetConfig([
           ...this.buildRoutes(
             appConfig.coreApplications as IMicroFrontendConfig[]
           ),
-          ...this.router.config,
+          ...this.initialRoutes,
         ]);
         resolve();
       } catch (e) {
@@ -90,7 +114,20 @@ export class BootstrapService {
     this.appInitialized?.();
   }
 
-  private authErrorHandler(error: string): void {
-    // Todo
+  private listenLoginLogout(isLogin: boolean) {
+    this.loginLogoutLoaded = false;
+    this.store
+      .pipe(
+        select(Auth.loggedIn),
+        takeWhile(() => !this.loginLogoutLoaded)
+      )
+      .subscribe(this.initAppConfig.bind(this, isLogin));
+  }
+
+  private initAppConfig(expected: boolean, currentState: boolean | null) {
+    if (currentState !== expected) return;
+    this.loginLogoutLoaded = true;
+    this.store.dispatch(Config.initApplicationConfigWithAuth());
+    setTimeout(this.listenConfigUpdates.bind(this));
   }
 }

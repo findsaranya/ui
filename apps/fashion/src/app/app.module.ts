@@ -10,7 +10,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { ROOT_REDUCER, AppConfig, Auth } from '@tt-webapp/service';
+import {
+  ROOT_REDUCER,
+  AppConfig,
+  Auth,
+  WildcardAuthGuard,
+} from '@tt-webapp/service';
 import { CoreModule } from './core.module';
 import { environment } from '../environments/environment';
 
@@ -30,6 +35,7 @@ import { environment } from '../environments/environment';
         path: '**',
         loadChildren: () =>
           import('@tt-webapp/ui').then((m) => m.PageNotFoundModule),
+        canActivate: [WildcardAuthGuard],
       },
     ]),
     StoreModule.forRoot(ROOT_REDUCER, {

@@ -27,6 +27,12 @@ const configReducer = createReducer(
     error: null,
     coreApplications: null,
   })),
+  on(ConfigActions.initApplicationConfigWithAuth, (state: State) => ({
+    ...state,
+    loaded: false,
+    error: null,
+    coreApplications: null,
+  })),
   on(ConfigActions.loadConfigSuccess, (state, { config }) => ({
     ...state,
     error: null,

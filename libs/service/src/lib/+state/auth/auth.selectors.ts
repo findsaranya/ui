@@ -12,6 +12,10 @@ export const getSession = createSelector(
   getAuthState,
   (state: State) => state.token
 );
+export const loggedIn = createSelector(
+  getAuthState,
+  (state: State) => state.loggedIn
+);
 
 export const getAuthError = createSelector(
   getAuthState,

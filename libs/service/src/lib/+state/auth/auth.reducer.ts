@@ -1,4 +1,3 @@
-import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as AuthActions from './auth.actions';
@@ -33,7 +32,11 @@ const authReducer = createReducer(
     token,
     loaded: true,
   })),
-  on(AuthActions.loadSessionFailed, (state) => ({ ...state, loaded: true })),
+  on(AuthActions.loadSessionFailed, (state) => ({
+    ...state,
+    loaded: true,
+    loggedIn: false,
+  })),
   on(AuthActions.loginStart, (state) => ({
     ...state,
     authenticating: true,
