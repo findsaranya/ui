@@ -1,79 +1,51 @@
 .ttui-option {
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  max-width: 100%;
-  height: 40px;
-  white-space: nowrap;
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: 11px 12px;
-  border-radius: 7px;
-  transition: all 150ms ease;
+  @apply relative flex align-middle max-w-full h-[40px] whitespace-nowrap 
+  cursor-pointer box-border py-[11px] px-[12px] rounded-7px transition-all 
+  border-2 border-red-500;
 
-  .ttui-option-checkbox {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #212121;
-    border-radius: 5px;
-    display: inline-block;
-    margin: 0px 10px;
-    vertical-align: middle;
-    cursor: pointer;
-    position: relative;
-    &::after {
-      position: absolute;
-      opacity: 0;
-      content: '';
-      border-bottom: 2px solid white;
-      transition: opacity 90ms;
-      top: 5.3px;
-      left: 4px;
-      width: 8px;
-      height: 3px;
-      border-left: 2px solid white;
-      transform: rotate(-45deg);
-      box-sizing: content-box;
+  &-checkbox {
+    @apply w-[18px] h-[18px] border-2 border-gray-1000 
+    rounded-5px inline-block my-0 mx-[10px] align-middle cursor-pointer relative;
+    &:after {
+      @apply absolute opacity-0 content-[''] border-b-2
+        border-white-default transition-opacity duration-[90] top-[5.3px]
+        left-[4px] w-[8px] h-[3px] border-l-2 -rotate-45 box-content;
     }
   }
 
   &:hover {
-    background-color: #f5f5f5;
+    @apply bg-gray-200;
   }
 
   &.active {
-    background-color: #eee;
+    @apply bg-gray-300;
   }
 
-  &.ttui-option-text {
-    display: inline-block;
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &-text {
+    @apply inline-block flex-grow overflow-hidden text-ellipsis;
   }
 }
 
 .ttui-option.ttui-option-disabled {
-  color: #bdbdbd;
-  cursor: default;
-  &:hover {
-    background-color: transparent;
-  }
+  @apply text-gray-500 cursor-default hover:bg-transparent;
+  // &:hover {
+  //   background-color: transparent;
+  // }
 }
 
 .ttui-option.selected {
-  .ttui-option-checkbox {
-    border-color: transparent;
-    background-color: #ffa440;
+  &-checkbox {
+    @apply border-transparent bg-deepSaffron-default;
+    // border-color: transparent;
+    // background-color: #ffa440;
     &::after {
-      opacity: 1;
+      @apply opacity-100;
     }
   }
 }
 
 .ttui-option.multiple {
   &.active {
-    background: #fff3e5;
+    @apply bg-deepSaffron-50;
   }
 }
