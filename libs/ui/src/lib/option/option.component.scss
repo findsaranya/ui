@@ -1,46 +1,36 @@
 .ttui-option {
   @apply relative flex align-middle max-w-full h-[40px] whitespace-nowrap 
   cursor-pointer box-border py-[11px] px-[12px] rounded-7px transition-all 
-  border-2 border-red-500;
+  border-2 border-red-500 hover:bg-gray-200;
 
   &-checkbox {
-    @apply w-[18px] h-[18px] border-2 border-gray-1000 
+    @apply w-[18px] h-[18px] border-2 border-solid border-gray-1000 
     rounded-5px inline-block my-0 mx-[10px] align-middle cursor-pointer relative;
     &:after {
-      @apply absolute opacity-0 content-[''] border-b-2
-        border-white-default transition-opacity duration-[90] top-[5.3px]
-        left-[4px] w-[8px] h-[3px] border-l-2 -rotate-45 box-content;
+      @apply absolute opacity-0 content-[''] inline-block transition-opacity duration-[90] top-[5.3px]
+        left-[4px] w-[8px] h-[3px] box-content;
+      border-bottom: 2px solid white;
+      border-left: 2px solid white;
+      transform: rotate(-45deg);
     }
   }
-
-  &:hover {
-    @apply bg-gray-200;
-  }
-
   &.active {
     @apply bg-gray-300;
   }
 
   &-text {
-    @apply inline-block flex-grow overflow-hidden text-ellipsis;
+    @apply inline-block flex-grow text-ellipsis;
   }
 }
 
 .ttui-option.ttui-option-disabled {
   @apply text-gray-500 cursor-default hover:bg-transparent;
-  // &:hover {
-  //   background-color: transparent;
-  // }
 }
 
-.ttui-option.selected {
-  &-checkbox {
-    @apply border-transparent bg-deepSaffron-default;
-    // border-color: transparent;
-    // background-color: #ffa440;
-    &::after {
-      @apply opacity-100;
-    }
+.ttui-option.selected .ttui-option-checkbox {
+  @apply border-transparent bg-deepSaffron-default;
+  &::after {
+    @apply opacity-100;
   }
 }
 

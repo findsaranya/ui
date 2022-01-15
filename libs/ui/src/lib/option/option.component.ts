@@ -128,6 +128,7 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
   }
 
   private _emitSelectionChangeEvent(isUserInput = false): void {
+    console.log('option chane');
     this.SelectionChange.emit(new TTOptionSelectionChange(this, isUserInput));
   }
   _selectViaInteraction(): void {
