@@ -1,1 +1,46 @@
-<p>select works!</p>
+<div
+  class="ttui-select-trigger"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+  #trigger
+  (click)="open()"
+  [ngClass]="{ active: panelOpen, 'ttui-select-disable': disabled }"
+>
+  <div class="ttui-select-value">
+    <!-- {{ displayOption ? displayOption['value'] : '' }} -->
+    {{ triggerValue ? triggerValue : 'Select an Option' }}
+  </div>
+  <div class="ttui-select-arrow" [ngClass]="{ open: panelOpen }">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M11.3141 16.6859L3 8.37176L4.37176 7L12 14.6282L19.6282 7L21 8.37176L12.6859 16.6859C12.3071 17.0647 11.6929 17.0647 11.3141 16.6859Z"
+        fill="#212121"
+      />
+    </svg>
+  </div>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayLockPosition
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="panelOpen"
+  [cdkConnectedOverlayWidth]="_triggerRect?.width!"
+  [cdkConnectedOverlayOffsetY]="2"
+  (backdropClick)="close()"
+>
+  <div class="ttui-select-panel-wrap">
+    <div class="ttui-select-panel" tabindex="-1" role="listbox" #panel>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>
