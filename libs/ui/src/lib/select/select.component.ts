@@ -271,6 +271,10 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   registerOnTouched(fn: () => void): void {
     this._onTouched = fn;
   }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this._changeDetector.markForCheck();
+  }
 
   onReSelect() {
     if (this._options) {

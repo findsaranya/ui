@@ -13,7 +13,7 @@
   }
 }
 .ttui-select-trigger.ttui-select-disable {
-  @apply bg-gray-300 cursor-default border-0 hover:outline-0;
+  @apply bg-gray-300 cursor-default border-transparent hover:outline-0;
   .ttui-select-arrow {
     @apply hidden;
   }
@@ -23,7 +23,7 @@
 }
 
 .ttui-select-value {
-  @apply text-[18px] leading-[18px];
+  @apply text-sm leading-[18px];
 }
 .ttui-select-arrow.open {
   transform: rotateX(180deg);
