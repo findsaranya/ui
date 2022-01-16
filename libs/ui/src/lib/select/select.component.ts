@@ -35,7 +35,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { NgControl } from '@angular/forms';
+import { NgControl, Validators } from '@angular/forms';
 import { ViewportRuler } from '@angular/cdk/scrolling';
 import {
   BooleanInput,
@@ -90,6 +90,28 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   @HostBinding('attr.id') id = `tt-select-${++uniqueSelectId}`;
 
   @HostBinding('class') class = 'ttui-select';
+  @Input()
+  get required(): boolean {
+    return (
+      this._required ??
+      this._ngControl?.control?.hasValidator(Validators.required) ??
+      false
+    );
+  }
+  set required(value: BooleanInput) {
+    this._required = coerceBooleanProperty(value);
+  }
+  private _required: boolean | undefined;
+
+  @Input()
+  get name(): string | undefined {
+    return this._name;
+  }
+  set name(value: string | undefined) {
+    this._name = value ?? undefined;
+  }
+  private _name: string | undefined = undefined;
+
   @Input()
   get multiple(): boolean {
     return this._multiple;
@@ -165,6 +187,10 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
 
   @HostBinding('class.select-disable') get hasDisabled() {
     return this.disabled;
+  }
+
+  @HostBinding('attr.name') get hasName() {
+    return this.name;
   }
 
   @HostBinding('attr.tabindex') get hasIndex(): number {
