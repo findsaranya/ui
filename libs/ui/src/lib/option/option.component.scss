@@ -1,7 +1,7 @@
 .ttui-option {
   @apply relative flex align-middle max-w-full h-[40px] whitespace-nowrap 
   cursor-pointer box-border py-[11px] px-[12px] rounded-7px transition-all 
-  border-2 border-red-500 hover:bg-gray-200;
+  border-2 border-red-500 hover:bg-gray-200 my-1 mx-0;
 
   &-checkbox {
     @apply w-[18px] h-[18px] border-2 border-solid border-gray-1000 
@@ -19,7 +19,7 @@
   }
 
   &-text {
-    @apply inline-block flex-grow text-ellipsis;
+    @apply inline-block flex-grow text-ellipsis text-sm leading-[18px];
   }
 }
 
@@ -33,8 +33,12 @@
     @apply opacity-100;
   }
 }
+.ttui-option.selected {
+  @apply bg-gray-300;
+}
 
-.ttui-option.multiple {
+.ttui-option.multiple.selected {
+  @apply bg-deepSaffron-50 hover:bg-deepSaffron-50;
   &.active {
     @apply bg-deepSaffron-50;
   }
