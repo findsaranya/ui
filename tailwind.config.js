@@ -134,7 +134,22 @@ module.exports = {
       'primary-gradient':
         'linear-gradient(163.03deg, #FFC280 12.92%, #FFAA4D 68.23%)',
     },
-    extend: {},
+    extend: {
+      minWidth: {
+        30: '1.875rem',
+        40: '2.5rem',
+        50: '3.125rem',
+      },
+      minHeight: {
+        30: '1.875rem',
+        40: '2.5rem',
+        50: '3.125rem',
+      },
+      borderRadius: {
+        '7px': '0.438rem',
+        '5px': '0.313rem',
+      },
+    },
   },
   variants: {
     extend: {},
