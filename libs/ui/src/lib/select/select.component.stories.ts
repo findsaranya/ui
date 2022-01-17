@@ -33,7 +33,8 @@ export const SingleSelect: Story = (args) => ({
    [disabled]="disabled"
    [value]="value"
    >
-  <tt-option *ngFor="let option of options" 
+  <tt-option *ngFor="let option of options"
+  [disabled]="option_disable" 
   [value]="option.value">{{option.label}}</tt-option>
  
 </tt-select>
@@ -42,6 +43,7 @@ export const SingleSelect: Story = (args) => ({
 SingleSelect.args = {
   disabled: false,
   value: '',
+  option_disable: false,
   options: [
     {
       label: 'apple',
@@ -60,7 +62,7 @@ export const MultiSelect: Story = (args) => ({
    [disabled]="disabled"
    [value]="value"
    >
-  <tt-option *ngFor="let option of options" 
+  <tt-option *ngFor="let option of options" [disabled]="option_disable"
   [value]="option.value">{{option.label}}</tt-option>
  
 </tt-select>
@@ -69,6 +71,7 @@ export const MultiSelect: Story = (args) => ({
 MultiSelect.args = {
   disabled: false,
   value: [],
+  option_disable: false,
   options: [
     {
       label: 'Brand -1',
