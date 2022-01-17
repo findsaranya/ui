@@ -42,7 +42,7 @@
     @apply bg-gray-500;
   }
 }
-.ng-invalid {
+.ng-invalid.ng-touched {
   .ttui-select-trigger {
     @apply border-red-500 hover:border-red-500;
   }
