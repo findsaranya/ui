@@ -1,0 +1,26 @@
+.ttui-form-field-label {
+  @apply capitalize mr-2;
+}
+.ttui-form-field-error {
+  @apply text-red-500;
+}
+.ttui-form-field-hint {
+  @apply text-gray-500;
+}
+.ttui-form-field-disabled {
+  @apply text-gray-500 pointer-events-none;
+}
+.ttui-form-field-disabled {
+  input,
+  textarea {
+    @apply text-gray-500 bg-gray-300 border-0;
+  }
+}
+.ttui-form-field-disabled .ttui-form-field-label,
+.ttui-form-field-disabled .ttui-form-field-hint {
+  @apply text-gray-500;
+}
+.ttui-form-field-required tt-label::after {
+  content: '*';
+  @apply text-red-500;
+}
