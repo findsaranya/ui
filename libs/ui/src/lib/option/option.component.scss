@@ -27,6 +27,12 @@
   @apply text-gray-500 cursor-default hover:bg-transparent;
 }
 
+.ttui-option.ttui-option-disabled .ttui-option-checkbox {
+  @apply border-gray-500 cursor-default;
+}
+.ttui-option.selected.ttui-option-disabled .ttui-option-checkbox {
+  @apply bg-gray-500;
+}
 .ttui-option.selected .ttui-option-checkbox {
   @apply border-transparent bg-deepSaffron-default;
   &::after {
