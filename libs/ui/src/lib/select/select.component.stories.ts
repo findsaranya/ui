@@ -108,7 +108,6 @@ export const TemplateFormSelect: Story = (args) => {
 
 TemplateFormSelect.args = {
   disabled: false,
-  value: '',
   options: [
     {
       label: 'Brand -1',
@@ -136,7 +135,6 @@ export const ReactiveFormSelect: Story = (args) => {
     <form [formGroup]="form" >
     <tt-select [multiple]="multiple"
      [disabled]="disabled"
-     [value]="value"
      formControlName="test"
      >
     <tt-option *ngFor="let option of options" 
@@ -150,7 +148,6 @@ export const ReactiveFormSelect: Story = (args) => {
 
 ReactiveFormSelect.args = {
   disabled: false,
-  value: [],
   options: [
     {
       label: 'Brand -1',
