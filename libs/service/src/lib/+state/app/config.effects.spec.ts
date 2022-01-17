@@ -12,21 +12,18 @@ import { ConfigEffects } from './config.effects';
 import { apps, errorMessage } from './config.data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { IApplicationConfigResponce } from '.';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, IApplicationConfigResponce } from '.';
 
 describe('ConfigEffects', () => {
   let actions: Observable<Action>;
   let effects: ConfigEffects;
 
-  const mockHttpClient = {
-    get: jest.fn((url: string) => {
-      if (url !== 'api/mfe/config') return throwError(() => errorMessage);
-      const responce: IApplicationConfigResponce = {
-        appConfig: apps,
-      };
-      return of(responce);
-    }),
+  const responce: IApplicationConfigResponce = {
+    data: apps,
+  };
+  const mockConfigService = {
+    applicationConfig: jest.fn(() => of(responce)),
+    applicationConfigWithAuth: jest.fn(() => of(responce)),
   };
 
   beforeEach(() => {
@@ -34,7 +31,7 @@ describe('ConfigEffects', () => {
       imports: [NxModule.forRoot(), HttpClientTestingModule],
       providers: [
         ConfigEffects,
-        { provide: HttpClient, useValue: mockHttpClient },
+        { provide: ConfigService, useValue: mockConfigService },
         provideMockActions(() => actions),
         provideMockStore(),
       ],
@@ -42,28 +39,81 @@ describe('ConfigEffects', () => {
     effects = TestBed.inject(ConfigEffects);
   });
 
-  describe('init$', () => {
-    it('should init the config', () => {
+  describe('Config Effect [Without Auth]', () => {
+    it('should init the application config', () => {
       actions = hot('-a-|', {
-        a: ConfigActions.init({ envConfig: { API_BASE_URL: '' } }),
+        a: ConfigActions.initApplicationConfig(),
       });
 
       const expected = hot('-a-|', {
         a: ConfigActions.loadConfigSuccess({ config: apps }),
       });
 
-      expect(effects.init$).toBeObservable(expected);
+      expect(effects.initApplicationConfig$).toBeObservable(expected);
     });
+
     it('Should throw error to init config', () => {
       actions = hot('-a-|', {
-        a: ConfigActions.init({ envConfig: { API_BASE_URL: 'ERROR' } }),
+        a: ConfigActions.initApplicationConfig(),
       });
 
-      const expected = hot('-(a|)', {
+      mockConfigService.applicationConfig = jest.fn(() =>
+        throwError(() => errorMessage)
+      );
+
+      const expected = hot('-a-|', {
         a: ConfigActions.loadConfigFailure({ error: errorMessage }),
       });
 
-      expect(effects.init$).toBeObservable(expected);
+      expect(effects.initApplicationConfig$).toBeObservable(expected);
+    });
+    it('Should throw error to init config with http response', () => {
+      actions = hot('-a-|', {
+        a: ConfigActions.initApplicationConfig(),
+      });
+
+      mockConfigService.applicationConfig = jest.fn(() =>
+        throwError(() => ({
+          error: {
+            message: errorMessage,
+          },
+        }))
+      );
+
+      const expected = hot('-a-|', {
+        a: ConfigActions.loadConfigFailure({ error: errorMessage }),
+      });
+
+      expect(effects.initApplicationConfig$).toBeObservable(expected);
+    });
+  });
+  describe('Config Effect [With Auth]', () => {
+    it('should init the application config', () => {
+      actions = hot('-a-|', {
+        a: ConfigActions.initApplicationConfigWithAuth(),
+      });
+
+      const expected = hot('-a-|', {
+        a: ConfigActions.loadConfigSuccess({ config: apps }),
+      });
+
+      expect(effects.initApplicationConfigWithAuth$).toBeObservable(expected);
+    });
+
+    it('Should throw error to init config and return init config without auth observable', () => {
+      actions = hot('-a-|', {
+        a: ConfigActions.initApplicationConfigWithAuth(),
+      });
+
+      mockConfigService.applicationConfigWithAuth = jest.fn(() =>
+        throwError(() => errorMessage)
+      );
+
+      const expected = hot('-a-|', {
+        a: ConfigActions.initApplicationConfig(),
+      });
+
+      expect(effects.initApplicationConfigWithAuth$).toBeObservable(expected);
     });
   });
 });
