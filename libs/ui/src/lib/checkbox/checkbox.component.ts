@@ -82,6 +82,14 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
   private _value: string | null = null;
 
+  get classes(): string {
+    return [
+      'ttui-checkbox-layout',
+      this.checked ? 'ttui-checkbox-checked' : null,
+      this.disabled ? 'ttui-checkbox-disabled' : null,
+    ].join(' ');
+  }
+
   @Output() valueChange = new EventEmitter<boolean>();
 
   @ViewChild('input') inputElement?: ElementRef<HTMLInputElement>;

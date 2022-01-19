@@ -1,11 +1,4 @@
-<label
-  [attr.for]="id"
-  class="ttui-checkbox-layout"
-  [ngClass]="{
-    'ttui-checkbox-checked': checked,
-    'ttui-checkbox-disabled': disabled
-  }"
->
+<label [attr.for]="id" [ngClass]="classes">
   <span
     [attr.tabindex]="tabIndex"
     class="ttui-checkbox-inner-container"
