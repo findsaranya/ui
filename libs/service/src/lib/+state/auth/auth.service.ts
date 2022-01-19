@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
@@ -15,7 +15,7 @@ export class AuthService {
     private store: Store<AppState>
   ) {}
 
-  login(credentials: ILoginPayload) {
+  login(credentials: ILoginPayload): Observable<HttpResponse<unknown>> {
     return this.http.post(`${this.apiBaseUrl}login`, credentials, {
       observe: 'response',
       withCredentials: true,
@@ -40,7 +40,7 @@ export class AuthService {
       );
   }
 
-  logout() {
+  logout(): Observable<unknown> {
     return this.http.post(
       `${this.apiBaseUrl}logout`,
       {},

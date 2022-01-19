@@ -29,7 +29,7 @@ export class RemoteEntryComponent {
     this.name$ = this.store.pipe(select(Auth.fullName));
   }
 
-  logout() {
+  logout(): void {
     this.store.dispatch(Auth.logout());
   }
 }

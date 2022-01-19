@@ -21,7 +21,8 @@
           "apps/fashion/src/assets"
         ],
         "styles": [
-          "apps/fashion/src/styles.scss"
+          "libs/ui/src/styles.scss",
+          "apps/auth/src/styles.scss"
         ],
         "scripts": [],
         "customWebpackConfig": {
@@ -109,7 +110,7 @@
       "options": {
         "commands": [
           "nx serve settings",
-          "nx serve auth --liveReload=false ",
+          "nx serve auth",
           "nx serve fashion --liveReload=false --host app.trustrace.local"
         ]
       }

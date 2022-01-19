@@ -49,7 +49,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
   ],
   providers: [
     Auth.AuthService,
-
     {
       provide: API_BASE_URL,
       useValue: environment.API_BASE_URL,

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IApplicationConfigResponce } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
 
@@ -10,12 +11,12 @@ export class ConfigService {
     private http: HttpClient
   ) {}
 
-  applicationConfig() {
+  applicationConfig(): Observable<IApplicationConfigResponce> {
     return this.http.get<IApplicationConfigResponce>(
       `${this.apiBaseUrl}ui/app-config`
     );
   }
-  applicationConfigWithAuth() {
+  applicationConfigWithAuth(): Observable<IApplicationConfigResponce> {
     return this.http.get<IApplicationConfigResponce>(
       `${this.apiBaseUrl}api/ui/app-config`
     );

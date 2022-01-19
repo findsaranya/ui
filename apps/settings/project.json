@@ -21,7 +21,8 @@
           "apps/settings/src/assets"
         ],
         "styles": [
-          "apps/settings/src/styles.scss"
+          "libs/ui/src/styles.scss",
+          "apps/auth/src/styles.scss"
         ],
         "scripts": [],
         "customWebpackConfig": {

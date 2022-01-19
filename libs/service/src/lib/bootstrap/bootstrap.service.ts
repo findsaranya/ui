@@ -67,7 +67,7 @@ export class BootstrapService {
       });
   }
 
-  private startApplication(auth: Auth.State) {
+  private startApplication(auth: Auth.State): void {
     const next = this.activatedRoute.snapshot.queryParams.next;
     this.appInitialized?.();
     if (!auth.loggedIn) return;
@@ -117,7 +117,7 @@ export class BootstrapService {
     this.appInitialized?.();
   }
 
-  private listenLoginLogout(isLogin: boolean) {
+  private listenLoginLogout(isLogin: boolean): void {
     this.loginLogoutLoaded = false;
     this.store
       .pipe(
@@ -127,7 +127,7 @@ export class BootstrapService {
       .subscribe(this.initAppConfig.bind(this, isLogin));
   }
 
-  private initAppConfig(expected: boolean, currentState: boolean | null) {
+  private initAppConfig(expected: boolean, currentState: boolean | null): void {
     if (currentState !== expected) return;
     if (currentState === false) this.router.navigate(['login']);
     this.loginLogoutLoaded = true;
