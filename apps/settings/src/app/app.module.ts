@@ -8,11 +8,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
+import { UiModule } from '@tt-webapp/ui';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    UiModule,
     RouterModule.forRoot(
       [
         {

@@ -9,4 +9,5 @@ export * from './lib/unauthorized/unauthorized.component';
 export * from './lib/unauthorized/unauthorized.module';
 // root
 export * from './lib/ui.module';
+export* from "./lib/sidebar/sidebar.component"
 export * from './lib/button/button.component';

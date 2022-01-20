@@ -1,0 +1,47 @@
+.sidebar {
+  @apply w-60 fixed z-50 top-0 bottom-0 left-60 -ml-60 border-none overflow-y-auto 
+  bg-gray-1000 whitespace-nowrap transition-all duration-[0.3s] ease-[ease-in-out] overflow-x-hidden;
+}
+
+.collapsed {
+  @apply w-[75px] hover:w-60;
+
+  .navigation-pin,
+  .label {
+    @apply hidden;
+  }
+  &:hover {
+    .navigation-pin,
+    .label {
+      @apply block;
+    }
+  }
+}
+
+.logo-block {
+  @apply p-[10px];
+  &:hover{
+    .navigation-pin{
+      @apply z-0
+    }
+  }
+}
+
+.navigation-pin {
+  @apply absolute right-5 top-4 block -z-10 cursor-pointer hover:z-0 hover:cursor-pointer;
+}
+
+.navigation {
+  @apply flex flex-col h-[calc(100vh-5rem)];
+  .list-group {
+    @apply px-3 pt-[10px];
+    a {
+      @apply text-gray-600 text-sm hover:bg-gray-800 hover:rounded-md hover:text-white-default hover:fill-white-default;
+      &:hover {
+        svg path {
+          fill: white;
+        }
+      }
+    }
+  }
+}
