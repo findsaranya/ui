@@ -7,12 +7,16 @@
   @apply w-[75px] hover:w-60;
 
   .navigation-pin,
-  .label {
+  .label,
+  .arrow,
+  .nested {
     @apply hidden;
   }
   &:hover {
     .navigation-pin,
-    .label {
+    .label,
+    .arrow,
+    .nested {
       @apply block;
     }
   }
@@ -20,9 +24,9 @@
 
 .logo-block {
   @apply p-[10px];
-  &:hover{
-    .navigation-pin{
-      @apply z-0
+  &:hover {
+    .navigation-pin {
+      @apply z-0;
     }
   }
 }
@@ -36,12 +40,41 @@
   .list-group {
     @apply px-3 pt-[10px];
     a {
-      @apply text-gray-600 text-sm hover:bg-gray-800 hover:rounded-md hover:text-white-default hover:fill-white-default;
-      &:hover {
-        svg path {
-          fill: white;
-        }
-      }
+      @apply text-gray-600 text-sm hover:bg-gray-800 hover:rounded-md hover:text-white-default;
     }
+    a:hover svg path {
+      @apply fill-white-default;
+    }
+  }
+}
+
+.nested-menu {
+  a {
+    @apply cursor-pointer;
+  }
+  .arrow {
+    @apply ml-2;
+  }
+  ul.submenu {
+    @apply hidden h-0;
+  }
+}
+
+.nested-menu.expand {
+  > a,
+  span {
+    @apply bg-gray-800 rounded-md text-white-default;
+    svg path {
+      @apply fill-white-default;
+    }
+  }
+  .submenu {
+    @apply block h-auto ml-10;
+    a {
+      @apply block p-2 hover:bg-transparent;
+    }
+  }
+  .arrow {
+    @apply transform rotate-90;
   }
 }

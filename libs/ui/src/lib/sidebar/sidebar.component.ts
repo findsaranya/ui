@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
   EventEmitter,
   Output,
@@ -13,20 +12,18 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  isActive: boolean;
   collapsed: boolean;
   showMenu: string;
   pushRightClass: string;
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
   constructor() {
-    this.isActive = false;
     this.collapsed = false;
     this.showMenu = '';
     this.pushRightClass = 'push-right';
   }
 
-  addExpandClass(element: any) {
+  addExpandClass(element: string) {
     if (element === this.showMenu) {
       this.showMenu = '0';
     } else {
