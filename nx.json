@@ -43,13 +43,12 @@
       "e2eTestRunner": "none"
     },
     "@nrwl/angular:library": {
-      "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
       "style": "scss",
-      "prefix" : "tt"
+      "prefix": "tt"
     }
   },
   "defaultProject": "fashion"
