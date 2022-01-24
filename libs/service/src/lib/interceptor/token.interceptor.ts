@@ -94,7 +94,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private errorHandler(
     error: HttpErrorResponse
   ): Observable<HttpEvent<string>> {
-    const err = new Error(error.error.message || '');
+    const err = error.error.message || '';
     return throwError(() => err);
   }
 
