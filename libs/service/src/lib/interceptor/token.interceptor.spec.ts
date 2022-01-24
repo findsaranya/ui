@@ -33,7 +33,7 @@ describe('TokenInterceptor', () => {
   };
   let interceptor: TokenInterceptor;
 
-  describe('With token state', () => {
+  describe('With Auth', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
@@ -156,7 +156,7 @@ describe('TokenInterceptor', () => {
             done();
           },
         });
-      interceptor.refreshTokenSubject.next(true);
+      interceptor.refreshTokenSubject.next('next');
     });
   });
 

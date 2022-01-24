@@ -24,7 +24,9 @@ import { RefreshTokenResponse } from '../+state/auth';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   isTokenRefreshing = false;
-  refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+  refreshTokenSubject: BehaviorSubject<null | string> = new BehaviorSubject<
+    string | null
+  >(null);
 
   constructor(
     private store: Store<AppState>,
@@ -84,7 +86,7 @@ export class TokenInterceptor implements HttpInterceptor {
       return this.refreshTokenSubject.pipe(
         filter((result) => result !== null),
         take(1),
-        switchMap((): Observable<HttpEvent<any>> => {
+        switchMap((): Observable<HttpEvent<unknown>> => {
           return this.sendRequest(request, next);
         })
       );
