@@ -33,7 +33,7 @@
   cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayOrigin]="origin"
   [cdkConnectedOverlayOpen]="panelOpen"
-  [cdkConnectedOverlayWidth]="_triggerRect?.width!"
+  [cdkConnectedOverlayWidth]="triggerRect?.width!"
   [cdkConnectedOverlayOffsetY]="2"
   (backdropClick)="close()"
 >

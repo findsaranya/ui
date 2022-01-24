@@ -78,7 +78,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   }
   private _panelOpen = false;
 
-  _triggerRect?: ClientRect;
+  triggerRect?: ClientRect;
 
   keyManager?: ActiveDescendantKeyManager<OptionComponent>;
 
@@ -92,10 +92,9 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   @HostBinding('class') class = 'ttui-select';
   @Input()
   get required(): boolean {
-    return (
-      this._required ??
-      this._ngControl?.control?.hasValidator(Validators.required) ??
-      false
+    return !!(
+      this._required ||
+      this._ngControl?.control?.hasValidator(Validators.required)
     );
   }
   set required(value: BooleanInput) {
@@ -131,13 +130,13 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       (this._multiple && Array.isArray(newValue))
     ) {
       if (this._options) {
-        this._setSelectionByValue(newValue);
+        this.setSelectionByValue(newValue);
       }
 
       this._value = newValue;
     }
   }
-  private _value: any = '';
+  private _value: string | string[] = '';
 
   @Input()
   get disabled(): boolean {
@@ -211,11 +210,11 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   constructor(
-    protected _elementRef: ElementRef<HTMLElement>,
+    private _elementRef: ElementRef<HTMLElement>,
     @Self() @Optional() protected _ngControl: NgControl,
-    protected _changeDetector: ChangeDetectorRef,
-    protected _viewRuler: ViewportRuler,
-    protected _ngZone: NgZone
+    private _changeDetector: ChangeDetectorRef,
+    private _viewRuler: ViewportRuler,
+    private _ngZone: NgZone
   ) {
     if (this._ngControl) {
       this._ngControl.valueAccessor = this;
@@ -309,10 +308,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       this.optionSelectionChanges
         .pipe(takeUntil(changedOrDestroyed))
         .subscribe((event) => {
-          this.onSelectclick(
-            event.source as OptionComponent,
-            event.isUserInput
-          );
+          this.onSelect(event.source as OptionComponent, event.isUserInput);
 
           if (event.isUserInput && !this.multiple && this._panelOpen) {
             this.close();
@@ -349,14 +345,14 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   getChangeEvent(value: any): TTSelectChange {
     return new TTSelectChange(this, value);
   }
-  onSelectclick(option: OptionComponent, input: boolean): void {
+  onSelect(option: OptionComponent, input: boolean): void {
     const wasSelected = this._selectionModel?.isSelected(option);
 
     if (option.value == null && (this.multiple || !this.multiple)) {
       option.deselect();
       this._selectionModel?.clear();
       if (this.value != null) {
-        this._propagateChanges(option.value ? option.value : '');
+        this.propagateChanges(option.value ? option.value : '');
       }
     } else {
       if (wasSelected !== option.selected) {
@@ -376,12 +372,12 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
         }
       }
       if (wasSelected !== this._selectionModel?.isSelected(option)) {
-        this._propagateChanges();
+        this.propagateChanges();
       }
     }
   }
   private updateRect() {
-    this._triggerRect = this.trigger?.nativeElement.getBoundingClientRect();
+    this.triggerRect = this.trigger?.nativeElement.getBoundingClientRect();
   }
 
   private initKeyManager(): void {
@@ -408,13 +404,11 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   }
   private initializeSelection(): void {
     Promise.resolve().then(() => {
-      this._setSelectionByValue(
-        this._ngControl ? this._ngControl.value : this.value
-      );
+      this.setSelectionByValue(this._ngControl?.value || this.value);
     });
   }
 
-  private _setSelectionByValue(value: string | string[]): void {
+  private setSelectionByValue(value: string | string[]): void {
     this._selectionModel?.selected.forEach((option) =>
       option.setInactiveStyles()
     );
@@ -425,16 +419,15 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       }
 
       value.forEach((currentValue: any) => {
-        const eachOption = this._selectValue(currentValue);
+        const eachOption = this.selectValue(currentValue);
         if (eachOption) {
-          this.onSelectclick(eachOption, false);
+          this.onSelect(eachOption, false);
         }
       });
-      //this._sortValues();
     } else {
-      const correspondingOption = this._selectValue(value as string);
+      const correspondingOption = this.selectValue(value as string);
       if (correspondingOption) {
-        this.onSelectclick(correspondingOption, false);
+        this.onSelect(correspondingOption, false);
         this.keyManager?.updateActiveItem(correspondingOption);
       } else if (!this.panelOpen) {
         this.keyManager?.updateActiveItem(-1);
@@ -444,7 +437,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     this._changeDetector.markForCheck();
   }
 
-  private _selectValue(value: string): OptionComponent | undefined {
+  private selectValue(value: string): OptionComponent | undefined {
     const optionsArr = this._options ? this._options.toArray() : [];
     const correspondingOption = optionsArr.find((option: OptionComponent) => {
       return (
@@ -457,16 +450,16 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     return correspondingOption;
   }
 
-  private _propagateChanges(fallbackValue?: string): void {
-    let valueToEmit: any = null;
+  private propagateChanges(fallbackValue = ''): void {
+    let valueToEmit: string | string[] = '';
 
     if (this.multiple) {
       valueToEmit = (this.selected as OptionComponent[]).map(
         (option) => option.value
-      );
+      ) as string[];
     } else {
       valueToEmit = this.selected
-        ? (this.selected as OptionComponent).value
+        ? ((this.selected as OptionComponent).value as string)
         : fallbackValue;
     }
 

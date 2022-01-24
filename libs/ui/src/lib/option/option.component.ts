@@ -82,7 +82,7 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
     super();
   }
 
-  get multiple() {
+  get multiple(): boolean | undefined {
     return this._parent && this._parent.multiple;
   }
   get viewValue(): string {
@@ -108,14 +108,14 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
     return this.viewValue;
   }
 
-  focus(options?: FocusOptions) {
+  focus(options?: FocusOptions): void {
     this.getHostElement().focus(options);
   }
   select(): void {
     if (!this.selected && this.value) {
       this.selected = true;
       this.changeDetector.markForCheck();
-      this._emitSelectionChangeEvent();
+      this.emitSelectionChangeEvent();
     }
   }
 
@@ -123,18 +123,18 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
     if (this.selected) {
       this.selected = false;
       this.changeDetector.markForCheck();
-      this._emitSelectionChangeEvent();
+      this.emitSelectionChangeEvent();
     }
   }
 
-  private _emitSelectionChangeEvent(isUserInput = false): void {
+  private emitSelectionChangeEvent(isUserInput = false): void {
     this.SelectionChange.emit(new TTOptionSelectionChange(this, isUserInput));
   }
-  _selectViaInteraction(): void {
+  selectViaInteraction(): void {
     if (!this.disabled && this.value) {
       this.selected = !this.selected;
       this.changeDetector.markForCheck();
-      this._emitSelectionChangeEvent(true);
+      this.emitSelectionChangeEvent(true);
     }
   }
 }
@@ -184,7 +184,7 @@ export class OptionComponent extends TTOptionBase {
     event.preventDefault();
     event.stopPropagation();
     if (!this.disabled) {
-      this._selectViaInteraction();
+      this.selectViaInteraction();
     }
   }
 }

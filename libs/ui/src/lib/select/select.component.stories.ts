@@ -46,8 +46,8 @@ SingleSelect.args = {
   option_disable: false,
   options: [
     {
-      label: 'apple',
-      value: 1,
+      label: 'Brand-1',
+      value: '1',
     },
   ],
 } as Partial<SelectComponent>;
@@ -93,7 +93,7 @@ export const TemplateFormSelect: Story = (args) => {
     component: SelectComponent,
     template: `
     <form #test="ngForm" >
-    <tt-select [multiple]="multiple"
+    <tt-select
      [disabled]="disabled"
      name="test"
     #test=ngModel
@@ -121,12 +121,11 @@ TemplateFormSelect.args = {
       value: 2,
     },
   ],
-  multiple: false,
 } as Partial<SelectComponent>;
 
 export const ReactiveFormSelect: Story = (args) => {
   const formGroup = new FormGroup({
-    test: new FormControl(null, [Validators.required]),
+    test: new FormControl(1, [Validators.required]),
   });
   return {
     props: {
@@ -136,7 +135,7 @@ export const ReactiveFormSelect: Story = (args) => {
     component: SelectComponent,
     template: `
     <form [formGroup]="form" >
-    <tt-select [multiple]="multiple"
+    <tt-select
      [disabled]="disabled"
      formControlName="test"
      >
@@ -161,5 +160,4 @@ ReactiveFormSelect.args = {
       value: 2,
     },
   ],
-  multiple: false,
 } as Partial<SelectComponent>;
