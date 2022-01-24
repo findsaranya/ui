@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, mergeMap, of, switchMap } from 'rxjs';
 import { LoginPayload } from '.';
 
 import * as AuthActions from './auth.actions';
@@ -15,11 +15,10 @@ export class AuthEffects {
       ofType(AuthActions.initSession),
       switchMap((action) => {
         const jwt = localStorage.getItem('_session');
-
         //success
         if (action.callback?.success?.length)
           this.#loginSuccessCallback = [...action.callback.success];
-        this.#loginSuccessCallback?.push(AuthActions.initUserConfig());
+        this.#loginSuccessCallback.push(AuthActions.initUserConfig());
 
         // failure
         if (action.callback?.failure?.length)
@@ -30,8 +29,7 @@ export class AuthEffects {
         // logout
         if (action.callback?.logout?.length)
           this.#logoutCallback = [...(action.callback.logout as Action[])];
-        this.#logoutCallback?.push(AuthActions.resetSession());
-
+        this.#logoutCallback.push(AuthActions.resetSession());
         if (!jwt) {
           return of(
             AuthActions.loadSessionFailed({
@@ -72,7 +70,7 @@ export class AuthEffects {
         const payload = new LoginPayload(action.email, action.password).parse();
         return this.authService.login(payload).pipe(
           map((loginResponse) => {
-            const sessionToken = loginResponse.headers.get('X-token') || '';
+            const sessionToken = String(loginResponse.headers.get('X-token'));
             localStorage.setItem('_session', sessionToken);
             return AuthActions.loadSessionSuccess({
               sessionToken,
@@ -81,6 +79,7 @@ export class AuthEffects {
           }),
           catchError((e) => {
             const error = e.error.message || 'Failed to login';
+            localStorage.removeItem('_session');
             return of(AuthActions.loadSessionFailed({ error }));
           })
         );
@@ -99,7 +98,6 @@ export class AuthEffects {
           }),
           catchError(() => {
             localStorage.removeItem('_session');
-            window.location.reload();
             return of(AuthActions.logoutFailed());
           })
         );
@@ -107,42 +105,42 @@ export class AuthEffects {
     )
   );
 
-  $loadSessionSuccess = createEffect(() =>
+  loadSessionSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loadSessionSuccess),
-      switchMap((action) => {
-        if (action.isRefresh && !this.loginSuccessCallback) return of();
+      mergeMap((action) => {
+        if (action.isRefresh || !this.loginSuccessCallback.length) return EMPTY;
         return of(...this.loginSuccessCallback);
       })
     )
   );
 
-  $loadSessionFailed = createEffect(() =>
+  loadSessionFailed$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loadSessionFailed),
-      switchMap(() => {
-        if (!this.loginFailedCallback) return of();
+      mergeMap(() => {
+        if (!this.loginFailedCallback.length) return EMPTY;
         return of(...this.loginFailedCallback);
       })
     )
   );
 
-  $logoutSuccess = createEffect(() =>
+  logoutSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logoutSuccess),
-      switchMap(() => {
-        if (!this.logoutCallback) return of();
+      mergeMap(() => {
+        if (!this.logoutCallback.length) return EMPTY;
         return of(...this.logoutCallback);
       })
     )
   );
 
-  $refreshSession = createEffect(() =>
+  refreshSession$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.refreshSession),
       switchMap((action) => {
         localStorage.removeItem('_session');
-        localStorage.setItem('_session', action?.sessionToken);
+        localStorage.setItem('_session', action.sessionToken);
         return of(
           AuthActions.loadSessionSuccess({
             sessionToken: action.sessionToken,

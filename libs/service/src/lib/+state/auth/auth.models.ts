@@ -18,6 +18,11 @@ abstract class Payload {
   abstract parse(): void;
 }
 
+export class constructPassword extends Password {
+  constructor(private _password: string) {
+    super(_password);
+  }
+}
 export interface ILoginPayload {
   username: string;
   password: string;
