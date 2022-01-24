@@ -3,7 +3,7 @@
  */
 export interface AuthEntity {
   token: string | null;
-  userConfig: UserConfig | null;
+  userConfig: IUserConfig | null;
   loggedIn: boolean | null;
   authenticating: boolean;
 }
@@ -38,8 +38,13 @@ export class LoginPayload extends Password implements Payload {
   }
 }
 
+export interface ILoginFailedResponce {
+  success: boolean;
+  message: string;
+}
+
 // TODO
-export interface UserConfig {
+export interface IUserConfig {
   username: string;
   authorities: Authority[];
   accountNonExpired: boolean;
@@ -73,9 +78,7 @@ export interface Authority {
 export interface CompanyProfileView {
   id: string;
   name: string;
-  logoUrl: string;
   verificationStatus: VerificationStatus;
-  contactInfo: ContactInfo;
   address: Address;
   companyType: string;
   noOfSuppliers: number;
@@ -97,11 +100,6 @@ export interface Address {
   longitude: number;
 }
 
-export interface ContactInfo {
-  name: string;
-  email: string;
-}
-
 export interface Facility {
   id: string;
   updateTs: number;
@@ -109,26 +107,15 @@ export interface Facility {
   createdBy: string;
   lastModifiedBy: string;
   entityVersion: number;
-  latestSource?: string;
   name: string;
   companyId: string;
-  address: Address;
-  valueProcess: string[];
-  materials: string[];
-  employeeCount: EmployeeCount;
-  type?: string;
+  type: string;
   status: string;
-  managers: string[];
   completenessScore: number;
+  createdCompanyId: string;
   noOfAssessments: number;
+  createdCompanyName: string;
   certificateList: any[];
-  productionCapacity?: string;
-}
-
-export interface EmployeeCount {
-  men?: number;
-  others?: number;
-  total: number;
 }
 
 export interface VerificationStatus {

@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { ILoginPayload, RefreshTokenResponse, UserConfig } from '.';
+import { ILoginPayload, RefreshTokenResponse, IUserConfig } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
 import { AppState } from '../app.store';
 import * as AuthActions from './auth.actions';
@@ -22,8 +22,8 @@ export class AuthService {
     });
   }
 
-  getUserConfig(): Observable<UserConfig> {
-    return this.http.get<UserConfig>(`${this.apiBaseUrl}api/secured/user/`);
+  getUserConfig(): Observable<IUserConfig> {
+    return this.http.get<IUserConfig>(`${this.apiBaseUrl}api/secured/user/`);
   }
 
   refreshToken(): Observable<RefreshTokenResponse> {
