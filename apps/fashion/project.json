@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/fashion",
         "index": "apps/fashion/src/index.html",
@@ -16,14 +14,8 @@
         "polyfills": "apps/fashion/src/polyfills.ts",
         "tsConfig": "apps/fashion/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/fashion/src/favicon.ico",
-          "apps/fashion/src/assets"
-        ],
-        "styles": [
-          "libs/ui/src/styles.scss",
-          "apps/auth/src/styles.scss"
-        ],
+        "assets": ["apps/fashion/src/favicon.ico", "apps/fashion/src/assets"],
+        "styles": ["libs/ui/src/styles.scss", "apps/auth/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/fashion/webpack.config.js"
@@ -97,9 +89,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/fashion"
-      ],
+      "outputs": ["coverage/apps/fashion"],
       "options": {
         "jestConfig": "apps/fashion/jest.config.js",
         "passWithNoTests": true
@@ -109,9 +99,9 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "nx serve settings",
-          "nx serve auth",
-          "nx serve fashion --host app.trustrace.local"
+          "nx serve settings --liveReload=false ",
+          "nx serve auth --liveReload=false ",
+          "nx serve fashion --liveReload=false --host app.trustrace.local"
         ]
       }
     }

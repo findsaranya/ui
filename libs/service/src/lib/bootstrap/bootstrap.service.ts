@@ -68,7 +68,7 @@ export class BootstrapService {
   }
 
   private startApplication(auth: Auth.State): void {
-    const next = this.activatedRoute.snapshot.queryParams.next;
+    const next = this.activatedRoute.snapshot.queryParams['next'];
     this.appInitialized?.();
     if (!auth.loggedIn) return;
     if (next) {
