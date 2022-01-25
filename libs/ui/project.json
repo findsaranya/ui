@@ -59,7 +59,8 @@
         "config": {
           "configFolder": "libs/ui/.storybook"
         },
-        "projectBuildConfig": "ui:build-storybook"
+        "projectBuildConfig": "ui:build-storybook",
+        "styles":["libs/ui/src/styles.scss"]
       },
       "configurations": {
         "ci": {
