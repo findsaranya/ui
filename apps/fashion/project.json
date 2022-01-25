@@ -98,10 +98,7 @@
     "serve-mfe": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": [
-          "nx serve auth --liveReload=false",
-          "nx serve fashion --liveReload=false"
-        ]
+        "commands": ["nx serve auth", "nx serve fashion"]
       }
     }
   },
