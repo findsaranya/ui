@@ -6,7 +6,7 @@ import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { IMicroFrontendConfig } from '../mfe/mfe.model';
-import { loadRemoteModule } from '@angular-architects/module-federation';
+import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
 @Injectable()
 export class BootstrapService {
