@@ -38,6 +38,9 @@ module.exports = {
   experiments: {
     outputModule: true,
   },
+  devServer: {
+    allowedHosts: ['app.trustrace.local'],
+  },
   resolve: {
     alias: {
       ...sharedMappings.getAliases(),

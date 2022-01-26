@@ -35,6 +35,9 @@ module.exports = {
   optimization: {
     runtimeChunk: false,
   },
+  devServer: {
+    allowedHosts: ['app.trustrace.local'],
+  },
   experiments: {
     outputModule: true,
   },
