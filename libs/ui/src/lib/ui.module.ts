@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from './button/button.component';
+import { ButtonModule } from './button/button.module';
+import { FormFieldModule } from './form-field/form-field.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { RouterModule } from '@angular/router';
+
+import { InputModule } from './input/input.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
-  declarations: [ButtonComponent, SidebarComponent],
-  exports: [ButtonComponent, SidebarComponent],
+  imports: [CommonModule, ButtonModule, FormFieldModule, InputModule],
+  declarations: [],
+  exports: [FormFieldModule, InputModule, SidebarComponent],
 })
 export class UiModule {}

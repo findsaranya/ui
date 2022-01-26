@@ -12,15 +12,15 @@
         "@angular-eslint/directive-selector": [
           "error",
           {
-            "type": "attribute",
-            "prefix": "ttWebapp",
-            "style": "camelCase"
+            "type": "both",
+            "prefix": "tt",
+            "style": "kebab-case"
           }
         ],
         "@angular-eslint/component-selector": [
           "error",
           {
-            "type": "element",
+            "type": "both",
             "prefix": "tt",
             "style": "kebab-case"
           }
