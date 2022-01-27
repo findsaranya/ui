@@ -85,7 +85,6 @@ MultiSelect.args = {
 } as Partial<SelectComponent>;
 
 export const TemplateFormSelect: Story = (args) => {
-  const brand = '';
   return {
     props: {
       ...args,
@@ -96,6 +95,7 @@ export const TemplateFormSelect: Story = (args) => {
     <tt-select
      [disabled]="disabled"
      name="test"
+     multiple
     #test=ngModel
     required
     ngModel
@@ -125,7 +125,7 @@ TemplateFormSelect.args = {
 
 export const ReactiveFormSelect: Story = (args) => {
   const formGroup = new FormGroup({
-    test: new FormControl(1, [Validators.required]),
+    test: new FormControl([1], [Validators.required]),
   });
   return {
     props: {
@@ -138,6 +138,7 @@ export const ReactiveFormSelect: Story = (args) => {
     <tt-select
      [disabled]="disabled"
      formControlName="test"
+     multiple
      >
     <tt-option *ngFor="let option of options" 
     [value]="option.value">{{option.label}}</tt-option>
@@ -149,7 +150,7 @@ export const ReactiveFormSelect: Story = (args) => {
 };
 
 ReactiveFormSelect.args = {
-  disabled: false,
+  disabled: true,
   options: [
     {
       label: 'Brand -1',
