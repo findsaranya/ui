@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { UiModule } from '@tt-webapp/ui';
+import { SidebarModule } from '@tt-webapp/ui';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,7 +26,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    UiModule,
+    SidebarModule,
     HttpClientModule,
     RouterModule.forRoot(
       [
