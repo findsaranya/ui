@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  Directive,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -21,7 +20,6 @@ import {
 } from '@angular/core';
 import {
   OptionComponent,
-  TTOptionBase,
   TTOptionSelectionChange,
 } from '../option/option.component';
 import {
@@ -180,7 +178,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   @Output() readonly selectionChange: EventEmitter<TTSelectChange> =
     new EventEmitter<TTSelectChange>();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  _onChange: (value: any) => void = () => {};
+  _onChange: (value: string | string[]) => void = () => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   _onTouched: () => void = () => {};
 
@@ -287,10 +285,10 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       : '';
   }
   // control value accessor
-  writeValue(value: any): void {
+  writeValue(value: string | string[]): void {
     this.value = value;
   }
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: string | string[]) => void): void {
     this._onChange = fn;
   }
   registerOnTouched(fn: () => void): void {
@@ -298,7 +296,6 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this._changeDetector.markForCheck();
   }
 
   onReSelect() {
@@ -342,7 +339,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     return this._elementRef.nativeElement;
   }
 
-  getChangeEvent(value: any): TTSelectChange {
+  getChangeEvent(value: string | string[]): TTSelectChange {
     return new TTSelectChange(this, value);
   }
   onSelect(option: OptionComponent, input: boolean): void {
@@ -393,9 +390,6 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
 
       this.keyManager.tabOut.pipe(takeUntil(this.destroy$)).subscribe(() => {
         if (this.panelOpen) {
-          if (this.keyManager?.activeItem) {
-            console.log('keymanager', this.keyManager?.activeItem);
-          }
           this.focus();
           this.close();
         }
