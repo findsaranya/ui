@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AutocompleComponent } from './autocomple.component';
+import { AutocompleteComponent } from './autocomplete.component';
 
 
 
 @NgModule({
   declarations: [
-    AutocompleComponent
+    AutocompleComponent,
+    AutocompleteComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    AutocompleComponent
+    AutocompleComponent,
+    AutocompleteComponent
   ]
 })
 export class AutocompleteModule { }
