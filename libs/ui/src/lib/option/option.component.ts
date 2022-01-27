@@ -15,18 +15,14 @@ import {
 import { coerceBooleanProperty, BooleanInput } from '@angular/cdk/coercion';
 import { Highlightable } from '@angular/cdk/a11y';
 
-import { mixinDisabled } from './disable';
 import { OPTION_PARENT, ParentOption } from './parent-option';
 
 let uniqueIdValue = 0;
 export class TTOptionSelectionChange {
   constructor(public source: TTOptionBase, public isUserInput = false) {}
 }
-
-const TTMixinOptionBase = mixinDisabled(class {});
-
 @Directive()
-export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
+export class TTOptionBase implements Highlightable {
   get active(): boolean {
     return this._active;
   }
@@ -78,9 +74,7 @@ export class TTOptionBase extends TTMixinOptionBase implements Highlightable {
     private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
     private _parent: ParentOption
-  ) {
-    super();
-  }
+  ) {}
 
   get multiple(): boolean | undefined {
     return this._parent && this._parent.multiple;
