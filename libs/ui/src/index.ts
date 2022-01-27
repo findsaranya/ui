@@ -28,3 +28,7 @@ export * from './lib/form-field/hint.directive';
 export * from './lib/form-field/label.directive';
 export * from './lib/input/input.directive';
 export * from './lib/input/input.module';
+//autocomplete
+export * from './lib/autocomplete/autocomplete.module';
+export * from './lib/autocomplete/autocomplete-trigger.directive';
+export * from './lib/autocomplete/autocomplete.component';
