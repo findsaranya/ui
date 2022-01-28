@@ -1,9 +1,11 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
+  ConnectedPosition,
   ConnectionPositionPair,
   Overlay,
   OverlayConfig,
   OverlayRef,
+  PositionStrategy,
 } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ViewportRuler } from '@angular/cdk/scrolling';
@@ -15,14 +17,9 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NgControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   defer,
   delay,
@@ -45,7 +42,7 @@ import {
 } from '../option/option.component';
 import { AutocompleteComponent } from './autocomplete.component';
 
-export const TT_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
+export const TT_AUTOCOMPLETE_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => AutocompleteTriggerDirective),
   multi: true,
@@ -109,8 +106,7 @@ export class AutocompleteTriggerDirective
     this.destroy$.complete();
   }
   @HostListener('focusin', ['$event'])
-  onFocus(event: Event) {
-    console.log('focus my-app', document.activeElement);
+  onFocus(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
     if (this.canOpen()) {
@@ -124,7 +120,7 @@ export class AutocompleteTriggerDirective
   @HostListener('input', ['$event']) handleInput(event: KeyboardEvent): void {
     this._onChange((event.target as HTMLInputElement).value);
   }
-  attachOverlay() {
+  attachOverlay(): void {
     if (!this.ttAutocomplete) {
       throw new Error(
         'Attempting to open an undefined instance of tt-autocomplete'
@@ -160,9 +156,8 @@ export class AutocompleteTriggerDirective
     const element = this.host.nativeElement;
     return !element.readOnly && !element.disabled && !this.autocompleteDisabled;
   }
-  private initalizeSelection() {
+  private initalizeSelection(): void {
     if (this.ttAutocomplete && this.ttAutocomplete['options']) {
-      console.log('option', this.ttAutocomplete?.options);
       const firstStable = this.ngZone.onStable.pipe(take(1));
       const optionChanges = this.ttAutocomplete.options.changes.pipe(delay(0));
       merge(firstStable, optionChanges)
@@ -188,9 +183,7 @@ export class AutocompleteTriggerDirective
     );
   }
   private setValueAndClose(event: TTOptionSelectionChange | null): void {
-    console.log('setvalue', event);
     const source = event && event.source;
-
     if (source) {
       this.clearPreviousSelectedOption(source);
       this.setTriggerValue(source.value);
@@ -205,7 +198,7 @@ export class AutocompleteTriggerDirective
     }
   }
 
-  private clearPreviousSelectedOption(skip: TTOptionBase) {
+  private clearPreviousSelectedOption(skip: TTOptionBase): void {
     if (this.ttAutocomplete && this.ttAutocomplete['options']) {
       this.ttAutocomplete?.options.forEach((option) => {
         if (option !== skip && option.selected) {
@@ -223,15 +216,19 @@ export class AutocompleteTriggerDirective
     });
   }
 
-  private getOverlayPosition() {
+  private getOverlayPosition(): PositionStrategy {
     const positions = [
       new ConnectionPositionPair(
         { originX: 'start', originY: 'bottom' },
-        { overlayX: 'start', overlayY: 'top' }
+        { overlayX: 'start', overlayY: 'top' },
+        0,
+        8
       ),
       new ConnectionPositionPair(
         { originX: 'start', originY: 'top' },
-        { overlayX: 'start', overlayY: 'bottom' }
+        { overlayX: 'start', overlayY: 'bottom' },
+        0,
+        8
       ),
     ];
 
@@ -252,7 +249,10 @@ export class AutocompleteTriggerDirective
       this.overlayRef = null;
     }
   }
-  overlayClickOutside(overlayRef: OverlayRef, origin: HTMLElement) {
+  overlayClickOutside(
+    overlayRef: OverlayRef,
+    origin: HTMLElement
+  ): Observable<Event> {
     return fromEvent<MouseEvent>(document, 'click').pipe(
       filter((event) => {
         const clickTarget = event.target as HTMLElement;
