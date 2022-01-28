@@ -32,3 +32,4 @@ export * from './lib/input/input.module';
 export * from './lib/autocomplete/autocomplete.module';
 export * from './lib/autocomplete/autocomplete-trigger.directive';
 export * from './lib/autocomplete/autocomplete.component';
+export * from './lib/autocomplete/filter-autocomplete.component';
