@@ -1,4 +1,3 @@
-@import '@angular/cdk/overlay-prebuilt.css';
 .ttui-autocomplete-panel {
   @apply w-full bg-white-default flex flex-col overflow-auto shadow-md max-h-[152px];
   &::-webkit-scrollbar {
