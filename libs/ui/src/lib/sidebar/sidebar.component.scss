@@ -33,15 +33,25 @@
 
 .navigation-pin {
   @apply absolute right-5 top-4 block -z-10 cursor-pointer hover:z-0 hover:cursor-pointer;
+  span {
+    @apply text-lg text-white-default p-[10px] rounded-md hover:bg-gray-800;
+  }
+  .unpin {
+    @apply bg-gray-700;
+  }
 }
 
 .navigation {
-  @apply flex flex-col h-[calc(100vh-5rem)];
+  @apply flex flex-col h-[calc(100vh-5rem)] select-none;
   .list-group {
     @apply px-3 pt-[10px];
     a {
       @apply text-gray-600 text-sm hover:bg-gray-800 hover:rounded-md hover:text-white-default;
     }
+    .tt-icon {
+      @apply text-[22px] p-[14px];
+    }
+
     a:hover svg path {
       @apply fill-white-default;
     }
