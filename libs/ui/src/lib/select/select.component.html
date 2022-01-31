@@ -7,7 +7,7 @@
   [ngClass]="{ active: panelOpen, 'ttui-select-disable': disabled }"
 >
   <div class="ttui-select-value">
-    {{ triggerValue ? triggerValue : 'Select an Option' }}
+    {{ triggerValue || 'Select an Option' }}
   </div>
   <div class="ttui-select-arrow" [ngClass]="{ open: panelOpen }">
     <svg
