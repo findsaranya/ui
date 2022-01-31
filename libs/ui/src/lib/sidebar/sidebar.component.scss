@@ -1,6 +1,15 @@
 .sidebar {
   @apply w-60 fixed z-50 top-0 bottom-0 left-60 -ml-60 border-none overflow-y-auto 
   bg-gray-1000 whitespace-nowrap transition-all duration-[0.3s] ease-[ease-in-out] overflow-x-hidden;
+  &::-webkit-scrollbar {
+    @apply w-[4px];
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300 rounded-7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500;
+  }
 }
 
 .collapsed {

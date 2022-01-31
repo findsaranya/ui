@@ -1,2 +1,5 @@
-<tt-webapp-sidebar></tt-webapp-sidebar>
-<router-outlet></router-outlet>
+<tt-webapp-sidebar (collapsedEvent)="onCollapse($event)"></tt-webapp-sidebar>
+
+<section class="main-container" [ngClass]="{collapsed}">
+  <router-outlet></router-outlet>
+</section>
