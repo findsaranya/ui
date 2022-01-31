@@ -37,6 +37,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
               (m) => m.RemoteEntryModule
             ),
         },
+        {
+          path: 'company/profile',
+          loadChildren: () =>
+            import('./remote-entry/entry.module').then(
+              (m) => m.RemoteEntryModule
+            ),
+        },
       ],
       { initialNavigation: 'enabledBlocking' }
     ),

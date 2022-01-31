@@ -1,21 +1,27 @@
 <nav class="sidebar" [ngClass]="{ collapsed }">
   <div class="logo-block">
-    <div class="logo">
+    <div class="trustrace logo">
       <a>
-        <svg
-          width="55"
-          height="55"
-          viewBox="0 0 55 55"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect width="55" height="55" rx="5" fill="#FFA440" />
-          <path
-            d="M36.3438 34.0923L33.1417 30.9501L35.7504 28.3937L34.1003 26.7742L26.877 33.8591L28.5298 35.4786L31.1698 32.8905L34.0151 35.6828C34.1115 35.7773 34.1881 35.89 34.2404 36.0143C34.2927 36.1385 34.3196 36.2719 34.3196 36.4067C34.3196 36.5414 34.2927 36.6748 34.2404 36.799C34.1881 36.9233 34.1115 37.036 34.0151 37.1305L29.1843 41.8621C28.8917 42.1474 28.4985 42.3072 28.0889 42.3072C27.6794 42.3072 27.2862 42.1474 26.9936 41.8621L22.2222 37.1798C22.1256 37.0851 22.0487 36.9723 21.9961 36.848C21.9437 36.724 21.9167 36.5909 21.9167 36.4565C21.9167 36.322 21.9437 36.1889 21.9961 36.065C22.0487 35.9406 22.1256 35.8279 22.2222 35.7332L36.3427 21.8772C36.6509 21.5758 36.8956 21.2163 37.0627 20.8198C37.2298 20.4232 37.3158 19.9975 37.3158 19.5675C37.3158 19.1374 37.2298 18.7117 37.0627 18.3152C36.8956 17.9186 36.6509 17.5591 36.3427 17.2578L31.1726 12.1834C30.356 11.3888 29.2595 10.9438 28.1175 10.9438C26.9756 10.9438 25.8791 11.3888 25.0625 12.1834L19.8247 17.3246C19.5191 17.6237 19.2762 17.9802 19.1102 18.3735C18.9441 18.7667 18.8581 19.1889 18.8572 19.6155C18.8562 20.0421 18.9404 20.4647 19.1048 20.8586C19.2692 21.2526 19.5105 21.6102 19.8148 21.9106L23.0599 25.0741L20.4968 27.5883L22.1469 29.2079L29.3653 22.123L27.7152 20.5034L25.0295 23.1392L22.1474 20.3469C22.0523 20.2541 21.9767 20.1433 21.9251 20.0211C21.8735 19.8989 21.8469 19.7677 21.8469 19.6351C21.8469 19.5025 21.8735 19.3713 21.9251 19.2491C21.9767 19.1268 22.0523 19.0161 22.1474 18.9233L27.1069 14.0608C27.3785 13.797 27.743 13.6493 28.1225 13.6493C28.502 13.6493 28.8665 13.797 29.1381 14.0608L34.009 18.8423C34.1056 18.9369 34.1825 19.0497 34.2351 19.1741C34.2875 19.2981 34.3145 19.4313 34.3145 19.5658C34.3145 19.7004 34.2875 19.8335 34.2351 19.9576C34.1825 20.0819 34.1056 20.1947 34.009 20.2894L19.8698 34.1257C19.5607 34.428 19.3148 34.7882 19.1465 35.1857C18.9789 35.5817 18.8926 36.0071 18.8926 36.4368C18.8926 36.8665 18.9789 37.2919 19.1465 37.6878C19.3147 38.0852 19.5604 38.4455 19.8692 38.7478L25.0718 43.8496C25.8775 44.6344 26.9598 45.0739 28.087 45.0739C29.2142 45.0739 30.2966 44.6344 31.1022 43.8496L36.3471 38.7112C36.6559 38.4098 36.9012 38.0503 37.0686 37.6534C37.2361 37.2566 37.3223 36.8305 37.3223 36.4001C37.3223 35.9697 37.2361 35.5436 37.0686 35.1467C36.9012 34.7499 36.6559 34.3903 36.3471 34.089L36.3438 34.0923Z"
-            fill="white"
-          />
-        </svg>
+        <img
+          src="http://app.trustrace.local:8080/assets/icons/{{
+            navigation.ttLogo
+          }}"
+          alt="logo"
+        />
       </a>
     </div>
+
+    <div *ngIf="navigation.customLogo" class="custom logo">
+      <a>
+        <img
+          src="http://app.trustrace.local:8080/assets/icons/{{
+            navigation.customLogo
+          }}"
+          alt="brand logo"
+        />
+      </a>
+    </div>
+
     <div class="navigation-pin" (click)="toggleCollapsed()">
       <span
         class="tt-icon pin"
@@ -26,45 +32,37 @@
 
   <div class="navigation">
     <div class="flex flex-col flex-1">
-      <div class="list-group">
-        <a class="flex items-center" href="">
-          <span class="tt-icon dashboard"></span>
-          <span class="label"> Dashboard </span>
-        </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon traceability"></span>
-          <span class="label"> T-Trace </span>
-        </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon evidences"></span>
-          <span class="label"> T-EMS </span>
-        </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon assessments"></span>
-          <span class="label"> Assessments </span>
-        </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon transactions"></span>
-
-          <span class="label"> Transactions </span>
-        </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon suppliers"></span>
-
-          <span class="label"> Suppliers </span>
-        </a>
-      </div>
+      <ng-container
+        *ngTemplateOutlet="
+          menuIterator;
+          context: { menuList: navigation.menus.topOrder }
+        "
+      >
+      </ng-container>
     </div>
-    <div>
-      <div class="list-group">
+    <div class="bottom-order">
+      <ng-container
+        *ngTemplateOutlet="
+          menuIterator;
+          context: { menuList: navigation.menus.bottomOrder }
+        "
+      >
+      </ng-container>
+    </div>
+  </div>
+</nav>
+<ng-template #menuIterator let-menuList="menuList">
+  <div class="list-group">
+    <ng-container *ngFor="let menu of menuList">
+      <ng-container *ngIf="menu.child?.length; else flatMenus">
         <div
           class="nested-menu"
-          [class.expand]="showMenu === 'Company Profile'"
-          (click)="addExpandClass('Company Profile')"
+          [class.expand]="showMenu === menu.title"
+          (click)="addExpandClass(menu.title)"
         >
-          <a class="flex items-center flex-1">
-            <span class="tt-icon company"></span>
-            <span class="label"> Company Profile </span>
+          <a class="flex items-center flex-1  {{ childEle.classList[1] }}">
+            <span class="tt-icon {{ menu.icon }}"></span>
+            <span class="label"> {{ menu.title }} </span>
             <span class="arrow">
               <svg
                 width="18"
@@ -80,27 +78,52 @@
               </svg>
             </span>
           </a>
-          <div class="nested">
+          <div
+            class="nested"
+            (click)="$event.stopPropagation()"
+            routerLinkActive="router-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            #childEle
+          >
             <ul class="submenu">
-              <li>
-                <a href=""> Basic Information </a>
-              </li>
-              <li>
-                <a href=""> Facilities </a>
+              <li *ngFor="let child of menu.child">
+                <a
+                  [routerLink]="[child.routePath]"
+                  routerLinkActive="child-router-link-active"
+                  [fragment]="child.fragment || null"
+                  [queryParams]="child.queryParams || ''"
+                  [routerLinkActiveOptions]="{
+                    fragment: child.fragment ? 'exact' : 'ignored',
+                    paths: 'exact',
+                    queryParams: 'ignored',
+                    matrixParams: child.queryParams ? 'exact' : 'ignored'
+                  }"
+                >
+                  {{ child.title }}
+                </a>
               </li>
             </ul>
           </div>
         </div>
-        <a class="flex items-center" href="">
-          <span class="tt-icon settings"></span>
-
-          <span class="label"> Settings </span>
+      </ng-container>
+      <ng-template #flatMenus>
+        <a
+          class="flex items-center"
+          [routerLink]="[menu.routePath]"
+          routerLinkActive="router-link-active"
+          [fragment]="menu.fragment || null"
+          [queryParams]="menu.queryParams || ''"
+          [routerLinkActiveOptions]="{
+            fragment: menu.fragment ? 'exact' : 'ignored',
+            paths: 'exact',
+            queryParams: 'ignored',
+            matrixParams: menu.queryParams ? 'exact' : 'ignored'
+          }"
+        >
+          <span class="tt-icon {{ menu.icon }}"></span>
+          <span class="label"> {{ menu.title }} </span>
         </a>
-        <a class="flex items-center" href="">
-          <span class="tt-icon logout"></span>
-          <span class="label"> Logout </span>
-        </a>
-      </div>
-    </div>
+      </ng-template>
+    </ng-container>
   </div>
-</nav>
+</ng-template>

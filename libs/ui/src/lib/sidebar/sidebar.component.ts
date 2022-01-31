@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
+import { sideNavSampleData } from './sidebar.model';
 
 @Component({
   selector: 'tt-webapp-sidebar',
@@ -14,13 +15,12 @@ import {
 export class SidebarComponent {
   collapsed: boolean;
   showMenu: string;
-  pushRightClass: string;
+  navigation = sideNavSampleData;
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
   constructor() {
     this.collapsed = false;
     this.showMenu = '';
-    this.pushRightClass = 'push-right';
   }
 
   addExpandClass(element: string) {
@@ -34,15 +34,5 @@ export class SidebarComponent {
   toggleCollapsed() {
     this.collapsed = !this.collapsed;
     this.collapsedEvent.emit(this.collapsed);
-  }
-
-  isToggled(): boolean {
-    const dom = document.querySelector('body') as HTMLBodyElement;
-    return dom.classList.contains(this.pushRightClass);
-  }
-
-  toggleSidebar() {
-    const dom: any = document.querySelector('body');
-    dom.classList.toggle(this.pushRightClass);
   }
 }

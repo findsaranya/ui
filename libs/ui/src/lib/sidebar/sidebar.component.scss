@@ -18,9 +18,11 @@
   .navigation-pin,
   .label,
   .arrow,
-  .nested {
+  .nested,
+  .logo .custom {
     @apply hidden;
   }
+
   &:hover {
     .navigation-pin,
     .label,
@@ -32,11 +34,14 @@
 }
 
 .logo-block {
-  @apply p-[10px];
+  @apply flex;
   &:hover {
     .navigation-pin {
       @apply z-0;
     }
+  }
+  .logo {
+    @apply p-[10px];
   }
 }
 
@@ -50,6 +55,13 @@
   }
 }
 
+@mixin menu-active {
+  @apply text-sm bg-gray-800 rounded-md text-white-default;
+  svg path {
+    @apply fill-white-default;
+  }
+}
+
 .navigation {
   @apply flex flex-col h-[calc(100vh-5rem)] select-none;
   .list-group {
@@ -60,9 +72,11 @@
     .tt-icon {
       @apply text-[22px] p-[14px];
     }
-
-    a:hover svg path {
-      @apply fill-white-default;
+    a.router-link-active {
+      @include menu-active;
+    }
+    a:hover {
+      @include menu-active;
     }
   }
 }
@@ -95,5 +109,9 @@
   }
   .arrow {
     @apply transform rotate-90;
+  }
+
+  a.child-router-link-active {
+    @apply text-white-default;
   }
 }
