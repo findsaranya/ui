@@ -10,9 +10,7 @@ import { Observable } from 'rxjs';
     </div>
     <div>
       <p>Hello {{ name$ | async }}</p>
-    </div>
-
-    <button type="button" (click)="logout()">Logout</button> `,
+    </div> `,
   styles: [
     `
       .remote-entry {

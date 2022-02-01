@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { SidebarModule } from '@tt-webapp/ui';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,19 +25,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    SidebarModule,
     HttpClientModule,
     RouterModule.forRoot(
       [
         {
           path: '',
-          loadChildren: () =>
-            import('./remote-entry/entry.module').then(
-              (m) => m.RemoteEntryModule
-            ),
-        },
-        {
-          path: 'company/profile',
           loadChildren: () =>
             import('./remote-entry/entry.module').then(
               (m) => m.RemoteEntryModule

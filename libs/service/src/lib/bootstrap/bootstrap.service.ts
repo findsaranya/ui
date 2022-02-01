@@ -15,6 +15,10 @@ export class BootstrapService {
   appConfig: (Observable<Config.State> | Observable<Auth.State>)[];
   loginLogoutLoaded = false;
   initialRoutes: Routes;
+  loadedRoutes: { root: Routes; child: Routes } = {
+    child: [],
+    root: [],
+  };
   constructor(
     private store: Store<AppState>,
     private router: Router,
@@ -86,10 +90,11 @@ export class BootstrapService {
   private loadApplicationConfig(appConfig: Config.State): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
+        this.loadedRoutes = this.buildRoutes(
+          appConfig.coreApplications as IMicroFrontendConfig[]
+        );
         this.router.resetConfig([
-          ...this.buildRoutes(
-            appConfig.coreApplications as IMicroFrontendConfig[]
-          ),
+          ...this.loadedRoutes.root,
           ...this.initialRoutes,
         ]);
         resolve();
@@ -99,17 +104,32 @@ export class BootstrapService {
     });
   }
 
-  private buildRoutes(options: IMicroFrontendConfig[]): Routes {
-    const routes: Routes = options.map((d) => ({
-      path: d.routePath,
-      loadChildren: () => {
-        if (d.companyType !== 'DEFAULT' && !d.subscribed) {
-          return import('@tt-webapp/ui').then((m) => m.NotSubscribedModule);
-        }
-        return loadRemoteModule(d).then((m) => m[d.ngModuleName]);
-      },
-    }));
-    return routes;
+  private buildRoutes(options: IMicroFrontendConfig[]): {
+    root: Routes;
+    child: Routes;
+  } {
+    const root: Routes = [];
+    const child: Routes = [];
+
+    options.forEach((option) => {
+      const path = option.routePath;
+      if (option.companyType !== 'DEFAULT') {
+        child.push({
+          path,
+          loadChildren: !option.subscribed
+            ? () => import('@tt-webapp/ui').then((m) => m.NotSubscribedModule)
+            : () =>
+                loadRemoteModule(option).then((m) => m[option.ngModuleName]),
+        });
+      } else {
+        root.push({
+          path,
+          loadChildren: () =>
+            loadRemoteModule(option).then((m) => m[option.ngModuleName]),
+        });
+      }
+    });
+    return { root, child };
   }
 
   private configErrorHandler(error: string): void {
