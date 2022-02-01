@@ -1,0 +1,57 @@
+.ttui-radio-group {
+  @apply flex flex-col space-y-[0.75rem] my-3;
+}
+
+.ttui-radio-group-horizontal {
+  @apply block space-x-[1.875rem] my-3;
+}
+
+.ttui-radio-button {
+  @apply inline-block;
+}
+
+.ttui-radio-label {
+  @apply inline-flex relative items-center whitespace-nowrap align-middle cursor-pointer hover:after:bg-gray-200;
+}
+
+.ttui-radio-input-container {
+  @apply w-[1.125rem] h-[1.125rem] focus-within:shadow-default focus-within:rounded-full outline-none;
+}
+
+.ttui-radio-label::after {
+  @apply box-border rounded-full h-[1.125rem] w-[1.125rem] absolute border-2 border-solid border-gray-1000 content-[''];
+}
+
+.ttui-radio-input-container::before {
+  @apply box-border rounded-full h-[0.625rem] w-[0.625rem] absolute mt-1 ml-1 opacity-0 content-[''] bg-gray-1000;
+
+  .ttui-radio-checked & {
+    @apply opacity-100 z-10;
+  }
+}
+
+.ttui-radio-label-content {
+  @apply inline-block order-none pl-[0.625rem];
+}
+
+.ttui-radio-disabled {
+  & .ttui-radio-input-container {
+    @apply focus-within:shadow-none cursor-default;
+  }
+
+  & .ttui-radio-input-container::before {
+    @apply bg-gray-500 cursor-default;
+  }
+
+  & .ttui-radio-label {
+    @apply after:border-gray-500 after:cursor-default;
+  }
+
+  & .ttui-radio-label:hover {
+    @apply after:bg-white-default after:cursor-default;
+  }
+
+  & .ttui-radio-label-content {
+    @apply text-gray-500 cursor-default;
+  }
+}
