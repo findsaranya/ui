@@ -53,10 +53,10 @@
     "@nrwl/storybook": "13.4.6",
     "@nrwl/tao": "13.4.6",
     "@nrwl/workspace": "13.4.6",
-    "@storybook/addon-essentials": "~6.4.14",
-    "@storybook/angular": "~6.4.14",
-    "@storybook/builder-webpack5": "~6.4.14",
-    "@storybook/manager-webpack5": "~6.4.14",
+    "@storybook/addon-essentials": "~6.4.17",
+    "@storybook/angular": "~6.4.17",
+    "@storybook/builder-webpack5": "~6.4.17",
+    "@storybook/manager-webpack5": "~6.4.17",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "~5.3.0",
@@ -83,4 +83,3 @@
     "webpack": "5.65.0"
   }
 }
-
