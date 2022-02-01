@@ -101,7 +101,7 @@
         "commands": [
           "nx serve settings",
           "nx serve auth",
-          "nx serve fashion --liveReload=false --host app.trustrace.local"
+          "nx serve fashion --host app.trustrace.local"
         ]
       }
     }

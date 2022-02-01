@@ -9,7 +9,7 @@ import { Observable, of, throwError } from 'rxjs';
 import * as ConfigActions from './config.actions';
 import { ConfigEffects } from './config.effects';
 
-import { apps, errorMessage } from './config.data';
+import { appsWithAuth, errorMessage } from './config.data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ConfigService, IApplicationConfigResponce } from '.';
@@ -19,7 +19,7 @@ describe('ConfigEffects', () => {
   let effects: ConfigEffects;
 
   const responce: IApplicationConfigResponce = {
-    data: apps,
+    data: appsWithAuth,
   };
   const mockConfigService = {
     applicationConfig: jest.fn(() => of(responce)),
@@ -46,7 +46,7 @@ describe('ConfigEffects', () => {
       });
 
       const expected = hot('-a-|', {
-        a: ConfigActions.loadConfigSuccess({ config: apps }),
+        a: ConfigActions.loadConfigSuccess({ config: appsWithAuth }),
       });
 
       expect(effects.initApplicationConfig$).toBeObservable(expected);
@@ -94,7 +94,7 @@ describe('ConfigEffects', () => {
       });
 
       const expected = hot('-a-|', {
-        a: ConfigActions.loadConfigSuccess({ config: apps }),
+        a: ConfigActions.loadConfigSuccess({ config: appsWithAuth }),
       });
 
       expect(effects.initApplicationConfigWithAuth$).toBeObservable(expected);

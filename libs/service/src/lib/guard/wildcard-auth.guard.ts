@@ -4,7 +4,6 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { map, Observable, take } from 'rxjs';
@@ -19,11 +18,7 @@ export class WildcardAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  ): Observable<boolean> {
     return this.store.pipe(
       select(loggedIn),
       take(1),

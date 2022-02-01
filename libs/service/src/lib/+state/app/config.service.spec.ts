@@ -5,7 +5,7 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { IApplicationConfigResponce } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
-import { apiBaseUrl, apps } from './config.data';
+import { apiBaseUrl, apps, appsWithAuth } from './config.data';
 
 import { ConfigService } from './config.service';
 
@@ -39,6 +39,7 @@ describe('ConfigService', () => {
     };
     service.applicationConfig().subscribe((config) => {
       expect(config.data.length).toEqual(1);
+      expect(config.data.every((d) => d.subscribed === false)).toBeTruthy();
       expect(config.data[0].id).toEqual('AUTH');
       done();
     });
@@ -50,10 +51,10 @@ describe('ConfigService', () => {
   });
   it('should return application config [With Auth] ', (done) => {
     const appConfigMock: IApplicationConfigResponce = {
-      data: apps,
+      data: appsWithAuth,
     };
     service.applicationConfigWithAuth().subscribe((config) => {
-      expect(config.data.length).toEqual(1);
+      expect(config.data.length).toEqual(2);
       expect(config.data[0].id).toEqual('AUTH');
       done();
     });

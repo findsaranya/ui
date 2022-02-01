@@ -25,6 +25,8 @@ sharedMappings.register(
   workspaceRootPath
 );
 
+const share = mf.share;
+mf.setInferVersion(true);
 module.exports = {
   output: {
     uniqueName: 'settings',
@@ -33,7 +35,10 @@ module.exports = {
   },
   optimization: {
     runtimeChunk: false,
-    minimize: false,
+    minimize: true,
+  },
+  devServer: {
+    allowedHosts: ['app.trustrace.local'],
   },
   resolve: {
     alias: {
@@ -47,7 +52,7 @@ module.exports = {
       exposes: {
         './Module': 'apps/settings/src/app/remote-entry/entry.module.ts',
       },
-      shared: {
+      shared: share({
         '@angular/core': {
           singleton: true,
           strictVersion: true,
@@ -68,13 +73,18 @@ module.exports = {
           strictVersion: true,
           requiredVersion: '^13.0.0',
         },
+        rxjs: {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: 'auto',
+        },
         '@ngrx/store': {
           singleton: true,
           strictVersion: true,
           requiredVersion: '^13.0.0',
         },
         ...sharedMappings.getDescriptors(),
-      },
+      }),
     }),
     sharedMappings.getPlugin(),
   ],

@@ -1,5 +1,5 @@
 import { Action, createAction, props } from '@ngrx/store';
-import { UserConfig } from './auth.models';
+import { IUserConfig } from './auth.models';
 
 export const initSession = createAction(
   '[Auth] Init Session',
@@ -27,7 +27,7 @@ export const initUserConfig = createAction('[Auth] Init User config');
 
 export const userConfigLoadSuccess = createAction(
   '[Auth] User Config Load Success',
-  props<{ data: UserConfig }>()
+  props<{ data: IUserConfig }>()
 );
 
 export const userConfigLoadFailed = createAction(
