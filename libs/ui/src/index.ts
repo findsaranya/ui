@@ -20,3 +20,6 @@ export * from './lib/form-field/hint.directive';
 export * from './lib/form-field/label.directive';
 export * from './lib/input/input.directive';
 export * from './lib/input/input.module';
+export * from './lib/radio/radio-group/radio-group.directive';
+export * from './lib/radio/radio-button/radio-button.component';
+export * from './lib/radio/radio.module';

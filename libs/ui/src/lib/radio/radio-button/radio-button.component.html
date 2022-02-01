@@ -1,0 +1,21 @@
+<label [attr.for]="inputId" class="ttui-radio-label">
+  <span [attr.tabindex]="tabIndex" class="ttui-radio-input-container">
+    <input
+      #input
+      class="hidden"
+      type="radio"
+      [id]="inputId"
+      [checked]="checked"
+      [disabled]="disabled"
+      [attr.name]="name"
+      [attr.value]="value"
+      [required]="required"
+      (change)="$event.stopPropagation(); onChange()"
+      (click)="$event.stopPropagation()"
+    />
+  </span>
+
+  <span class="ttui-radio-label-content">
+    <ng-content></ng-content>
+  </span>
+</label>
