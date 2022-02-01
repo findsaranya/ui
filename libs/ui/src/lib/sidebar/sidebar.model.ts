@@ -1,5 +1,3 @@
-import { Params } from '@angular/router';
-
 export interface ISideNavigationResponse {
   message: string;
   data: ISideNavigation;
@@ -24,7 +22,6 @@ export interface MenuItem {
   icon?: string;
   child?: MenuItem[];
   fragment?: string;
-  queryParams?: Params;
 }
 
 export const sideNavSampleData: ISideNavigation = {
