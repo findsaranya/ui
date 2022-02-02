@@ -43,12 +43,10 @@ import {
 } from '@angular/cdk/coercion';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { OPTION_PARENT } from '../option/parent-option';
-
+import { v4 as uid } from 'uuid';
 export class TTSelectChange {
   constructor(public source: SelectComponent, public value: any) {}
 }
-let uniqueSelectId = 0;
-
 @Component({
   selector: 'tt-select',
   templateUrl: './select.component.html',
@@ -85,7 +83,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   @ContentChildren(OptionComponent, { descendants: true })
   _options?: QueryList<OptionComponent>;
 
-  @HostBinding('attr.id') id = `tt-select-${++uniqueSelectId}`;
+  @HostBinding('attr.id') id = `tt-select-${uid()}`;
 
   @HostBinding('class') class = 'ttui-select';
   @Input()
