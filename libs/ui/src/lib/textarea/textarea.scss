@@ -1,0 +1,20 @@
+textarea::-webkit-scrollbar {
+  @apply w-1;
+}
+textarea::-webkit-scrollbar-track {
+  @apply bg-gray-300 rounded-[0.625rem] my-1;
+}
+textarea::-webkit-scrollbar-thumb {
+  @apply bg-gray-500 rounded-[0.438rem];
+}
+textarea.ttui-input {
+  @apply px-5 py-4;
+}
+.ttui-textarea-auto,
+.ttui-textarea-packed {
+  @apply resize-none;
+}
+.ttui-textarea-resizeable,
+.ttui-textarea-packed {
+  @apply h-[5.375rem];
+}
