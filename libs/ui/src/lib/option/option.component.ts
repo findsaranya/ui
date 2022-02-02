@@ -16,8 +16,8 @@ import { coerceBooleanProperty, BooleanInput } from '@angular/cdk/coercion';
 import { Highlightable } from '@angular/cdk/a11y';
 
 import { OPTION_PARENT, ParentOption } from './parent-option';
+import { v4 as uid } from 'uuid';
 
-let uniqueIdValue = 0;
 export class TTOptionSelectionChange {
   constructor(public source: TTOptionBase, public isUserInput = false) {}
 }
@@ -65,7 +65,7 @@ export class TTOptionBase implements Highlightable {
   get id(): string {
     return this._id;
   }
-  private _id = `tt-option-${++uniqueIdValue}`;
+  private _id = `tt-option-${uid()}`;
 
   @Output() readonly SelectionChange =
     new EventEmitter<TTOptionSelectionChange>();
