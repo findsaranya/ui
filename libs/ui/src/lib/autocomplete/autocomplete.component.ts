@@ -15,9 +15,7 @@ import {
 } from '@angular/core';
 import { OptionComponent } from '../option/option.component';
 import { OPTION_PARENT } from '../option/parent-option';
-
-let uniqueId = 0;
-
+import { v4 as uid } from 'uuid';
 @Component({
   selector: 'tt-autocomplete',
   template: `
@@ -45,9 +43,9 @@ export class AutocompleteComponent implements AfterContentInit {
     return this._id;
   }
   set id(value: string) {
-    this._id = `tt-autocomplete-${++uniqueId}`;
+    this._id = `tt-autocomplete-${value}`;
   }
-  private _id = `tt-autocomplete-${++uniqueId}`;
+  private _id = `tt-autocomplete-${uid()}`;
   @ViewChild(TemplateRef, { static: true }) template?: TemplateRef<any>;
 
   @ViewChild('panel') panel?: ElementRef;
