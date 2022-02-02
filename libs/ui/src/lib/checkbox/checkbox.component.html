@@ -1,0 +1,34 @@
+<label [attr.for]="id" [ngClass]="classes">
+  <span
+    [attr.tabindex]="tabIndex"
+    class="ttui-checkbox-inner-container"
+    [class.ttui-checkbox-without-margin]="!checkboxLabel?.textContent?.trim()"
+  >
+    <input
+      type="checkbox"
+      class="ttui-checkbox"
+      [checked]="checked"
+      [disabled]="disabled"
+      [required]="required"
+      [attr.id]="id"
+      [attr.name]="name"
+      [attr.value]="value"
+      (click)="onClick($event)"
+      #input
+    />
+    <span class="ttui-checkbox-frame"></span>
+    <span class="ttui-checkbox-background">
+      <svg viewBox="0 0 10 8" xmlns="http://www.w3.org/2000/svg">
+        <path
+          class="ttui-checkbox-checkmark-path"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.169 0.756715C9.57951 1.12617 9.61279 1.75846 9.24333 2.16897L4.74333 7.16897C4.38896 7.56273 3.789 7.6118 3.37534 7.28088L0.875342 5.28088C0.44408 4.93587 0.374158 4.30658 0.719168 3.87531C1.06418 3.44405 1.69347 3.37413 2.12473 3.71914L3.88794 5.12971L7.75674 0.831044C8.1262 0.420534 8.75849 0.387255 9.169 0.756715Z"
+        />
+      </svg>
+    </span>
+  </span>
+  <span class="ttui-checkbox-label" #checkboxLabel>
+    <ng-content></ng-content>
+  </span>
+</label>
