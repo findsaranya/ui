@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '@angular/cdk/overlay-prebuilt.css';
 
 @layer base {
   h1 {

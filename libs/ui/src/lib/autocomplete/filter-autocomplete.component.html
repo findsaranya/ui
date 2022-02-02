@@ -1,0 +1,21 @@
+<form>
+  <tt-form-field>
+    <tt-label>label</tt-label>
+    <input
+      type="type"
+      placeholder="placeholder"
+      ttInput
+      #input
+      [formControl]="ctrl"
+      [ttAutocomplete]="auto"
+      [ttAutocompleteDisabled]="disabled"
+    />
+    <tt-autocomplete #auto="ttAutocomplete">
+      <tt-option
+        [value]="brand"
+        *ngFor="let brand of filteredOptions | async"
+        >{{ brand }}</tt-option
+      >
+    </tt-autocomplete>
+  </tt-form-field>
+</form>
