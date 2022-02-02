@@ -1,8 +1,13 @@
 <div class="ttui-form-field-wrapper">
   <div>
     <ng-content select="tt-label"></ng-content>
+    <span
+      *ngIf="isTextarea && maxLength !== -1"
+      class="float-right mt-2 text-gray-800 ttui-text-help-regular ttui-char-counter"
+      >{{ charCount }}/{{ maxLength }}</span
+    >
   </div>
-  <ng-content></ng-content>
+  <span class="ttui-text-input"><ng-content></ng-content></span>
   <div class="ttui-form-field-error ttui-text-help-regular">
     <ng-content select="tt-error"></ng-content>
   </div>
