@@ -3,8 +3,9 @@ import {
   ChangeDetectionStrategy,
   EventEmitter,
   Output,
+  Input,
 } from '@angular/core';
-import { sideNavSampleData } from './sidebar.model';
+import { AppConfig } from '@tt-webapp/service';
 
 @Component({
   selector: 'tt-webapp-sidebar',
@@ -15,9 +16,10 @@ import { sideNavSampleData } from './sidebar.model';
 export class SidebarComponent {
   collapsed: boolean;
   showMenu: string;
-  navigation = sideNavSampleData;
 
+  @Input() navigation!: AppConfig.ISideNavigation | null;
   @Output() collapsedEvent = new EventEmitter<boolean>();
+
   constructor() {
     this.collapsed = false;
     this.showMenu = '';

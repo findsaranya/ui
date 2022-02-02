@@ -10,3 +10,4 @@ export * from './lib/interceptor/token.interceptor';
 export * from './lib/injection/tokens';
 
 export * from './lib/guard/wildcard-auth.guard';
+export * from './lib/+state/app/config.data';

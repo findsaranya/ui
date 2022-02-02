@@ -1,5 +1,5 @@
 * {
-  transition: margin-left 0.2s ease-in-out;
+  @apply transition-[margin-left] duration-[0.2s] ease-[ease-in-out];
 }
 .main-container {
   @apply ml-60 h-screen bg-gray-200;

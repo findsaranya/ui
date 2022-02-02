@@ -1,4 +1,7 @@
-<tt-webapp-sidebar (collapsedEvent)="onCollapse($event)"></tt-webapp-sidebar>
+<tt-webapp-sidebar
+  [navigation]="navigation$ | async"
+  (collapsedEvent)="onCollapse($event)"
+></tt-webapp-sidebar>
 
 <main class="main-container" [ngClass]="{collapsed}">
   <header class="shadow-md">

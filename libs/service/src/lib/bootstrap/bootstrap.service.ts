@@ -5,7 +5,7 @@ import { AppState } from '../+state/app.store';
 import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { IMicroFrontendConfig } from '../mfe/mfe.model';
+import { IMicroFrontendConfig } from '../+state/app/config.models';
 import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
 @Injectable()
