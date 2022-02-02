@@ -20,6 +20,8 @@ export * from './lib/option/option.component';
 // Select
 export * from './lib/select/select.module';
 export * from './lib/select/select.component';
+export * from './lib/checkbox/checkbox.component';
+export * from './lib/checkbox/checkbox.module';
 // Form Field
 export * from './lib/form-field/form-field.module';
 export * from './lib/form-field/error.directive';
