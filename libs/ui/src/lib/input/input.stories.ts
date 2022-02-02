@@ -5,7 +5,7 @@ import { FormFieldModule } from '../form-field/form-field.module';
 import { FormsModule } from '@angular/forms';
 import { InputModule } from './input.module';
 export default {
-  title: 'InputComponent',
+  title: 'Components/Input',
   component: FormFieldComponent,
   decorators: [
     moduleMetadata({
