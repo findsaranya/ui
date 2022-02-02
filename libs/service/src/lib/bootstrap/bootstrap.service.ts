@@ -84,7 +84,7 @@ export class BootstrapService {
       window.location.pathname === '/login'
     )
       // ToDo Default landing page setup
-      this.router.navigate(['settings']);
+      this.router.navigate(['/']);
   }
 
   private loadApplicationConfig(appConfig: Config.State): Promise<void> {

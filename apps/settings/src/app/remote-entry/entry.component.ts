@@ -5,12 +5,20 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tt-webapp-settings-entry',
-  template: `<div class="remote-entry">
-      <h2>settings's Remote Entry Component</h2>
+  template: `
+    <!--color code missing  696865 -->
+    <p class="text-lg font-bold">
+      <span class="text-gray-700">Welcome,</span>
+      <span> {{ name$ | async }}</span>
+    </p>
+
+    <div class="mt-3">
+      <img
+        src="http://app.trustrace.local:8080/assets/img/dashboard.jpg"
+        alt="logo"
+      />
     </div>
-    <div>
-      <p>Hello {{ name$ | async }}</p>
-    </div> `,
+  `,
   styles: [
     `
       .remote-entry {

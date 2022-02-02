@@ -33,7 +33,7 @@ export const sideNavSampleData: ISideNavigation = {
     topOrder: [
       {
         title: 'Dashboard',
-        routePath: '/',
+        routePath: '',
         icon: 'dashboard',
       },
       {
