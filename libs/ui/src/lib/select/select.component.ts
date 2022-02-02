@@ -119,10 +119,10 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   private _multiple = false;
 
   @Input()
-  get value(): any {
+  get value(): string | string[] {
     return this._value;
   }
-  set value(newValue: any) {
+  set value(newValue: string | string[]) {
     if (
       newValue !== this._value ||
       (this._multiple && Array.isArray(newValue))
@@ -134,7 +134,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       this._value = newValue;
     }
   }
-  private _value: string | string[] = '';
+  private _value: string | string[] = this.multiple ? [] : '';
 
   @Input()
   get disabled(): boolean {
@@ -174,6 +174,37 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     }
   );
 
+  get empty(): boolean {
+    return !this._selectionModel || this._selectionModel.isEmpty();
+  }
+
+  get selectedOption(): OptionComponent | null {
+    return this._selectedOption ? this._selectedOption : null;
+  }
+
+  get selected(): OptionComponent | OptionComponent[] {
+    return this.multiple
+      ? this._selectionModel?.selected || []
+      : (this._selectionModel?.selected[0] as OptionComponent);
+  }
+
+  get triggerValue(): string {
+    if (this.empty) {
+      return '';
+    }
+
+    if (this.multiple) {
+      const selectedOptions = this._selectionModel?.selected.map(
+        (option) => option.viewValue
+      );
+
+      return selectedOptions ? selectedOptions.join(', ') : '';
+    }
+
+    return this._selectionModel?.selected[0]['viewValue']
+      ? this._selectionModel?.selected[0].viewValue
+      : '';
+  }
   @Output() readonly valueChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() readonly selectionChange: EventEmitter<TTSelectChange> =
     new EventEmitter<TTSelectChange>();
@@ -182,24 +213,24 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   _onTouched: () => void = () => {};
 
-  @HostBinding('class.select-disable') get hasDisabled() {
+  @HostBinding('class.select-disable') get hasDisabled(): boolean {
     return this.disabled;
   }
 
-  @HostBinding('attr.name') get hasName() {
+  @HostBinding('attr.name') get hasName(): string | undefined {
     return this.name;
   }
 
   @HostBinding('attr.tabindex') get hasIndex(): number {
     return this.tabIndex;
   }
-  @HostListener('focus') onFocus() {
+  @HostListener('focus') onFocus(): void {
     if (!this.disabled) {
       this.focused = true;
     }
   }
 
-  @HostListener('blur') onBlur() {
+  @HostListener('blur') onBlur(): void {
     this.focused = false;
     if (!this.disabled) {
       this._onTouched();
@@ -248,42 +279,6 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this._selectionModel?.clear();
-  }
-  get empty(): boolean {
-    return !this._selectionModel || this._selectionModel.isEmpty();
-  }
-
-  get selectedOption(): OptionComponent | null {
-    return this._selectedOption ? this._selectedOption : null;
-  }
-
-  get selected(): OptionComponent | OptionComponent[] {
-    return this.multiple
-      ? this._selectionModel?.selected || []
-      : (this._selectionModel?.selected[0] as OptionComponent);
-  }
-
-  get triggerValue(): string {
-    if (this.empty) {
-      return '';
-    }
-
-    if (this.multiple) {
-      const selectedOptions = this._selectionModel?.selected.map(
-        (option) => option.viewValue
-      );
-
-      return selectedOptions ? selectedOptions.join(', ') : '';
-    }
-
-    return this._selectionModel?.selected[0]['viewValue']
-      ? this._selectionModel?.selected[0].viewValue
-      : '';
-  }
   // control value accessor
   writeValue(value: string | string[]): void {
     this.value = value;
@@ -298,7 +293,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     this.disabled = isDisabled;
   }
 
-  onReSelect() {
+  onReSelect(): void {
     if (this._options) {
       const changedOrDestroyed = merge(this._options.changes, this.destroy$);
 
@@ -315,7 +310,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     }
   }
 
-  open() {
+  open(): void {
     if (!this.disabled) {
       if (!this.panelOpen) {
         this.updateRect();
@@ -324,18 +319,18 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       }
     }
   }
-  close() {
+  close(): void {
     if (this.panelOpen) {
       this.panelOpen = false;
       this._changeDetector.markForCheck();
     }
   }
 
-  focus(options?: FocusOptions) {
+  focus(options?: FocusOptions): void {
     this.getHostElement().focus(options);
   }
 
-  getHostElement() {
+  getHostElement(): HTMLElement {
     return this._elementRef.nativeElement;
   }
 
@@ -373,7 +368,7 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
       }
     }
   }
-  private updateRect() {
+  private updateRect(): void {
     this.triggerRect = this.trigger?.nativeElement.getBoundingClientRect();
   }
 
@@ -463,5 +458,10 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     this._onChange(valueToEmit);
     this.selectionChange.emit(this.getChangeEvent(valueToEmit));
     this._changeDetector.markForCheck();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this._selectionModel?.clear();
   }
 }

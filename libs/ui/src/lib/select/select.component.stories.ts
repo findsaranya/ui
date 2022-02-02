@@ -125,7 +125,9 @@ TemplateFormSelect.args = {
 
 export const ReactiveFormSelect: Story = (args) => {
   const formGroup = new FormGroup({
-    test: new FormControl([1], [Validators.required]),
+    test: new FormControl({ value: [1], disabled: args['disabled'] }, [
+      Validators.required,
+    ]),
   });
   return {
     props: {
@@ -136,7 +138,6 @@ export const ReactiveFormSelect: Story = (args) => {
     template: `
     <form [formGroup]="form" >
     <tt-select
-     [disabled]="disabled"
      formControlName="test"
      multiple
      >
@@ -150,7 +151,7 @@ export const ReactiveFormSelect: Story = (args) => {
 };
 
 ReactiveFormSelect.args = {
-  disabled: true,
+  disabled: false,
   options: [
     {
       label: 'Brand -1',
