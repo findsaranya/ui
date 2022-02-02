@@ -17,10 +17,14 @@
   }
 }
 .ttui-form-field-disabled .ttui-form-field-label,
-.ttui-form-field-disabled .ttui-form-field-hint {
+.ttui-form-field-disabled .ttui-form-field-hint,
+.ttui-form-field-disabled .ttui-char-counter {
   @apply text-gray-500;
 }
 .ttui-form-field-required tt-label::after {
   content: '*';
   @apply text-red-500;
+}
+.ttui-text-help-regular {
+  @apply text-xs leading-xs font-regular tracking-primary;
 }

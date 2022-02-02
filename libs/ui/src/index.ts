@@ -18,5 +18,13 @@ export * from './lib/form-field/error.directive';
 export * from './lib/form-field/form-field.component';
 export * from './lib/form-field/hint.directive';
 export * from './lib/form-field/label.directive';
+//input
 export * from './lib/input/input.directive';
 export * from './lib/input/input.module';
+//textarea
+export * from './lib/textarea/textarea.directive';
+export * from './lib/textarea/textarea.module';
+//radio
+export * from './lib/radio/radio-group/radio-group.directive';
+export * from './lib/radio/radio-button/radio-button.component';
+export * from './lib/radio/radio.module';
