@@ -1,4 +1,3 @@
-import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as ConfigActions from './config.actions';
@@ -15,23 +14,27 @@ export interface ConfigPartialState {
   readonly [CONFIG_FEATURE_KEY]: State;
 }
 
-export const configAdapter: EntityAdapter<ConfigEntity> =
-  createEntityAdapter<ConfigEntity>();
-
-export const initialState: State = configAdapter.getInitialState({
+export const initialState: State = {
   loaded: false,
   coreApplications: null,
-});
+};
 
 const configReducer = createReducer(
   initialState,
-  on(ConfigActions.init, (state) => ({
+  on(ConfigActions.initApplicationConfig, (state: State) => ({
+    ...state,
+    loaded: false,
+    error: null,
+    coreApplications: null,
+  })),
+  on(ConfigActions.initApplicationConfigWithAuth, (state: State) => ({
     ...state,
     loaded: false,
     error: null,
     coreApplications: null,
   })),
   on(ConfigActions.loadConfigSuccess, (state, { config }) => ({
+    ...state,
     error: null,
     loaded: true,
     coreApplications: config,

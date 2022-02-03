@@ -1,23 +1,24 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BootstrapService } from '@tt-webapp/service';
-import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
-import { ROOT_REDUCER, ConfigEffects, AuthEffects } from '@tt-webapp/service';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  ROOT_REDUCER,
+  AppConfig,
+  Auth,
+  WildcardAuthGuard,
+} from '@tt-webapp/service';
+import { CoreModule } from './core.module';
+import { environment } from '../environments/environment';
 
-function initApplication(bsService: BootstrapService): () => Promise<void> {
-  return () => bsService.init(environment);
-}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -34,6 +35,7 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
         path: '**',
         loadChildren: () =>
           import('@tt-webapp/ui').then((m) => m.PageNotFoundModule),
+        canActivate: [WildcardAuthGuard],
       },
     ]),
     StoreModule.forRoot(ROOT_REDUCER, {
@@ -43,18 +45,9 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
         strictStateImmutability: true,
       },
     }),
-    EffectsModule.forRoot([ConfigEffects, AuthEffects]),
+    EffectsModule.forRoot([AppConfig.ConfigEffects, Auth.AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreRouterConnectingModule.forRoot(),
-  ],
-  providers: [
-    BootstrapService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApplication,
-      multi: true,
-      deps: [BootstrapService],
-    },
+    CoreModule,
   ],
   bootstrap: [AppComponent],
 })

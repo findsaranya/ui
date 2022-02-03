@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'tt-webapp-auth-entry',
-  template: `<div class="remote-entry">
-    <h2>auth's Remote Entry Component</h2>
-  </div>`,
+  template: `<router-outlet></router-outlet>`,
   styles: [
     `
       .remote-entry {

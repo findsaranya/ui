@@ -1,7 +1,6 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
-const share = mf.share;
 
 /**
  * We use the NX_TSCONFIG_PATH environment variable when using the @nrwl/angular:webpack-browser
@@ -26,6 +25,8 @@ sharedMappings.register(
   workspaceRootPath
 );
 
+const share = mf.share;
+mf.setInferVersion(true);
 module.exports = {
   output: {
     uniqueName: 'fashion',
@@ -34,9 +35,10 @@ module.exports = {
   },
   optimization: {
     runtimeChunk: false,
+    minimize: true,
   },
-  experiments: {
-    outputModule: true,
+  devServer: {
+    allowedHosts: ['app.trustrace.local'],
   },
   resolve: {
     alias: {
@@ -50,38 +52,32 @@ module.exports = {
         '@angular/core': {
           singleton: true,
           strictVersion: true,
-          requiredVersion: 'auto',
-          includeSecondaries: true,
+          requiredVersion: '^13.0.0',
         },
         '@angular/common': {
           singleton: true,
           strictVersion: true,
-          requiredVersion: 'auto',
-          includeSecondaries: true,
+          requiredVersion: '^13.0.0',
         },
         '@angular/common/http': {
           singleton: true,
           strictVersion: true,
-          requiredVersion: 'auto',
-          includeSecondaries: true,
+          requiredVersion: '^13.0.0',
         },
         '@angular/router': {
           singleton: true,
           strictVersion: true,
-          requiredVersion: 'auto',
-          includeSecondaries: true,
+          requiredVersion: '^13.0.0',
         },
         rxjs: {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
         },
         '@ngrx/store': {
           singleton: true,
           strictVersion: true,
-          requiredVersion: 'auto',
-          includeSecondaries: true,
+          requiredVersion: '^13.0.0',
         },
         ...sharedMappings.getDescriptors(),
       }),

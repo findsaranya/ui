@@ -5,7 +5,7 @@ import * as ConfigActions from './config.actions';
 import { ConfigEntity } from './config.models';
 import { State, initialState, reducer } from './config.reducer';
 
-import { apps } from './config.data';
+import { appsWithAuth } from './config.data';
 
 describe('Config Reducer', () => {
   const createConfigEntity = (
@@ -15,8 +15,15 @@ describe('Config Reducer', () => {
   });
 
   describe('valid Config actions', () => {
-    it('init config should reset the config', () => {
-      const action = ConfigActions.init({ envConfig: { TEST: 'TEST' } });
+    it('init config should reset the config [Without Auth]', () => {
+      const action = ConfigActions.initApplicationConfig();
+      const result: State = reducer(initialState, action);
+      expect(result.loaded).toBe(false);
+      expect(result.coreApplications).toBe(null);
+      expect(result.error).toBe(null);
+    });
+    it('init config should reset the config [With Auth]', () => {
+      const action = ConfigActions.initApplicationConfigWithAuth();
       const result: State = reducer(initialState, action);
       expect(result.loaded).toBe(false);
       expect(result.coreApplications).toBe(null);
@@ -24,7 +31,7 @@ describe('Config Reducer', () => {
     });
 
     it('loadConfigSuccess should return the list of known Config', () => {
-      const config = createConfigEntity(apps);
+      const config = createConfigEntity(appsWithAuth as IMicroFrontendConfig[]);
       const action = ConfigActions.loadConfigSuccess({
         config: config.coreApplications as IMicroFrontendConfig[],
       });
@@ -32,7 +39,7 @@ describe('Config Reducer', () => {
       const result: State = reducer(initialState, action);
 
       expect(result.loaded).toBe(true);
-      expect(result.coreApplications?.length).toBe(1);
+      expect(result.coreApplications?.length).toBe(2);
       expect(result.error).toBe(null);
     });
 

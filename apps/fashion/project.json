@@ -98,7 +98,11 @@
     "serve-mfe": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["nx serve auth", "nx serve fashion"]
+        "commands": [
+          "nx serve settings",
+          "nx serve auth",
+          "nx serve fashion --host app.trustrace.local"
+        ]
       }
     }
   },
