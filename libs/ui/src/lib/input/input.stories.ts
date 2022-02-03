@@ -61,7 +61,7 @@ export const Primary = (args: FormFieldComponent) => ({
   template: `
   <tt-form-field [disabled]="disabled" [isBlockElement]="isBlockElement">
     <tt-label> label </tt-label>
-    <input [type]="type"  [placeholder]="placeholder" ttInput #input placeHolder="hello there" /> 
+    <input [type]="type"  [placeholder]="placeholder" ttInput #input/> 
   </tt-form-field>`,
   props: args,
 });
@@ -103,7 +103,7 @@ export const InputWithHint = (args: FormFieldComponent) => ({
   template: `
   <tt-form-field  [isBlockElement]="isBlockElement" [disabled]="disabled">
     <tt-label> label </tt-label>
-    <input [type]="type" [placeholder]="placeholder" ttInput #input placeHolder="hello there" />
+    <input [type]="type" [placeholder]="placeholder" ttInput #input/>
     <tt-hint>Hint message</tt-hint>
   </tt-form-field> `,
   props: args,
