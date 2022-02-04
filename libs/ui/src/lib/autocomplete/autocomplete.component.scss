@@ -1,0 +1,12 @@
+.ttui-autocomplete-panel {
+  @apply w-full bg-white-default flex flex-col overflow-auto shadow-md max-h-[152px];
+  &::-webkit-scrollbar {
+    @apply w-[4px];
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300 rounded-7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500;
+  }
+}

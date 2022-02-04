@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold tracking-primary;
+  }
+  h2 {
+    @apply text-2xl font-bold tracking-primary;
+  }
+  h3 {
+    @apply text-xl font-bold tracking-primary;
+  }
+  h4 {
+    @apply text-lg font-semibold tracking-primary;
+  }
+  h5 {
+    @apply text-base font-semibold tracking-primary;
+  }
+  h6 {
+    @apply text-sm font-semibold tracking-primary;
+  }
+}
+
+.ttui-text-primary {
+  @apply text-sm leading-base font-regular tracking-secondary;
+}
+.ttui-text-secondary {
+  @apply text-base leading-lg font-regular tracking-secondary;
+}

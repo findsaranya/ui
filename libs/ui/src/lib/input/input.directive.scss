@@ -1,5 +1,5 @@
 .ttui-input {
-  @apply border border-gray-400 bg-gray-100 rounded-[7px] px-4 py-1.5
+  @apply border border-gray-400 bg-gray-100 rounded-7px px-4 py-1.5
       focus:outline-none focus:shadow-default focus:border-deepSaffron-500
         active:border-deepSaffron-default active:ring-0 
         hover:bg-gray-200;
@@ -8,7 +8,7 @@ input.ttui-input {
   @apply h-[3.125rem];
 }
 .ttui-input::placeholder {
-  @apply text-sm leading-[1.125rem] font-regular tracking-[0%] text-gray-600;
+  @apply text-sm leading-sm font-regular tracking-primary text-gray-600;
 }
 .ttui-input.ng-touched.ng-valid {
   @apply border-green-500;
@@ -21,4 +21,7 @@ input.ttui-input {
 }
 .ttui-input.ttui-input-block {
   @apply block w-full;
+}
+.ttui-text-input {
+  @apply text-sm leading-sm tracking-primary font-medium text-gray-1000;
 }

@@ -5,7 +5,7 @@ import { FormFieldModule } from '../form-field/form-field.module';
 import { FormsModule } from '@angular/forms';
 import { InputModule } from './input.module';
 export default {
-  title: 'InputComponent',
+  title: 'Components/Input',
   component: FormFieldComponent,
   decorators: [
     moduleMetadata({
@@ -61,7 +61,7 @@ export const Primary = (args: FormFieldComponent) => ({
   template: `
   <tt-form-field [disabled]="disabled" [isBlockElement]="isBlockElement">
     <tt-label> label </tt-label>
-    <input [type]="type"  [placeholder]="placeholder" ttInput #input placeHolder="hello there" /> 
+    <input [type]="type"  [placeholder]="placeholder" ttInput #input/> 
   </tt-form-field>`,
   props: args,
 });
@@ -103,7 +103,7 @@ export const InputWithHint = (args: FormFieldComponent) => ({
   template: `
   <tt-form-field  [isBlockElement]="isBlockElement" [disabled]="disabled">
     <tt-label> label </tt-label>
-    <input [type]="type" [placeholder]="placeholder" ttInput #input placeHolder="hello there" />
+    <input [type]="type" [placeholder]="placeholder" ttInput #input/>
     <tt-hint>Hint message</tt-hint>
   </tt-form-field> `,
   props: args,
