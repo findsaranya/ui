@@ -54,7 +54,7 @@ describe('ConfigService', () => {
       data: appsWithAuth,
     };
     service.applicationConfigWithAuth().subscribe((config) => {
-      expect(config.data.length).toEqual(2);
+      expect(config.data.length).toEqual(3);
       expect(config.data[0].id).toEqual('AUTH');
       done();
     });
@@ -66,4 +66,21 @@ describe('ConfigService', () => {
 
     req.flush(appConfigMock);
   });
+  // ToDo
+  // it('should return navigation config', (done) => {
+  // const appConfigMock: INavigationResponse = {
+  //   data: sideNavSampleData,
+  //   message: '',
+  // };
+  // service.getNavigationData().subscribe((config) => {
+  //   expect(config.data.collapsed).toBeTruthy();
+  //   expect(config.data.menus.bottomOrder.length).toEqual(6);
+  //   done();
+  // });
+
+  // const req = httpTestingController.expectOne(apiBaseUrl + 'api/navigation');
+  // expect(req.request.method).toEqual('GET');
+
+  // req.flush(appConfigMock);
+  // });
 });

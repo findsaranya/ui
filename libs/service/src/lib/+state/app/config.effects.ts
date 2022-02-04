@@ -44,7 +44,7 @@ export class ConfigEffects {
             ];
             return ConfigActions.loadConfigSuccess({
               appConfig: applicationConfig.data,
-              navigationConfig: navigationConfig?.data,
+              navigationConfig: navigationConfig.data,
             });
           }),
           catchError(() => of(ConfigActions.initApplicationConfig()))

@@ -9,7 +9,7 @@ import { Observable, of, throwError } from 'rxjs';
 import * as ConfigActions from './config.actions';
 import { ConfigEffects } from './config.effects';
 
-import { appsWithAuth, errorMessage } from './config.data';
+import { appsWithAuth, errorMessage, sideNavSampleData } from './config.data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ConfigService, IApplicationConfigResponce } from '.';
@@ -24,6 +24,9 @@ describe('ConfigEffects', () => {
   const mockConfigService = {
     applicationConfig: jest.fn(() => of(responce)),
     applicationConfigWithAuth: jest.fn(() => of(responce)),
+    getNavigationData: jest.fn(() =>
+      of({ data: sideNavSampleData, message: '' })
+    ),
   };
 
   beforeEach(() => {
@@ -46,7 +49,10 @@ describe('ConfigEffects', () => {
       });
 
       const expected = hot('-a-|', {
-        a: ConfigActions.loadConfigSuccess({ config: appsWithAuth }),
+        a: ConfigActions.loadConfigSuccess({
+          appConfig: appsWithAuth,
+          navigationConfig: null,
+        }),
       });
 
       expect(effects.initApplicationConfig$).toBeObservable(expected);
@@ -94,7 +100,10 @@ describe('ConfigEffects', () => {
       });
 
       const expected = hot('-a-|', {
-        a: ConfigActions.loadConfigSuccess({ config: appsWithAuth }),
+        a: ConfigActions.loadConfigSuccess({
+          appConfig: appsWithAuth,
+          navigationConfig: sideNavSampleData,
+        }),
       });
 
       expect(effects.initApplicationConfigWithAuth$).toBeObservable(expected);
