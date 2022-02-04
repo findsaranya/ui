@@ -13,7 +13,7 @@ export class LayoutComponent {
   collapsed: boolean | null = null;
   name$: Observable<string>;
 
-  navigation$: Observable<AppConfig.ISideNavigation | null>;
+  navigation$: Observable<AppConfig.INavigation | null>;
 
   constructor(private store: Store<AppState>) {
     this.name$ = this.store.pipe(select(Auth.fullName));

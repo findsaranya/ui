@@ -3,7 +3,7 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 import * as ConfigActions from './config.actions';
 
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
-import { IApplicationConfigResponce, ISideNavigationResponse } from '.';
+import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { ConfigService } from './config.service';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class ConfigEffects {
           map((configResponse) => {
             const [applicationConfig, navigationConfig] = configResponse as [
               IApplicationConfigResponce,
-              ISideNavigationResponse
+              INavigationResponse
             ];
             return ConfigActions.loadConfigSuccess({
               appConfig: applicationConfig.data,

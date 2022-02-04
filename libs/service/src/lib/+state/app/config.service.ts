@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IApplicationConfigResponce, ISideNavigationResponse } from '.';
+import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
 import { sideNavSampleData } from './config.data';
 
@@ -23,8 +23,8 @@ export class ConfigService {
     );
   }
 
-  getNavigationData(): Observable<ISideNavigationResponse> {
-    const resp: ISideNavigationResponse = {
+  getNavigationData(): Observable<INavigationResponse> {
+    const resp: INavigationResponse = {
       data: sideNavSampleData,
       message: '',
     };

@@ -1,4 +1,4 @@
-import { IMicroFrontendConfig, ISideNavigation } from './config.models';
+import { IMicroFrontendConfig, INavigation } from './config.models';
 
 export const apps: IMicroFrontendConfig[] = [
   {
@@ -25,9 +25,19 @@ export const appsWithAuth: IMicroFrontendConfig[] = [
     subscribed: false,
     remoteEntry: 'http://localhost:4202/remoteEntry.js',
   },
+  {
+    companyType: 'SUPPLIER',
+    exposedModule: './Module',
+    id: 'dashboard',
+    ngModuleName: 'RemoteEntryModule',
+    remoteName: 'dashboard',
+    routePath: '',
+    subscribed: true,
+    remoteEntry: 'http://localhost:4203/remoteEntry.js',
+  },
 ];
 
-export const sideNavSampleData: ISideNavigation = {
+export const sideNavSampleData: INavigation = {
   collapsed: true,
   ttLogo: 'tt-logo.svg',
   customLogo: '',

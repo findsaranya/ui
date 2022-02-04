@@ -5,7 +5,10 @@ import { AppState } from '../+state/app.store';
 import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { IMicroFrontendConfig } from '../+state/app/config.models';
+import {
+  IMicroFrontendConfig,
+  INavigation,
+} from '../+state/app/config.models';
 import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
 @Injectable()
@@ -66,12 +69,21 @@ export class BootstrapService {
         this.listenLoginLogout(!auth.loggedIn);
         this.appConfigLoaded = true;
         this.loadApplicationConfig(appConfig)
-          .then(this.startApplication.bind(this, auth))
+          .then(
+            this.startApplication.bind(
+              this,
+              auth,
+              appConfig.navigation as INavigation
+            )
+          )
           .catch(this.configErrorHandler.bind(this));
       });
   }
 
-  private startApplication(auth: Auth.State): void {
+  private startApplication(
+    auth: Auth.State,
+    navigation: INavigation
+  ): void {
     const next = this.activatedRoute.snapshot.queryParams['next'];
     this.appInitialized();
     if (!auth.loggedIn) return;
@@ -84,7 +96,7 @@ export class BootstrapService {
       window.location.pathname === '/login'
     )
       // ToDo Default landing page setup
-      this.router.navigate(['/']);
+      this.router.navigate([navigation.defaultRoute]);
   }
 
   private loadApplicationConfig(appConfig: Config.State): Promise<void> {
@@ -116,10 +128,10 @@ export class BootstrapService {
       if (option.companyType !== 'DEFAULT') {
         child.push({
           path,
-          loadChildren: !option.subscribed
-            ? () => import('@tt-webapp/ui').then((m) => m.NotSubscribedModule)
-            : () =>
-                loadRemoteModule(option).then((m) => m[option.ngModuleName]),
+          loadChildren: () =>
+            !option.subscribed
+              ? import('@tt-webapp/ui').then((m) => m.NotSubscribedModule)
+              : loadRemoteModule(option).then((m) => m[option.ngModuleName]),
         });
       } else {
         root.push({

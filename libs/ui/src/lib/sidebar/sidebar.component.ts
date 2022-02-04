@@ -18,7 +18,7 @@ export class SidebarComponent {
   collapsed: boolean;
   showMenu: string;
 
-  @Input() navigation!: AppConfig.ISideNavigation | null;
+  @Input() navigation!: AppConfig.INavigation | null;
   @Output() collapsedEvent = new EventEmitter<boolean>();
 
   get staticUrl() {

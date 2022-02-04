@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IMicroFrontendConfig, ISideNavigation } from './config.models';
+import { IMicroFrontendConfig, INavigation } from './config.models';
 
 export const initApplicationConfig = createAction(
   '[Config] Init Application Config'
@@ -12,7 +12,7 @@ export const loadConfigSuccess = createAction(
   '[Config/API] Load Config Success',
   props<{
     appConfig: IMicroFrontendConfig[];
-    navigationConfig: ISideNavigation | null;
+    navigationConfig: INavigation | null;
   }>()
 );
 

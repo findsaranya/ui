@@ -16,7 +16,7 @@ export interface IMicroFrontendConfig extends LoadRemoteModuleOptions {
  */
 export interface ConfigEntity {
   coreApplications: IMicroFrontendConfig[] | null;
-  navigation: ISideNavigation | null;
+  navigation: INavigation | null;
 }
 
 export interface IApplicationConfigResponce {
@@ -24,12 +24,12 @@ export interface IApplicationConfigResponce {
   data: IMicroFrontendConfig[];
 }
 
-export interface ISideNavigationResponse {
+export interface INavigationResponse {
   message: string;
-  data: ISideNavigation;
+  data: INavigation;
 }
 
-export interface ISideNavigation {
+export interface INavigation {
   ttLogo: string;
   customLogo: string;
   defaultRoute: string;
