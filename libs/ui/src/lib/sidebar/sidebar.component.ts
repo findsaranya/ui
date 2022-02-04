@@ -4,8 +4,9 @@ import {
   EventEmitter,
   Output,
   Input,
+  Inject,
 } from '@angular/core';
-import { AppConfig } from '@tt-webapp/service';
+import { AppConfig, STATIC_BASE_URL } from '@tt-webapp/service';
 
 @Component({
   selector: 'tt-webapp-sidebar',
@@ -20,12 +21,16 @@ export class SidebarComponent {
   @Input() navigation!: AppConfig.ISideNavigation | null;
   @Output() collapsedEvent = new EventEmitter<boolean>();
 
-  constructor() {
+  get staticUrl() {
+    return this._staticUrl;
+  }
+
+  constructor(@Inject(STATIC_BASE_URL) private _staticUrl: string) {
     this.collapsed = false;
     this.showMenu = '';
   }
 
-  addExpandClass(element: string) {
+  addExpandClass(element: string): void {
     if (element === this.showMenu) {
       this.showMenu = '0';
     } else {
@@ -33,7 +38,7 @@ export class SidebarComponent {
     }
   }
 
-  toggleCollapsed() {
+  toggleCollapsed(): void {
     this.collapsed = !this.collapsed;
     this.collapsedEvent.emit(this.collapsed);
   }
