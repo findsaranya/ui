@@ -44,3 +44,7 @@ export * from './lib/textarea/textarea.module';
 export * from './lib/radio/radio-group/radio-group.directive';
 export * from './lib/radio/radio-button/radio-button.component';
 export * from './lib/radio/radio.module';
+//content modal
+export * from './lib/contentmodal/contentmodal.module';
+export * from './lib/contentmodal/modal.service';
+export * from './lib/contentmodal/modalref';
