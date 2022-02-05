@@ -7,7 +7,7 @@ export const enum TTModalState {
   CLOSED,
 }
 
-export class TTModalRef<T, R> {
+export class ModalRef<T = any, R = any> {
   private _result: R | undefined;
   get state(): TTModalState {
     return this._state;
