@@ -1,9 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { IMicroFrontendConfig } from '../../mfe/mfe.model';
 
-export const init = createAction(
-  '[Config] Init',
-  props<{ envConfig: { [key in string]: unknown } }>()
+export const initApplicationConfig = createAction(
+  '[Config] Init Application Config'
+);
+export const initApplicationConfigWithAuth = createAction(
+  '[Config] Init Application Config With Authentication'
 );
 
 export const loadConfigSuccess = createAction(

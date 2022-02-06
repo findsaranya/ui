@@ -1,62 +1,57 @@
-import { AuthEntity } from './auth.models';
-import { authAdapter, AuthPartialState, initialState } from './auth.reducer';
+import { AUTH_FEATURE_KEY } from '.';
+import { UserConfig } from './auth.data';
+import { AuthPartialState, initialState } from './auth.reducer';
 import * as AuthSelectors from './auth.selectors';
 
 describe('Auth Selectors', () => {
-  const ERROR_MSG = 'No Error Available';
-  const getAuthId = (it: AuthEntity) => it.id;
-  const createAuthEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as AuthEntity);
-
   let state: AuthPartialState;
 
-  beforeEach(() => {
-    state = {
-      auth: authAdapter.setAll(
-        [
-          createAuthEntity('PRODUCT-AAA'),
-          createAuthEntity('PRODUCT-BBB'),
-          createAuthEntity('PRODUCT-CCC'),
-        ],
-        {
-          ...initialState,
-          selectedId: 'PRODUCT-BBB',
-          error: ERROR_MSG,
-          loaded: true,
-        }
-      ),
-    };
+  describe('Auth Selectors', () => {
+    beforeEach(() => {
+      state = {
+        [AUTH_FEATURE_KEY]: { ...initialState },
+      };
+    });
+    it('getAuthState() should return the list of Auth', () => {
+      const results = AuthSelectors.getAuthState(state);
+      expect(results.loaded).toBeFalsy();
+      expect(results.token).toBeNull();
+      expect(results.loggedIn).toBeNull();
+      expect(results.userConfig).toBeNull();
+      expect(results.authenticating).toBeFalsy();
+    });
+    it('getAuthLoaded() should return Falsy', () => {
+      const result = AuthSelectors.getAuthLoaded(state);
+      expect(result).toBeFalsy();
+    });
+    it('getSession() should return null', () => {
+      const result = AuthSelectors.getSession(state);
+      expect(result).toBeNull();
+    });
+    it('loggedIn() should return null', () => {
+      const result = AuthSelectors.loggedIn(state);
+      expect(result).toBeNull();
+    });
+    it('fullName() should return null', () => {
+      const result = AuthSelectors.fullName(state);
+      expect(result).toEqual('undefined undefined');
+    });
+    it('getAuthError() should return undefined', () => {
+      const result = AuthSelectors.getAuthError(state);
+      expect(result).toBeUndefined();
+    });
   });
 
-  describe('Auth Selectors', () => {
-    it('getAllAuth() should return the list of Auth', () => {
-      const results = AuthSelectors.getAllAuth(state);
-      const selId = getAuthId(results[1]);
-
-      expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
+  describe('Auth selector with user config', () => {
+    beforeEach(() => {
+      state = {
+        [AUTH_FEATURE_KEY]: { ...initialState, userConfig: UserConfig },
+      };
     });
-
-    it('getSelected() should return the selected Entity', () => {
-      const result = AuthSelectors.getSelected(state) as AuthEntity;
-      const selId = getAuthId(result);
-
-      expect(selId).toBe('PRODUCT-BBB');
-    });
-
-    it('getAuthLoaded() should return the current "loaded" status', () => {
-      const result = AuthSelectors.getAuthLoaded(state);
-
-      expect(result).toBe(true);
-    });
-
-    it('getAuthError() should return the current "error" state', () => {
-      const result = AuthSelectors.getAuthError(state);
-
-      expect(result).toBe(ERROR_MSG);
+    it('fullName() with user config should return fullName', () => {
+      state[AUTH_FEATURE_KEY].userConfig = UserConfig;
+      const result = AuthSelectors.fullName(state);
+      expect(result).toEqual('fn ln');
     });
   });
 });

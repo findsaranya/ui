@@ -1,66 +1,100 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { combineLatest, takeWhile } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { combineLatest, Observable, takeWhile } from 'rxjs';
 import { AppState } from '../+state/app.store';
-import * as AppConfig from '../+state/app';
+import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
-import { Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { IMicroFrontendConfig } from '../mfe/mfe.model';
-import { loadRemoteModule } from '@angular-architects/module-federation';
+import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BootstrapService {
-  appInitialized: ((value: void | PromiseLike<void>) => void) | undefined;
+  appInitialized!: (value: void | PromiseLike<void>) => void;
   appConfigLoaded = false;
-
-  constructor(private store: Store<AppState>, private router: Router) {}
+  appConfig: (Observable<Config.State> | Observable<Auth.State>)[];
+  loginLogoutLoaded = false;
+  initialRoutes: Routes;
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.appConfig = [
+      this.store.select('appConfig'),
+      this.store.select('auth'),
+    ];
+    this.initialRoutes = this.router.config;
+  }
 
   /**
    * init
    * @param envConfig
    * @returns
    */
-  init(envConfig: { [key in string]: unknown }): Promise<void> {
+  init(): Promise<void> {
     return new Promise((resolve) => {
       this.appInitialized = resolve;
       this.appConfigLoaded = false;
-      this.store.dispatch(AppConfig.init({ envConfig }));
-      this.store.dispatch(Auth.init());
+
+      // check authentication status -> callback mfe application config
+      const callback = {
+        success: [Config.initApplicationConfigWithAuth()],
+        failure: [Config.initApplicationConfig()],
+        logout: [Config.initApplicationConfig()],
+      };
+      this.store.dispatch(Auth.initSession({ callback }));
       this.listenConfigUpdates();
     });
   }
 
   private listenConfigUpdates(): void {
-    const appData = [this.store.select('appConfig'), this.store.select('auth')];
-    combineLatest(appData)
+    this.appConfigLoaded = false;
+    combineLatest(this.appConfig)
       .pipe(takeWhile(() => !this.appConfigLoaded))
-      .subscribe((config) => {
-        const [appConfig, auth] = config;
-        if (!appConfig.loaded || !auth.loaded) return;
-        if (appConfig.error) this.configErrorHandler(appConfig.error);
-        if (auth.error) this.authErrorHandler(auth.error);
-
+      .subscribe((state) => {
+        const [appConfig, auth] = state as [Config.State, Auth.State];
+        if (!appConfig.loaded || auth.loggedIn === null) return;
+        if (appConfig.error) {
+          this.configErrorHandler(appConfig.error);
+          return;
+        }
+        this.listenLoginLogout(!auth.loggedIn);
         this.appConfigLoaded = true;
-        this.loadApplicationConfig(appConfig as AppConfig.State)
-          .then(this.appInitialized)
+        this.loadApplicationConfig(appConfig)
+          .then(this.startApplication.bind(this, auth))
           .catch(this.configErrorHandler.bind(this));
       });
   }
 
-  private loadApplicationConfig(appConfig: AppConfig.State): Promise<void> {
+  private startApplication(auth: Auth.State): void {
+    const next = this.activatedRoute.snapshot.queryParams['next'];
+    this.appInitialized();
+    if (!auth.loggedIn) return;
+    if (next) {
+      this.router.navigate([next]);
+      return;
+    }
+    if (
+      window.location.pathname === '/' ||
+      window.location.pathname === '/login'
+    )
+      // ToDo Default landing page setup
+      this.router.navigate(['settings']);
+  }
+
+  private loadApplicationConfig(appConfig: Config.State): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         this.router.resetConfig([
           ...this.buildRoutes(
             appConfig.coreApplications as IMicroFrontendConfig[]
           ),
-          ...this.router.config,
+          ...this.initialRoutes,
         ]);
         resolve();
       } catch (e) {
-        reject(e);
+        reject('Failed to load application routes');
       }
     });
   }
@@ -68,7 +102,12 @@ export class BootstrapService {
   private buildRoutes(options: IMicroFrontendConfig[]): Routes {
     const routes: Routes = options.map((d) => ({
       path: d.routePath,
-      loadChildren: () => loadRemoteModule(d).then((m) => m[d.ngModuleName]),
+      loadChildren: () => {
+        if (d.companyType !== 'DEFAULT' && !d.subscribed) {
+          return import('@tt-webapp/ui').then((m) => m.NotSubscribedModule);
+        }
+        return loadRemoteModule(d).then((m) => m[d.ngModuleName]);
+      },
     }));
     return routes;
   }
@@ -80,10 +119,23 @@ export class BootstrapService {
         prev: this.router.url,
       },
     });
-    this.appInitialized?.();
+    this.appInitialized();
   }
 
-  private authErrorHandler(error: string): void {
-    // Todo
+  private listenLoginLogout(isLogin: boolean): void {
+    this.loginLogoutLoaded = false;
+    this.store
+      .pipe(
+        select(Auth.loggedIn),
+        takeWhile(() => !this.loginLogoutLoaded)
+      )
+      .subscribe(this.initAppConfig.bind(this, isLogin));
+  }
+
+  private initAppConfig(expected: boolean, currentState: boolean | null): void {
+    if (currentState !== expected) return;
+    if (currentState === false) this.router.navigate(['login']);
+    this.loginLogoutLoaded = true;
+    this.listenConfigUpdates();
   }
 }

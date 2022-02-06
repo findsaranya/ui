@@ -2,11 +2,11 @@ import { LoadRemoteModuleOptions } from '@angular-architects/module-federation';
 
 export interface IMicroFrontendConfig extends LoadRemoteModuleOptions {
   id: string;
+  companyType: 'DEFAULT' | 'BRAND' | 'SUPPLIER';
   routePath: string;
   ngModuleName: string;
-  companyType: string | null;
+  subscribed: boolean;
   pathMatch?: string;
-  subscription: string | null;
   canActivate?: string[];
   canDeactivate?: string[];
 }

@@ -4,6 +4,7 @@
     "auth": "apps/auth",
     "fashion": "apps/fashion",
     "service": "libs/service",
+    "settings": "apps/settings",
     "ui": "libs/ui"
   }
 }
