@@ -4,15 +4,12 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { Modal } from './modal.service';
 import { ModalContainerComponent } from './modal-container.component';
+import { ModaTitleDirective } from './moda-title-directive.directive';
 
 @NgModule({
-  declarations: [
-    ModalContainerComponent
-  ],
+  declarations: [ModalContainerComponent, ModaTitleDirective],
   imports: [CommonModule, OverlayModule, PortalModule],
   providers: [Modal],
-  exports: [
-    ModalContainerComponent
-  ],
+  exports: [ModalContainerComponent, ModaTitleDirective],
 })
 export class ContentmodalModule {}
