@@ -48,3 +48,5 @@ export * from './lib/radio/radio.module';
 export * from './lib/contentmodal/contentmodal.module';
 export * from './lib/contentmodal/modal.service';
 export * from './lib/contentmodal/modalref';
+export * from './lib/contentmodal/modalconfig';
+export * from './lib/contentmodal/moda-title-directive.directive';
