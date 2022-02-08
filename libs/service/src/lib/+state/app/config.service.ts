@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
-import { sideNavSampleData } from './config.data';
 
 @Injectable()
 export class ConfigService {
@@ -24,11 +23,6 @@ export class ConfigService {
   }
 
   getNavigationData(): Observable<INavigationResponse> {
-    const resp: INavigationResponse = {
-      data: sideNavSampleData,
-      message: '',
-    };
-
-    return of(resp);
+    return this.http.get<INavigationResponse>(`${this.apiBaseUrl}api/ui/menus`);
   }
 }
