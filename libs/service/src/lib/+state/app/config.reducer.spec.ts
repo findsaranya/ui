@@ -52,6 +52,17 @@ describe('Config Reducer', () => {
       expect(result.error).toBeNull();
     });
 
+    it('should toggle the navigation collapse', () => {
+      const action = ConfigActions.navigationPinToggle({ collapsed: false });
+      const result = reducer(
+        { ...initialState, navigation: sideNavSampleData },
+        action
+      );
+      expect(result.loaded).toBeFalsy();
+      expect(result.coreApplications).toBeNull();
+      expect(result.navigation?.collapsed).toBeFalsy();
+      expect(result.error).toBeUndefined();
+    });
     it('loadConfigError should return the error message', () => {
       const errorMessage = 'Failed to load application config';
       const action = ConfigActions.loadConfigFailure({ error: errorMessage });

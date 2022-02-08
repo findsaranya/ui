@@ -3,7 +3,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NxModule } from '@nrwl/angular';
-import { hot } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 
 import * as ConfigActions from './config.actions';
@@ -17,7 +17,7 @@ import { ConfigService, IApplicationConfigResponce } from '.';
 describe('ConfigEffects', () => {
   let actions: Observable<Action>;
   let effects: ConfigEffects;
-
+  let service: ConfigService;
   const responce: IApplicationConfigResponce = {
     data: appsWithAuth,
   };
@@ -27,6 +27,9 @@ describe('ConfigEffects', () => {
     getNavigationData: jest.fn(() =>
       of({ data: sideNavSampleData, message: '' })
     ),
+    updateNavigationPinState: jest.fn((collapsed: boolean) => {
+      return of(collapsed);
+    }),
   };
 
   beforeEach(() => {
@@ -40,6 +43,7 @@ describe('ConfigEffects', () => {
       ],
     });
     effects = TestBed.inject(ConfigEffects);
+    service = TestBed.inject(ConfigService);
   });
 
   describe('Config Effect [Without Auth]', () => {
@@ -123,6 +127,19 @@ describe('ConfigEffects', () => {
       });
 
       expect(effects.initApplicationConfigWithAuth$).toBeObservable(expected);
+    });
+    it('Should call handle navigation effect and dispatch nothing', () => {
+      actions = cold('a', {
+        a: ConfigActions.navigationPinToggle({ collapsed: true }),
+      });
+
+      jest.spyOn(service, 'updateNavigationPinState');
+      effects.handleNavigationPinToggle$.subscribe();
+      const expected = cold('a', {
+        a: true,
+      });
+      expect(effects.handleNavigationPinToggle$).toBeObservable(expected);
+      expect(service.updateNavigationPinState).toBeCalled();
     });
   });
 });

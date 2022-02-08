@@ -1,4 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
+import { INavigation } from '.';
 
 import * as ConfigActions from './config.actions';
 import { ConfigEntity } from './config.models';
@@ -46,6 +47,13 @@ const configReducer = createReducer(
       navigation: navigationConfig,
     })
   ),
+  on(ConfigActions.navigationPinToggle, (state, { collapsed }) => ({
+    ...state,
+    navigation: {
+      ...(state.navigation as INavigation),
+      collapsed,
+    },
+  })),
   on(ConfigActions.loadConfigFailure, (state, { error }) => ({
     ...state,
     loaded: true,

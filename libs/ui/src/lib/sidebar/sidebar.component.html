@@ -1,4 +1,8 @@
-<nav class="sidebar" [ngClass]="{ collapsed }" *ngIf="navigation">
+<nav
+  class="sidebar"
+  [ngClass]="{ collapsed: navigation.collapsed }"
+  *ngIf="navigation"
+>
   <div class="logo-block">
     <div class="trustrace logo">
       <a>
@@ -25,7 +29,7 @@
     <div class="navigation-pin" (click)="toggleCollapsed()">
       <span
         class="tt-icon pin"
-        [ngClass]="{ pin: collapsed, unpin: !collapsed }"
+        [ngClass]="{ pin: navigation.collapsed, unpin: !navigation.collapsed }"
       ></span>
     </div>
   </div>

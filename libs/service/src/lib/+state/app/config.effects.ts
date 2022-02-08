@@ -53,6 +53,17 @@ export class ConfigEffects {
     )
   );
 
+  handleNavigationPinToggle$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ConfigActions.navigationPinToggle),
+        switchMap((action) =>
+          this.configService.updateNavigationPinState(action.collapsed)
+        )
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private readonly actions$: Actions,
     private configService: ConfigService

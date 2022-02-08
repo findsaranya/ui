@@ -23,5 +23,6 @@ export class LayoutComponent {
 
   onCollapse(e: boolean): void {
     this.collapsed = e;
+    this.store.dispatch(AppConfig.navigationPinToggle({ collapsed: e }));
   }
 }

@@ -67,7 +67,7 @@
   .list-group {
     @apply px-3 pt-[10px];
     a {
-      @apply text-gray-600 text-sm hover:bg-gray-800 hover:rounded-md hover:text-white-default;
+      @apply text-gray-600 text-sm;
     }
     .tt-icon {
       @apply text-[22px] p-[14px];

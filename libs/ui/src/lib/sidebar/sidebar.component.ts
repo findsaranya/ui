@@ -15,7 +15,6 @@ import { AppConfig, STATIC_BASE_URL } from '@tt-webapp/service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  collapsed: boolean;
   showMenu: string;
 
   @Input() navigation!: AppConfig.INavigation | null;
@@ -26,7 +25,6 @@ export class SidebarComponent {
   }
 
   constructor(@Inject(STATIC_BASE_URL) private _staticUrl: string) {
-    this.collapsed = false;
     this.showMenu = '';
   }
 
@@ -39,7 +37,6 @@ export class SidebarComponent {
   }
 
   toggleCollapsed(): void {
-    this.collapsed = !this.collapsed;
-    this.collapsedEvent.emit(this.collapsed);
+    this.collapsedEvent.emit(!this.navigation?.collapsed);
   }
 }

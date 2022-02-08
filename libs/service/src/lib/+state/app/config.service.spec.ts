@@ -66,6 +66,7 @@ describe('ConfigService', () => {
 
     req.flush(appConfigMock);
   });
+
   // ToDo
   // it('should return navigation config', (done) => {
   // const appConfigMock: INavigationResponse = {
@@ -83,4 +84,16 @@ describe('ConfigService', () => {
 
   // req.flush(appConfigMock);
   // });
+
+  it('should patch navigation pin state ', (done) => {
+    service.updateNavigationPinState(false).subscribe((config) => {
+      expect(config).not.toBeUndefined();
+      done();
+    });
+    const req = httpTestingController.expectOne(
+      apiBaseUrl + 'api/ui/navigation'
+    );
+    expect(req.request.method).toEqual('PATCH');
+    req.flush({});
+  });
 });

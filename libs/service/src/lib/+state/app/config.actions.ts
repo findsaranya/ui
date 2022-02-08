@@ -9,7 +9,7 @@ export const initApplicationConfigWithAuth = createAction(
 );
 
 export const loadConfigSuccess = createAction(
-  '[Config/API] Load Config Success',
+  '[Config] Load Config Success',
   props<{
     appConfig: IMicroFrontendConfig[];
     navigationConfig: INavigation | null;
@@ -17,6 +17,11 @@ export const loadConfigSuccess = createAction(
 );
 
 export const loadConfigFailure = createAction(
-  '[Config/API] Load Config Failure',
+  '[Config] Load Config Failure',
   props<{ error: string }>()
+);
+
+export const navigationPinToggle = createAction(
+  '[Config] navigation pin toggle',
+  props<{ collapsed: boolean }>()
 );

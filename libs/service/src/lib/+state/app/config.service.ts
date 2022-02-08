@@ -31,4 +31,10 @@ export class ConfigService {
 
     return of(resp);
   }
+
+  updateNavigationPinState(collapsed: boolean): Observable<unknown> {
+    return this.http.patch(`${this.apiBaseUrl}api/ui/navigation`, {
+      collapsed,
+    });
+  }
 }
