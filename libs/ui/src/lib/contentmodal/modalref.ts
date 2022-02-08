@@ -1,7 +1,11 @@
 import { FocusOrigin } from '@angular/cdk/a11y';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
-
+import {
+  ModalContainerBaseComponent,
+  ModalContainerComponent,
+} from './modal-container.component';
+import { v4 as uid } from 'uuid';
 export const enum TTModalState {
   OPEN,
   CLOSED,
@@ -16,10 +20,21 @@ export class ModalRef<T = any, R = any> {
     this._state = val;
   }
   private _state = TTModalState.OPEN;
+  disableClose: boolean | undefined =
+    this.containerInstance.config.disableClose;
   componentInstance: T | undefined;
   afterClosed$ = new Subject<R | undefined>();
-  constructor(private _overlayRef: OverlayRef) {
-    _overlayRef.backdropClick().subscribe(() => this.closeModalVia('mouse'));
+  constructor(
+    private _overlayRef: OverlayRef,
+    public containerInstance: ModalContainerComponent,
+    readonly id: string = `tt-modal-${uid()}`
+  ) {
+    _overlayRef.backdropClick().subscribe(() => {
+      if (!this.disableClose) {
+        this.closeModalVia('mouse');
+      }
+      containerInstance.id = id;
+    });
   }
 
   close(modalResult?: R): void {
