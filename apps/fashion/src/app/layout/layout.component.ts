@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {
-  collapsed: boolean | null = null;
   name$: Observable<string>;
 
   navigation$: Observable<AppConfig.INavigation | null>;
@@ -22,7 +21,6 @@ export class LayoutComponent {
   }
 
   onCollapse(e: boolean): void {
-    this.collapsed = e;
     this.store.dispatch(AppConfig.navigationPinToggle({ collapsed: e }));
   }
 }

@@ -3,7 +3,10 @@
   (collapsedEvent)="onCollapse($event)"
 ></tt-webapp-sidebar>
 
-<main class="main-container" [ngClass]="{collapsed}">
+<main
+  class="main-container"
+  [ngClass]="{ collapsed: (navigation$ | async)?.collapsed }"
+>
   <header class="shadow-md">
     <div class="px-9">
       <div class="flex items-center h-16">

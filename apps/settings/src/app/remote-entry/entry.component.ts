@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
     </p>
 
     <div class="mt-3">
-      <img src="{{ staticUrl }}assets/static/img/dashboard.jpg" alt="logo" />
+      <img src="{{ staticUrl }}static/img/dashboard.jpg" alt="logo" />
     </div>
   `,
   styles: [
