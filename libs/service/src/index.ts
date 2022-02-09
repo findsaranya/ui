@@ -10,3 +10,5 @@ export * from './lib/interceptor/token.interceptor';
 export * from './lib/injection/tokens';
 
 export * from './lib/guard/wildcard-auth.guard';
+export * from './lib/chat-service/support-chat.service';
+export * from './lib/chat-service/support-chat.module';

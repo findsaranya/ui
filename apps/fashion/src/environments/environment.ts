@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API_BASE_URL: 'http://api.trustrace.local:5000/',
+  FRESH_CHAT_TOKEN: 'eac734fb-962b-4819-b126-31fa64298602',
   MOCK_SERVER_URL: 'http://localhost:5000/',
 };
 
