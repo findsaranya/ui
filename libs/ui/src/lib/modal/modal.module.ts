@@ -10,6 +10,7 @@ import {
   ModalActionsDirective,
   ModaCloseDirective,
 } from './moda-title-directive.directive';
+import { ModalComponentComponent } from './modalstories-component/modal-component/modal-component.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {
     ModalContentDirective,
     ModalActionsDirective,
     ModaCloseDirective,
+    ModalComponentComponent,
   ],
   imports: [CommonModule, OverlayModule, PortalModule],
   providers: [Modal],
@@ -29,4 +31,4 @@ import {
     ModaCloseDirective,
   ],
 })
-export class ContentmodalModule {}
+export class ModalModule {}
