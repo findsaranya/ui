@@ -2,17 +2,26 @@ import {
   ComponentType,
   Overlay,
   OverlayConfig,
+  OverlayContainer,
   OverlayRef,
 } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
-  ComponentRef,
+  Directive,
   Inject,
   Injectable,
   InjectionToken,
   Injector,
   Optional,
+  SkipSelf,
+  StaticProvider,
+  TemplateRef,
+  Type,
 } from '@angular/core';
+import {
+  ModalContainerBaseComponent,
+  ModalContainerComponent,
+} from './modal-container.component';
 import { Modalconfig } from './modalconfig';
 import { ModalRef } from './modalref';
 export const TT_MODAL_DEFAULT_OPTIONS = new InjectionToken<Modalconfig>(
@@ -20,71 +29,108 @@ export const TT_MODAL_DEFAULT_OPTIONS = new InjectionToken<Modalconfig>(
 );
 
 export const TT_MODAL_DATA = new InjectionToken<any>('ModalData');
-@Injectable()
-export class Modal {
+export interface ContainerModalRef {
+  container: ModalContainerBaseComponent;
+  modalRef: ModalRef<any>;
+}
+@Directive()
+export abstract class ModalBase<C extends ModalContainerBaseComponent> {
+  private _openDialogsAtThisLevel: ContainerModalRef[] = [];
   constructor(
     private _overlay: Overlay,
     private _injector: Injector,
-    @Optional()
-    @Inject(TT_MODAL_DEFAULT_OPTIONS)
-    private _defaultOptions: Modalconfig
-  ) {
-    console.log('default options', _defaultOptions);
-  }
+    private _defaultOptions: Modalconfig,
+    private _parentDialog: ModalBase<C> | undefined,
+    private _overlayContainer: OverlayContainer,
+    private _dialogRefConstructor: Type<ModalRef<any>>,
+    private _dialogContainerType: Type<C>,
+    private _dialogDataToken: InjectionToken<any>
+  ) {}
 
+  get openModals(): ContainerModalRef[] {
+    return this._parentDialog
+      ? this._parentDialog.openModals
+      : this._openDialogsAtThisLevel;
+  }
   open<T, D, R>(
     component: ComponentType<T>,
+    config?: Modalconfig<D>
+  ): ModalRef<T, R>;
+
+  open<T, D, R>(
+    template: TemplateRef<T>,
+    config?: Modalconfig<D>
+  ): ModalRef<T, R>;
+
+  open<T, D, R>(
+    template: ComponentType<T> | TemplateRef<T>,
+    config?: Modalconfig<D>
+  ): ModalRef<T, R>;
+  open<T, D, R>(
+    componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
     config?: Modalconfig<D>
   ): ModalRef<T, R> {
     const modalConfig = applyConfigDefaults(
       config,
       this._defaultOptions || new Modalconfig()
     );
-    console.log('config', modalConfig);
     const overlayRef = this.createOverlay(modalConfig);
-    const dialogRef = new ModalRef(overlayRef);
-
-    const overlayComponent = this.attachModalContainer<T>(
+    const dialogContainer = this.attachModalContainer<T>(
       overlayRef,
-      modalConfig,
-      dialogRef,
-      component
+      modalConfig
     );
-
-    //this.dialogRef = dialogRef;
+    const dialogRef = this.attachDialogContent<T, R>(
+      componentOrTemplateRef,
+      dialogContainer,
+      overlayRef,
+      modalConfig
+    );
+    this.openModals.push({
+      container: dialogContainer,
+      modalRef: dialogRef,
+    });
     return dialogRef;
   }
   private attachModalContainer<T>(
     overlayRef: OverlayRef,
-    config: Modalconfig,
-    dialogRef: ModalRef<T>,
-    component: ComponentType<T>
-  ) {
-    const injector = this.createInjector(config, dialogRef);
+    config: Modalconfig
+  ): C {
+    const userInjector =
+      config && config.viewContainerRef && config.viewContainerRef.injector;
 
-    const containerPortal = new ComponentPortal(component, null, injector);
-    const containerRef: ComponentRef<T> = overlayRef.attach(containerPortal);
-    console.log('container ref ', containerRef);
-    return containerRef.instance;
+    const injector1 = Injector.create({
+      parent: userInjector || this._injector,
+      providers: [{ provide: Modalconfig, useValue: config }],
+    });
+
+    const containerPortal1 = new ComponentPortal(
+      this._dialogContainerType,
+      config.viewContainerRef,
+      injector1,
+      config.componentFactoryResolver
+    );
+    const containerRef1 = overlayRef.attach<C>(containerPortal1);
+
+    return containerRef1.instance;
   }
 
   private createInjector<T>(
     config: Modalconfig,
-    dialogRef: ModalRef<T>
+    dialogRef: ModalRef<T>,
+    dialogContainer?: C
   ): Injector {
-    // const injectionTokens = new WeakMap();
-
-    // injectionTokens.set(CompoRef, dialogRef);
-
-    // return new PortalInjector(this._injector, injectionTokens);
+    const userInjector =
+      config && config.viewContainerRef && config.viewContainerRef.injector;
+    const providers: StaticProvider[] = [
+      { provide: this._dialogContainerType, useValue: dialogContainer },
+      { provide: this._dialogDataToken, useValue: config.data },
+      { provide: this._dialogRefConstructor, useValue: dialogRef },
+    ];
     const injector = Injector.create({
-      parent: this._injector,
-      providers: [
-        { provide: ModalRef, useValue: dialogRef },
-        { provide: TT_MODAL_DATA, useValue: config?.data },
-      ],
+      parent: userInjector || this._injector,
+      providers,
     });
-    console.log('injector', dialogRef);
+
     return injector;
   }
 
@@ -100,6 +146,7 @@ export class Modal {
       backdropClass: config.backdropClass,
       panelClass: config.panelClass,
       width: config.width,
+      maxWidth: config.maxWidth,
       scrollStrategy: this._overlay.scrollStrategies.block(),
       positionStrategy,
     });
@@ -107,12 +154,71 @@ export class Modal {
     return overlayConfig;
   }
 
-  private createOverlay(config: Modalconfig) {
-    // Returns an OverlayConfig
+  private createOverlay(config: Modalconfig): OverlayRef {
     const overlayConfig = this.getOverlayConfig(config);
 
-    // Returns an OverlayRef
     return this._overlay.create(overlayConfig);
+  }
+
+  private attachDialogContent<T, R>(
+    componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
+    dialogContainer: C | undefined,
+    overlayRef: OverlayRef,
+    config: Modalconfig
+  ): ModalRef<T, R> {
+    const dialogRef = new this._dialogRefConstructor(
+      overlayRef,
+      dialogContainer,
+      config.id
+    );
+
+    if (componentOrTemplateRef instanceof TemplateRef) {
+      dialogContainer?.attachTemplatePortal(
+        new TemplatePortal<T>(componentOrTemplateRef, {
+          $implicit: config.data,
+          dialogRef,
+        } as any)
+      );
+    } else {
+      const injector = this.createInjector<T>(
+        config,
+        dialogRef,
+        dialogContainer
+      );
+      const contentRef = dialogContainer?.attachComponentPortal<T>(
+        new ComponentPortal(
+          componentOrTemplateRef as ComponentType<T>,
+          config.viewContainerRef,
+          injector
+        )
+      );
+      dialogRef.componentInstance = contentRef?.instance;
+    }
+
+    return dialogRef;
+  }
+}
+@Injectable()
+export class Modal extends ModalBase<ModalContainerComponent> {
+  constructor(
+    overlay: Overlay,
+    injector: Injector,
+    @Optional()
+    @Inject(TT_MODAL_DEFAULT_OPTIONS)
+    private defaultOptions: Modalconfig,
+    @Optional() @SkipSelf() parentDialog: Modal,
+    overlayContainer: OverlayContainer
+  ) {
+    super(
+      overlay,
+      injector,
+      defaultOptions,
+      parentDialog,
+      overlayContainer,
+      ModalRef,
+      ModalContainerComponent,
+      TT_MODAL_DATA
+    );
   }
 }
 function applyConfigDefaults(
