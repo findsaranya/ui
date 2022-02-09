@@ -10,7 +10,12 @@ import {
   ModalActionsDirective,
   ModaCloseDirective,
 } from './moda-title-directive.directive';
-import { ModalComponentComponent } from './modalstories-component/modal-component/modal-component.component';
+import {
+  ModalComponent,
+  ModalMainComponent,
+  PromptComponent,
+} from './modalstories-component/modal-component/modal-component.component';
+import { ButtonModule } from '../button/button.module';
 
 @NgModule({
   declarations: [
@@ -19,9 +24,11 @@ import { ModalComponentComponent } from './modalstories-component/modal-componen
     ModalContentDirective,
     ModalActionsDirective,
     ModaCloseDirective,
-    ModalComponentComponent,
+    ModalComponent,
+    ModalMainComponent,
+    PromptComponent,
   ],
-  imports: [CommonModule, OverlayModule, PortalModule],
+  imports: [CommonModule, OverlayModule, PortalModule, ButtonModule],
   providers: [Modal],
   exports: [
     ModalContainerComponent,
@@ -29,6 +36,9 @@ import { ModalComponentComponent } from './modalstories-component/modal-componen
     ModalContentDirective,
     ModalActionsDirective,
     ModaCloseDirective,
+    ModalComponent,
+    ModalMainComponent,
+    PromptComponent,
   ],
 })
 export class ModalModule {}
