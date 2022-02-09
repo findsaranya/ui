@@ -50,3 +50,8 @@ export * from './lib/modal/modal.service';
 export * from './lib/modal/modalref';
 export * from './lib/modal/modalconfig';
 export * from './lib/modal/moda-title-directive.directive';
+export {
+  ModalComponent,
+  ModalMainComponent,
+  PromptComponent,
+} from './lib/modal/modalstories-component/modal-component/modal-component.component';
