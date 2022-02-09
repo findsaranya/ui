@@ -45,8 +45,8 @@ export * from './lib/radio/radio-group/radio-group.directive';
 export * from './lib/radio/radio-button/radio-button.component';
 export * from './lib/radio/radio.module';
 //content modal
-export * from './lib/contentmodal/contentmodal.module';
-export * from './lib/contentmodal/modal.service';
-export * from './lib/contentmodal/modalref';
-export * from './lib/contentmodal/modalconfig';
-export * from './lib/contentmodal/moda-title-directive.directive';
+export * from './lib/modal/modal.module';
+export * from './lib/modal/modal.service';
+export * from './lib/modal/modalref';
+export * from './lib/modal/modalconfig';
+export * from './lib/modal/moda-title-directive.directive';
