@@ -3,7 +3,6 @@ import {
   BasePortalOutlet,
   CdkPortalOutlet,
   ComponentPortal,
-  DomPortal,
   TemplatePortal,
 } from '@angular/cdk/portal';
 import {
@@ -23,13 +22,13 @@ import { v4 as uid } from 'uuid';
 @Directive()
 export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
   closeInteractionType: FocusOrigin | null = null;
-  id?: string;
   @ViewChild(CdkPortalOutlet, { static: true })
   portalOutlet!: CdkPortalOutlet;
   constructor(
     _elementRef: ElementRef,
     _config: Modalconfig,
-    viewContainerRef: ViewContainerRef
+    viewContainerRef: ViewContainerRef,
+    readonly id: string = `ttui-modal-container-${uid()}`
   ) {
     super();
   }
