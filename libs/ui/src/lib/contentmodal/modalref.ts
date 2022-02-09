@@ -1,16 +1,12 @@
 import { FocusOrigin } from '@angular/cdk/a11y';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
-import {
-  ModalContainerBaseComponent,
-  ModalContainerComponent,
-} from './modal-container.component';
+import { ModalContainerComponent } from './modal-container.component';
 import { v4 as uid } from 'uuid';
 export const enum TTModalState {
   OPEN,
   CLOSED,
 }
-
 export class ModalRef<T = any, R = any> {
   private _result: R | undefined;
   get state(): TTModalState {
@@ -27,13 +23,12 @@ export class ModalRef<T = any, R = any> {
   constructor(
     private _overlayRef: OverlayRef,
     public containerInstance: ModalContainerComponent,
-    readonly id: string = `tt-modal-${uid()}`
+    readonly id: string = `ttui-modal-ref-${uid()}`
   ) {
     _overlayRef.backdropClick().subscribe(() => {
       if (!this.disableClose) {
-        this.closeModalVia('mouse');
+        closeModalVia(this, 'mouse');
       }
-      containerInstance.id = id;
     });
   }
 
@@ -44,8 +39,14 @@ export class ModalRef<T = any, R = any> {
     this.afterClosed$.complete();
     this.state = TTModalState.CLOSED;
   }
-
-  private closeModalVia(interactionType: FocusOrigin, result?: R): void {
-    this.close(result);
+}
+export function closeModalVia<R>(
+  ref: ModalRef<R>,
+  interactionType: FocusOrigin,
+  result?: R
+): void {
+  if (ref.containerInstance !== undefined) {
+    ref.containerInstance.closeInteractionType = interactionType;
   }
+  return ref.close(result);
 }
