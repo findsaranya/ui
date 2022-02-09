@@ -1,6 +1,6 @@
 .ttui-modal-container {
   @apply block p-6 overflow-auto outline-none w-full h-full 
-  min-h-inherit max-h-inherit shadow-md rounded bg-white-default;
+  min-h-inherit max-h-inherit shadow-md rounded-xl bg-white-default;
 }
 .ttui-modal-title {
   @apply block mt-0 mx-0 mb-6 text-2xl font-bold tracking-primary;
