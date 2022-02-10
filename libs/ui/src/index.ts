@@ -12,9 +12,6 @@ export * from './lib/ui.module';
 // Sidebar
 export * from './lib/sidebar/sidebar.component';
 export * from './lib/sidebar/sidebar.module';
-// logout
-export * from './lib/logout/logout.component';
-export * from './lib/logout/logout.module';
 // Button
 export * from './lib/button/button.module';
 export * from './lib/button/button.component';

@@ -1,6 +1,7 @@
 <tt-webapp-sidebar
   [navigation]="navigation$ | async"
   (collapsedEvent)="onCollapse($event)"
+  [staticUrl]="staticUrl"
 ></tt-webapp-sidebar>
 
 <main

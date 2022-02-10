@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'logout',
-    loadChildren: () => import('@tt-webapp/ui').then((m) => m.LogoutModule),
+    loadChildren: () => import('./logout/logout.module').then((m) => m.LogoutModule),
   },
   {
     path: '**',
