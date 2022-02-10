@@ -17,17 +17,13 @@ export class SupportChatService {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
-  init(): void {
-    if (!this.chatConfig) {
-      throw new Error('Failed to load chat service configuration');
+  async init(): Promise<Error | void> {
+    try {
+      await this.embedChatWidget();
+      this.widget.init(this.chatConfig.initConfig);
+    } catch (error) {
+      throw new Error('Failed to create chat widget' + String(error));
     }
-    this.embedChatWidget()
-      .then(() => {
-        this.widget.init(this.chatConfig.initConfig);
-      })
-      .catch((error) => {
-        throw new Error('Failed embed chat widget' + String(error));
-      });
   }
 
   getUser(): Promise<unknown> {
