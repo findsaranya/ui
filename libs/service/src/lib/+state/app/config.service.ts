@@ -27,7 +27,7 @@ export class ConfigService {
   }
 
   updateNavigationPinState(collapsed: boolean): Observable<unknown> {
-    return this.http.patch(`${this.apiBaseUrl}api/ui/navigation`, {
+    return this.http.patch(`${this.apiBaseUrl}api/ui/menus/collapse`, {
       collapsed,
     });
   }

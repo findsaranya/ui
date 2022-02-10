@@ -96,7 +96,7 @@ describe('ConfigService', () => {
       done();
     });
     const req = httpTestingController.expectOne(
-      apiBaseUrl + 'api/ui/navigation'
+      apiBaseUrl + 'api/ui/menus/collapse'
     );
     expect(req.request.method).toEqual('PATCH');
     req.flush({});
