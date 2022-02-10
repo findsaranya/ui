@@ -48,7 +48,7 @@ export * from './lib/radio/radio.module';
 export * from './lib/modal/modal.module';
 export * from './lib/modal/modal.service';
 export * from './lib/modal/modalref';
-export * from './lib/modal/modalconfig';
+export * from './lib/modal/modalconfig.model';
 export * from './lib/modal/moda-title-directive.directive';
 export * from './lib/modal/modal-container.component';
 export {

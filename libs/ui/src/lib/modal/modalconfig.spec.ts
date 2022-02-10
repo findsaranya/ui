@@ -1,4 +1,4 @@
-import { Modalconfig } from './modalconfig';
+import { Modalconfig } from './modalconfig.model';
 
 describe('Modalconfig', () => {
   it('should create an instance', () => {

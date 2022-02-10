@@ -19,11 +19,11 @@ export class ModalRef<T = any, R = any> {
   disableClose: boolean | undefined =
     this.containerInstance.config.disableClose;
   componentInstance: T | undefined;
-  afterClosed$ = new Subject<R | undefined>();
+  afterClosed = new Subject<R | undefined>();
+  readonly id: string = `ttui-modal-ref-${uid()}`;
   constructor(
     private _overlayRef: OverlayRef,
-    public containerInstance: ModalContainerComponent,
-    readonly id: string = `ttui-modal-ref-${uid()}`
+    public containerInstance: ModalContainerComponent
   ) {
     _overlayRef.backdropClick().subscribe(() => {
       if (!this.disableClose) {
@@ -35,8 +35,8 @@ export class ModalRef<T = any, R = any> {
   close(modalResult?: R): void {
     this._result = modalResult;
     this._overlayRef.dispose();
-    this.afterClosed$.next(modalResult);
-    this.afterClosed$.complete();
+    this.afterClosed.next(modalResult);
+    this.afterClosed.complete();
     this.state = TTModalState.CLOSED;
   }
 }

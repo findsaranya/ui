@@ -16,7 +16,7 @@ import {
   ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { Modalconfig } from './modalconfig';
+import { Modalconfig } from './modalconfig.model';
 import { v4 as uid } from 'uuid';
 
 @Directive()
@@ -24,11 +24,11 @@ export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
   closeInteractionType: FocusOrigin | null = null;
   @ViewChild(CdkPortalOutlet, { static: true })
   portalOutlet!: CdkPortalOutlet;
+  readonly id: string = `ttui-modal-container-${uid()}`;
   constructor(
     _elementRef: ElementRef,
     _config: Modalconfig,
-    viewContainerRef: ViewContainerRef,
-    readonly id: string = `ttui-modal-container-${uid()}`
+    viewContainerRef: ViewContainerRef
   ) {
     super();
   }
@@ -66,5 +66,6 @@ export class ModalContainerComponent extends ModalContainerBaseComponent {
     public viewContainerRef: ViewContainerRef
   ) {
     super(elementRef, config, viewContainerRef);
+    console.log('cdk container', this.id);
   }
 }
