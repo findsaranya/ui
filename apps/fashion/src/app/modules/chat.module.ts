@@ -14,6 +14,16 @@ import { environment } from '../../environments/environment';
           tags: ['visitors-fashion', 'fashion'],
           filterType: 'category',
         },
+        config: {
+          headerProperty: {
+            appName: 'TrusTrace',
+            backgroundColor: '#FFA440',
+            foregroundColor: '#ffffff',
+            fontUrl:
+              'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+            fontName: 'Inter',
+          },
+        },
       },
     }),
   ],

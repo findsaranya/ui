@@ -70,7 +70,7 @@ interface IFCConfig {
   };
   agent?: IFCAgent;
   headerProperty?: IFCHeaderProperty;
-  content: IFCContent;
+  content?: IFCContent;
 }
 
 interface IFCAgent {
