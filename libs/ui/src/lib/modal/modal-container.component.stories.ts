@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { ModalModule } from './modal.module';
+import { ViewContainerService } from './modal.service';
 import {
   ModalMainComponent,
   PromptComponent,
@@ -12,6 +13,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [ModalModule, CommonModule],
+      providers: [ViewContainerService],
     }),
   ],
   argTypes: {

@@ -2,15 +2,15 @@ import { ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 export type DialogRole = 'dialog' | 'alertdialog';
 export class Modalconfig<D = any> {
   viewContainerRef?: ViewContainerRef;
-  panelClass: string | string[] = [];
+  panelClass?: string | string[] = [];
   id?: string;
-  hasBackdrop = true;
-  backdropClass: string | string[] = 'bg-black-default/50';
-  disableClose = false;
-  width = '';
-  height = '';
-  data: D | null = null;
-  role: DialogRole = 'dialog';
-  maxWidth = '80vw';
+  hasBackdrop?: boolean = true;
+  backdropClass?: string | string[] = 'bg-black-default/50';
+  disableClose?: boolean = false;
+  width?: string = '';
+  height?: string = '';
+  data?: D | null = null;
+  role?: DialogRole = 'dialog';
+  maxWidth?: string = '80vw';
   componentFactoryResolver?: ComponentFactoryResolver;
 }

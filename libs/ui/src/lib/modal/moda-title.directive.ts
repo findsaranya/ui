@@ -7,7 +7,7 @@ import {
   Optional,
 } from '@angular/core';
 import { ContainerModalRef, Modal } from './modal.service';
-import { closeModalVia, ModalRef } from './modalref';
+import { ModalRef } from './modalref';
 
 @Directive({
   selector: '[modal-title]',
@@ -46,36 +46,36 @@ export class ModalActionsDirective {
   exportAs: 'ttmodalClose',
 })
 export class ModaCloseDirective implements OnInit {
+  static getClosestDialog(
+    element: ElementRef<HTMLElement>,
+    openDialogs?: ContainerModalRef[]
+  ): ContainerModalRef | undefined | null {
+    let parent: HTMLElement | null = element.nativeElement.parentElement;
+    while (parent && !parent.classList.contains('ttui-modal-container')) {
+      parent = parent.parentElement;
+    }
+    return parent
+      ? openDialogs?.find(({ container }) => container.id === parent?.id)
+      : null;
+  }
+
   constructor(
     @Optional() private _dialogRef: ModalRef<any>,
     private _elementRef: ElementRef<HTMLElement>,
     private _dialog: Modal
   ) {}
+
   ngOnInit(): void {
     if (!this._dialogRef) {
-      const dialogRef = getClosestDialog(
+      const dialogRef = ModaCloseDirective.getClosestDialog(
         this._elementRef,
         this._dialog.openModals
       );
       this._dialogRef = dialogRef?.modalRef as ModalRef;
     }
   }
+
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    closeModalVia(
-      this._dialogRef,
-      event.screenX === 0 && event.screenY === 0 ? 'keyboard' : 'mouse'
-    );
+    ModalRef.closeModalVia(this._dialogRef, 'mouse');
   }
-}
-function getClosestDialog(
-  element: ElementRef<HTMLElement>,
-  openDialogs?: ContainerModalRef[]
-): ContainerModalRef | undefined | null {
-  let parent: HTMLElement | null = element.nativeElement.parentElement;
-  while (parent && !parent.classList.contains('ttui-modal-container')) {
-    parent = parent.parentElement;
-  }
-  return parent
-    ? openDialogs?.find(({ container }) => container.id === parent?.id)
-    : null;
 }

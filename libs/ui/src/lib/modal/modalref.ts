@@ -27,11 +27,20 @@ export class ModalRef<T = any, R = any> {
   ) {
     _overlayRef.backdropClick().subscribe(() => {
       if (!this.disableClose) {
-        closeModalVia(this, 'mouse');
+        ModalRef.closeModalVia(this, 'mouse');
       }
     });
   }
-
+  static closeModalVia<R>(
+    ref: ModalRef<R>,
+    interactionType: FocusOrigin,
+    result?: R
+  ): void {
+    if (ref.containerInstance !== undefined) {
+      ref.containerInstance.closeInteractionType = interactionType;
+    }
+    return ref.close(result);
+  }
   close(modalResult?: R): void {
     this._result = modalResult;
     this._overlayRef.dispose();
@@ -39,14 +48,4 @@ export class ModalRef<T = any, R = any> {
     this.afterClosed.complete();
     this.state = TTModalState.CLOSED;
   }
-}
-export function closeModalVia<R>(
-  ref: ModalRef<R>,
-  interactionType: FocusOrigin,
-  result?: R
-): void {
-  if (ref.containerInstance !== undefined) {
-    ref.containerInstance.closeInteractionType = interactionType;
-  }
-  return ref.close(result);
 }

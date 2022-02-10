@@ -18,7 +18,7 @@ export class ModalMainComponent {
   @Output()
   modalClose = new EventEmitter<string>();
   constructor(private modal: Modal) {}
-  open() {
+  open(): void {
     const ref = this.modal.open(ModalComponent, this.modalData);
     ref.afterClosed.subscribe(() => {
       this.modalClose.emit('Modal Closed');

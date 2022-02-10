@@ -18,7 +18,6 @@ import {
 } from '@angular/core';
 import { Modalconfig } from './modalconfig.model';
 import { v4 as uid } from 'uuid';
-
 @Directive()
 export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
   closeInteractionType: FocusOrigin | null = null;
@@ -66,6 +65,5 @@ export class ModalContainerComponent extends ModalContainerBaseComponent {
     public viewContainerRef: ViewContainerRef
   ) {
     super(elementRef, config, viewContainerRef);
-    console.log('cdk container', this.id);
   }
 }

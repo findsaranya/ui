@@ -17,6 +17,7 @@ import {
   StaticProvider,
   TemplateRef,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
 import {
   ModalContainerBaseComponent,
@@ -32,6 +33,16 @@ export const TT_MODAL_DATA = new InjectionToken<any>('ModalData');
 export interface ContainerModalRef {
   container: ModalContainerBaseComponent;
   modalRef: ModalRef<any>;
+}
+
+@Injectable()
+export class ViewContainerService {
+  public viewContainerRef?: ViewContainerRef;
+
+  set viewPortalRef(vcr: ViewContainerRef) {
+    console.log('service');
+    this.viewContainerRef = vcr;
+  }
 }
 @Directive()
 export abstract class ModalBase<C extends ModalContainerBaseComponent> {
@@ -95,11 +106,8 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
     overlayRef: OverlayRef,
     config: Modalconfig
   ): C {
-    const userInjector =
-      config && config.viewContainerRef && config.viewContainerRef.injector;
-
     const injector = Injector.create({
-      parent: userInjector || this._injector,
+      parent: this._injector,
       providers: [{ provide: Modalconfig, useValue: config }],
     });
 
@@ -109,8 +117,8 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
       injector,
       config.componentFactoryResolver
     );
-    const containerRef = overlayRef.attach<C>(containerPortal);
 
+    const containerRef = overlayRef.attach<C>(containerPortal);
     return containerRef.instance;
   }
 
