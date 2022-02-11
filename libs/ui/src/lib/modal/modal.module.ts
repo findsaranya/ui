@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { Modal, ViewContainerService } from './modal.service';
+import { Modal } from './modal.service';
 import { ModalContainerComponent } from './modal-container.component';
 import {
   ModaTitleDirective,
@@ -29,7 +29,7 @@ import { ButtonModule } from '../button/button.module';
     PromptComponent,
   ],
   imports: [CommonModule, OverlayModule, PortalModule, ButtonModule],
-  providers: [ViewContainerService, Modal],
+  providers: [Modal],
   exports: [
     ModalContainerComponent,
     ModaTitleDirective,

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { ModalModule } from './modal.module';
-import { ViewContainerService } from './modal.service';
 import {
   ModalMainComponent,
   PromptComponent,
@@ -13,7 +12,6 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [ModalModule, CommonModule],
-      providers: [ViewContainerService],
     }),
   ],
   argTypes: {
@@ -55,16 +53,30 @@ export default {
 
 const Template: Story<ModalMainComponent> = (args: ModalMainComponent) => ({
   props: args,
-  template: `<tt-modal-maincomponent (modalClose)="modalClose($event)"></tt-modal-maincomponent>`,
+  template: `<tt-modal-maincomponent [modalData]="modalData" (modalClose)="modalClose($event)"></tt-modal-maincomponent>`,
 });
 
 export const ContentModal = Template.bind({});
-ContentModal.args = {};
+ContentModal.args = {
+  modalData: {
+    width: '',
+    maxWidth: '80vh',
+    disableClose: false,
+    height: '',
+  },
+};
 
 const PromptTemplate: Story<PromptComponent> = (args: PromptComponent) => ({
   props: args,
-  template: `<tt-modal-prompt (modalClose)="modalClose($event)"></tt-modal-prompt>`,
+  template: `<tt-modal-prompt [modalData]="modalData" (modalClose)="modalClose($event)"></tt-modal-prompt>`,
 });
 
 export const PromptModal = PromptTemplate.bind({});
-PromptModal.args = {};
+PromptModal.args = {
+  modalData: {
+    width: '',
+    maxWidth: '80vh',
+    disableClose: false,
+    height: '',
+  },
+};

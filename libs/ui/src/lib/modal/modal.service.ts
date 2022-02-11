@@ -17,7 +17,6 @@ import {
   StaticProvider,
   TemplateRef,
   Type,
-  ViewContainerRef,
 } from '@angular/core';
 import {
   ModalContainerBaseComponent,
@@ -33,16 +32,6 @@ export const TT_MODAL_DATA = new InjectionToken<any>('ModalData');
 export interface ContainerModalRef {
   container: ModalContainerBaseComponent;
   modalRef: ModalRef<any>;
-}
-
-@Injectable()
-export class ViewContainerService {
-  public viewContainerRef?: ViewContainerRef;
-
-  set viewPortalRef(vcr: ViewContainerRef) {
-    console.log('service');
-    this.viewContainerRef = vcr;
-  }
 }
 @Directive()
 export abstract class ModalBase<C extends ModalContainerBaseComponent> {
@@ -92,7 +81,7 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
     );
     const dialogRef = this.attachDialogContent<T, R>(
       componentOrTemplateRef,
-      dialogContainer,
+      dialogContainer as unknown as ModalContainerComponent,
       overlayRef,
       modalConfig as Modalconfig
     );
@@ -125,17 +114,15 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
   private createInjector<T>(
     config: Modalconfig,
     dialogRef: ModalRef<T>,
-    dialogContainer?: C
+    dialogContainer?: ModalContainerComponent
   ): Injector {
-    const userInjector =
-      config && config.viewContainerRef && config.viewContainerRef.injector;
     const providers: StaticProvider[] = [
       { provide: this._dialogContainerType, useValue: dialogContainer },
       { provide: this._dialogDataToken, useValue: config.data },
       { provide: this._dialogRefConstructor, useValue: dialogRef },
     ];
     const injector = Injector.create({
-      parent: userInjector || this._injector,
+      parent: this._injector,
       providers,
     });
 
@@ -170,7 +157,7 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
 
   private attachDialogContent<T, R>(
     componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-    dialogContainer: C | undefined,
+    dialogContainer: ModalContainerComponent | undefined,
     overlayRef: OverlayRef,
     config: Modalconfig
   ): ModalRef<T, R> {
@@ -179,19 +166,18 @@ export abstract class ModalBase<C extends ModalContainerBaseComponent> {
       dialogContainer,
       config.id
     );
-
     if (componentOrTemplateRef instanceof TemplateRef) {
       dialogContainer?.attachTemplatePortal(
-        new TemplatePortal<T>(componentOrTemplateRef, {
+        new TemplatePortal<T>(componentOrTemplateRef, dialogContainer.viewRef, {
           $implicit: config.data,
           dialogRef,
-        } as any)
+        } as unknown as T)
       );
     } else {
       const injector = this.createInjector<T>(
         config,
         dialogRef,
-        dialogContainer
+        dialogContainer as ModalContainerComponent
       );
       const contentRef = dialogContainer?.attachComponentPortal<T>(
         new ComponentPortal(

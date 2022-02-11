@@ -51,7 +51,7 @@ export class ModaCloseDirective implements OnInit {
     openDialogs?: ContainerModalRef[]
   ): ContainerModalRef | undefined | null {
     let parent: HTMLElement | null = element.nativeElement.parentElement;
-    while (parent && !parent.classList.contains('ttui-modal-container')) {
+    if (parent && !parent.classList.contains('ttui-modal-container')) {
       parent = parent.parentElement;
     }
     return parent
@@ -75,7 +75,7 @@ export class ModaCloseDirective implements OnInit {
     }
   }
 
-  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+  @HostListener('click', ['$event']) onClick() {
     ModalRef.closeModalVia(this._dialogRef, 'mouse');
   }
 }

@@ -14,7 +14,7 @@ import { Modalconfig } from '../../modalconfig.model';
   </button>`,
 })
 export class ModalMainComponent {
-  @Input() modalData?: Modalconfig;
+  @Input() modalData: Modalconfig = {};
   @Output()
   modalClose = new EventEmitter<string>();
   constructor(private modal: Modal) {}
@@ -40,7 +40,7 @@ export class ModalMainComponent {
     </ng-template> `,
 })
 export class PromptComponent {
-  @Input() modalData?: Modalconfig;
+  @Input() modalData: Modalconfig = {};
   @Output()
   modalClose = new EventEmitter<string>();
   constructor(private modal: Modal) {}

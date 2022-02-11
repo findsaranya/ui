@@ -9,7 +9,6 @@ import {
   Component,
   ComponentRef,
   Directive,
-  ElementRef,
   EmbeddedViewRef,
   HostBinding,
   ViewChild,
@@ -24,14 +23,9 @@ export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
   @ViewChild(CdkPortalOutlet, { static: true })
   portalOutlet!: CdkPortalOutlet;
   readonly id: string = `ttui-modal-container-${uid()}`;
-  constructor(
-    _elementRef: ElementRef,
-    _config: Modalconfig,
-    viewContainerRef: ViewContainerRef
-  ) {
+  constructor(_config: Modalconfig) {
     super();
   }
-
   attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
     if (this.portalOutlet.hasAttached()) {
       throw new Error('Already attached');
@@ -48,7 +42,7 @@ export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
 }
 @Component({
   selector: 'tt-modal-container',
-  template: ` <ng-template cdkPortalOutlet></ng-template> `,
+  template: ` <ng-template cdkPortalOutlet #portalRef></ng-template> `,
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./modal-container.component.scss'],
 })
@@ -59,11 +53,7 @@ export class ModalContainerComponent extends ModalContainerBaseComponent {
   @HostBinding('class') get class(): string {
     return 'ttui-modal-container';
   }
-  constructor(
-    private elementRef: ElementRef,
-    public config: Modalconfig,
-    public viewContainerRef: ViewContainerRef
-  ) {
-    super(elementRef, config, viewContainerRef);
+  constructor(public config: Modalconfig, public viewRef: ViewContainerRef) {
+    super(config);
   }
 }
