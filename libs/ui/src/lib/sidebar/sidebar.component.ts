@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { INavigation } from './sidebar.model';
 @Component({
-  selector: 'tt-webapp-sidebar',
+  selector: 'tt-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState, Auth } from '@tt-webapp/service';
 
 @Component({
-  selector: 'tt-webapp-logout',
+  selector: 'tt-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss'],
 })

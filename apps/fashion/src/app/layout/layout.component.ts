@@ -5,7 +5,7 @@ import { AppConfig } from '@tt-webapp/service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'tt-webapp-layout',
+  selector: 'tt-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })

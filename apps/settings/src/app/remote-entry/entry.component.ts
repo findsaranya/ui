@@ -4,7 +4,7 @@ import { AppState, Auth, STATIC_BASE_URL } from '@tt-webapp/service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'tt-webapp-settings-entry',
+  selector: 'tt-settings-entry',
   template: `
     <!--color code missing  696865 -->
     <p class="text-lg font-bold">

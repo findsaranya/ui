@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'tt-webapp-auth-entry',
+  selector: 'tt-auth-entry',
   template: `<router-outlet></router-outlet>`,
   styles: [
     `

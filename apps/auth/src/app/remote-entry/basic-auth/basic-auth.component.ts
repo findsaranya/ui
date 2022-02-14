@@ -6,7 +6,7 @@ import { AppState, Auth, STATIC_BASE_URL } from '@tt-webapp/service';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'tt-webapp-basic-auth',
+  selector: 'tt-basic-auth',
   templateUrl: './basic-auth.component.html',
   styleUrls: ['./basic-auth.component.scss'],
 })
