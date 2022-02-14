@@ -50,7 +50,7 @@ export class SupportChatService {
     return this.widget.setFaqTags(faq);
   }
 
-  private embedChatWidget() {
+  private embedChatWidget(): Promise<unknown> {
     return new Promise((resolve, reject) => {
       const scriptElement: HTMLScriptElement =
         this.renderer.createElement('script');

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { RendererFactory2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CHAT_SERVICE_CONFIG } from '../injection/tokens';
@@ -6,9 +7,9 @@ import { SupportChatService } from './support-chat.service';
 
 describe('ChatService', () => {
   const mockRender = {
-    createRenderer: jest.fn((a, b) => ({
-      appendChild: jest.fn((a, b) => {
-        b.onload();
+    createRenderer: jest.fn((hostElement, type) => ({
+      appendChild: jest.fn((parent, newChild) => {
+        newChild.onload();
       }),
       createElement: () => ({
         type: '',
@@ -31,39 +32,39 @@ describe('ChatService', () => {
       on: () => true,
       open: () => true,
       setFaqTags: () => {
-        return new Promise((r, reject) => {
-          r();
+        return new Promise((resolve, reject) => {
+          resolve();
         });
       },
       track: () => {
-        return new Promise((r, reject) => {
-          r();
+        return new Promise((resolve, reject) => {
+          resolve();
         });
       },
       user: {
         get: () => {
-          return new Promise((r, reject) => {
-            r({ result: { data: '' } });
+          return new Promise((resolve, reject) => {
+            resolve({ result: { data: '' } });
           });
         },
         create: () => {
-          return new Promise((r, reject) => {
-            r();
+          return new Promise((resolve, reject) => {
+            resolve();
           });
         },
         setProperties: () => {
-          return new Promise((r, reject) => {
-            r();
+          return new Promise((resolve, reject) => {
+            resolve();
           });
         },
         update: () => {
-          return new Promise((r, reject) => {
-            r();
+          return new Promise((resolve, reject) => {
+            resolve();
           });
         },
         clear: () => {
-          return new Promise((r, reject) => {
-            r();
+          return new Promise((resolve, reject) => {
+            resolve();
           });
         },
       },
@@ -143,9 +144,9 @@ describe('ChatService', () => {
           {
             provide: RendererFactory2,
             useValue: {
-              createRenderer: jest.fn((a, b) => ({
-                appendChild: jest.fn((a, b) => {
-                  b.onerror();
+              createRenderer: jest.fn((hostElement, type) => ({
+                appendChild: jest.fn((parent, newChild) => {
+                  newChild.onerror();
                 }),
                 createElement: () => ({
                   type: '',
