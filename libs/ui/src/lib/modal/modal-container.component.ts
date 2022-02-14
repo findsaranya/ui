@@ -20,8 +20,7 @@ import { v4 as uid } from 'uuid';
 @Directive()
 export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
   closeInteractionType: FocusOrigin | null = null;
-  @ViewChild(CdkPortalOutlet, { static: true })
-  portalOutlet!: CdkPortalOutlet;
+  @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
   readonly id: string = `ttui-modal-container-${uid()}`;
   constructor(_config: Modalconfig) {
     super();
@@ -42,7 +41,7 @@ export abstract class ModalContainerBaseComponent extends BasePortalOutlet {
 }
 @Component({
   selector: 'tt-modal-container',
-  template: ` <ng-template cdkPortalOutlet #portalRef></ng-template> `,
+  template: ` <ng-template cdkPortalOutlet></ng-template> `,
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./modal-container.component.scss'],
 })

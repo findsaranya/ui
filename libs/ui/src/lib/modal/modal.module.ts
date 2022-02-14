@@ -9,7 +9,7 @@ import {
   ModalContentDirective,
   ModalActionsDirective,
   ModaCloseDirective,
-} from './moda-title.directive';
+} from './modal-title.directive';
 import {
   ModalComponent,
   ModalMainComponent,

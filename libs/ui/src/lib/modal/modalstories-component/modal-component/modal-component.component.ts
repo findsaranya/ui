@@ -16,12 +16,12 @@ import { Modalconfig } from '../../modalconfig.model';
 export class ModalMainComponent {
   @Input() modalData: Modalconfig = {};
   @Output()
-  modalClose = new EventEmitter<string>();
+  modalClose = new EventEmitter();
   constructor(private modal: Modal) {}
   open(): void {
     const ref = this.modal.open(ModalComponent, this.modalData);
     ref.afterClosed.subscribe(() => {
-      this.modalClose.emit('Modal Closed');
+      this.modalClose.emit();
     });
   }
 }
@@ -42,12 +42,12 @@ export class ModalMainComponent {
 export class PromptComponent {
   @Input() modalData: Modalconfig = {};
   @Output()
-  modalClose = new EventEmitter<string>();
+  modalClose = new EventEmitter();
   constructor(private modal: Modal) {}
   open(templateRef: TemplateRef<any>): void {
     const ref = this.modal.open(templateRef, this.modalData);
     ref.afterClosed.subscribe(() => {
-      this.modalClose.emit('Modal Closed');
+      this.modalClose.emit();
     });
   }
 }
