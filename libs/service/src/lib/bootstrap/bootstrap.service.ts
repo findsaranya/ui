@@ -5,10 +5,7 @@ import { AppState } from '../+state/app.store';
 import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import {
-  IMicroFrontendConfig,
-  INavigation,
-} from '../+state/app/config.models';
+import { IMicroFrontendConfig, INavigation } from '../+state/app/config.models';
 import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
 @Injectable()
@@ -80,10 +77,7 @@ export class BootstrapService {
       });
   }
 
-  private startApplication(
-    auth: Auth.State,
-    navigation: INavigation
-  ): void {
+  private startApplication(auth: Auth.State, navigation: INavigation): void {
     const next = this.activatedRoute.snapshot.queryParams['next'];
     this.appInitialized();
     if (!auth.loggedIn) return;
@@ -95,7 +89,7 @@ export class BootstrapService {
       window.location.pathname === '/' ||
       window.location.pathname === '/login'
     )
-      // ToDo Default landing page setup
+      // TODO Default landing page setup
       this.router.navigate([navigation.defaultRoute]);
   }
 

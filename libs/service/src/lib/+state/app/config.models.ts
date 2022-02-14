@@ -20,7 +20,7 @@ export interface ConfigEntity {
 }
 
 export interface IApplicationConfigResponce {
-  // ToDo
+  // TODO
   data: IMicroFrontendConfig[];
 }
 

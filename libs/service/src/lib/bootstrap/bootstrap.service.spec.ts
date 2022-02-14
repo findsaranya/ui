@@ -234,7 +234,7 @@ describe('BootstrapService', () => {
       expect(service.appConfigLoaded).toBeFalsy();
       expect(service.loginLogoutLoaded).toBeFalsy();
       expect(service.appInitialized).not.toBeUndefined();
-      // ToDo check appInitialized not called
+      // TODO check appInitialized not called
     });
     it('Router config reset exception', () => {
       mockStore.setState({
