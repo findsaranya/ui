@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SupportChatService } from '@tt-webapp/service';
 
 @Component({
-  selector: 'tt-webapp-root',
+  selector: 'tt-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

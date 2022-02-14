@@ -4,6 +4,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  ViewEncapsulation,
 } from '@angular/core';
 
 type BtnAttr =
@@ -29,10 +30,21 @@ type BtnSizes = {
   [index in Sizes]: string;
 };
 
+type BtnClasses = {
+  [index in BtnAttr]: string;
+};
+const HOST_BUTTON_CLASSES: BtnClasses = {
+  'tt-btn-primary': 'ttui-btn-primary',
+  'tt-btn-ghost': 'ttui-btn-ghost',
+  'tt-btn-outline': 'ttui-btn-outline',
+  'tt-btn-secondary': 'ttui-btn-secondary',
+  'tt-btn-transparent': 'ttui-btn-transparent',
+  'tt-btn-warning': 'ttui-btn-warning',
+};
 const HOST_BUTTON_SIZES: BtnSizes = {
-  md: 'tt-md',
-  sm: 'tt-sm',
-  lg: 'tt-lg',
+  md: 'ttui-md',
+  sm: 'ttui-sm',
+  lg: 'ttui-lg',
 };
 @Component({
   selector: `
@@ -44,8 +56,9 @@ const HOST_BUTTON_SIZES: BtnSizes = {
   button[tt-btn-outline]
   `,
   exportAs: 'tt-button',
-  template: ` <ng-content></ng-content> `,
+  template: ` <span class="ttui-btn-wrapper"><ng-content></ng-content></span>`,
   styleUrls: ['./button.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
@@ -82,10 +95,10 @@ export class ButtonComponent {
 
   @HostBinding('class') get className() {
     return [
-      'tt-btn',
+      'ttui-btn',
       HOST_BUTTON_SIZES[this.size],
-      this.isBlockElement ? 'tt-btn-block' : '',
-      this.hostAttribute(),
+      this.isBlockElement ? 'ttui-btn-block' : '',
+      HOST_BUTTON_CLASSES[this.hostAttribute() as BtnAttr],
     ].join(' ');
   }
 

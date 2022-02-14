@@ -6,9 +6,20 @@ import { WildcardAuthGuard } from '@tt-webapp/service';
   imports: [
     RouterModule.forRoot([
       {
+        path: '',
+        loadChildren: () =>
+          import('../layout/layout.module').then((m) => m.LayoutModule),
+        canActivate: [WildcardAuthGuard],
+      },
+      {
         path: 'error',
         loadChildren: () =>
           import('@tt-webapp/ui').then((m) => m.FailedToLoadApplicationModule),
+      },
+      {
+        path: 'logout',
+        loadChildren: () =>
+          import('../logout/logout.module').then((m) => m.LogoutModule),
       },
       {
         path: '**',

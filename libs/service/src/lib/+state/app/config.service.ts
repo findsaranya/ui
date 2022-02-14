@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IApplicationConfigResponce } from '.';
+import { Observable, of } from 'rxjs';
+import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
 
 @Injectable()
@@ -20,5 +20,15 @@ export class ConfigService {
     return this.http.get<IApplicationConfigResponce>(
       `${this.apiBaseUrl}api/ui/app-config`
     );
+  }
+
+  getNavigationData(): Observable<INavigationResponse> {
+    return this.http.get<INavigationResponse>(`${this.apiBaseUrl}api/ui/menus`);
+  }
+
+  updateNavigationPinState(collapsed: boolean): Observable<unknown> {
+    return this.http.patch(`${this.apiBaseUrl}api/ui/menus/collapse`, {
+      collapsed,
+    });
   }
 }
