@@ -1,17 +1,20 @@
+import { LoadRemoteModuleOptions } from '@angular-architects/module-federation-runtime';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import * as appConfig from '../+state/app';
-import { appsWithAuth } from '../+state/app/config.data';
+import { appsWithAuth, sideNavSampleData } from '../+state/app/config.data';
 import * as Auth from '../+state/auth';
 import { UserConfig } from '../+state/auth/auth.data';
 
 import { BootstrapService } from './bootstrap.service';
 
 jest.mock('@angular-architects/module-federation-runtime/', () => ({
-  loadRemoteModule: jest.fn((moduleName: string) => {
+  loadRemoteModule: jest.fn((data: LoadRemoteModuleOptions) => {
     return new Promise((resolve) => {
-      resolve(moduleName);
+      resolve({
+        RemoteEntryModule: data.remoteName,
+      });
     });
   }),
 }));
@@ -26,6 +29,7 @@ describe('BootstrapService', () => {
       ...appConfig.initialState,
       loaded: true,
       coreApplications: appsWithAuth,
+      navigation: sideNavSampleData,
     },
     auth: {
       ...Auth.initialState,
@@ -88,7 +92,9 @@ describe('BootstrapService', () => {
       service.init();
       expect(service.appInitialized).not.toBeUndefined();
       expect(service.appConfigLoaded).toBeTruthy();
-      expect(service.initialRoutes.length).toBeGreaterThan(0);
+      expect(service.loadedRoutes.child.length).toEqual(2);
+      expect(service.loadedRoutes.root.length).toEqual(1);
+      expect(service.initialRoutes.length).toEqual(1);
     });
 
     it('should handle the logout event', () => {
@@ -139,7 +145,30 @@ describe('BootstrapService', () => {
       service.init();
       expect(service.appInitialized).not.toBeUndefined();
       expect(service.appConfigLoaded).toBeTruthy();
-      expect(service.initialRoutes.length).toBeGreaterThan(0);
+      expect(service.loadedRoutes.child.length).toEqual(2);
+      expect(service.loadedRoutes.root.length).toEqual(1);
+      expect(service.initialRoutes.length).toEqual(1);
+    });
+
+    it('Should verify the root & child routes', () => {
+      (service.loadedRoutes.child[0].loadChildren?.() as Promise<unknown>).then(
+        (d) => {
+          const toStr = String(d);
+          expect(toStr.includes('NotSubscribedModule')).toBeTruthy();
+        }
+      );
+      (service.loadedRoutes.child[1].loadChildren?.() as Promise<unknown>).then(
+        (d) => {
+          const toStr = String(d);
+          expect(toStr.includes(appsWithAuth[2].remoteName)).toBeTruthy();
+        }
+      );
+      (service.loadedRoutes.root[0].loadChildren?.() as Promise<unknown>).then(
+        (d) => {
+          const toStr = String(d);
+          expect(toStr.includes(appsWithAuth[0].remoteName)).toBeTruthy();
+        }
+      );
     });
   });
 
@@ -155,6 +184,7 @@ describe('BootstrapService', () => {
                 coreApplications: null,
                 loaded: true,
                 error: 'Failed to load the application',
+                navigation: null,
               } as appConfig.State,
             },
           }),
@@ -186,6 +216,7 @@ describe('BootstrapService', () => {
               ...state,
               appConfig: {
                 coreApplications: null,
+                navigation: null,
                 loaded: false,
               } as appConfig.State,
             },
@@ -203,7 +234,7 @@ describe('BootstrapService', () => {
       expect(service.appConfigLoaded).toBeFalsy();
       expect(service.loginLogoutLoaded).toBeFalsy();
       expect(service.appInitialized).not.toBeUndefined();
-      // ToDo check appInitialized not called
+      // TODO check appInitialized not called
     });
     it('Router config reset exception', () => {
       mockStore.setState({
@@ -211,6 +242,7 @@ describe('BootstrapService', () => {
         appConfig: {
           ...state.appConfig,
           coreApplications: null,
+          navigation: null,
         },
       });
 

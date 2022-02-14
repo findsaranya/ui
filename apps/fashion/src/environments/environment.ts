@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   API_BASE_URL: 'http://api.trustrace.local:5000/',
-  MOCK_SERVER_URL: 'http://localhost:5000/',
+  STATIC_BASE_URL: 'http://app.trustrace.local:8080/',
 };
 
 /*

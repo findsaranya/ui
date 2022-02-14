@@ -1,6 +1,10 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { BootstrapService, TokenInterceptor } from '@tt-webapp/service';
+import {
+  BootstrapService,
+  STATIC_BASE_URL,
+  TokenInterceptor,
+} from '@tt-webapp/service';
 import { AppConfig, API_BASE_URL, Auth } from '@tt-webapp/service';
 import { environment } from '../environments/environment';
 
@@ -16,6 +20,11 @@ function initApplication(bsService: BootstrapService): () => Promise<void> {
     {
       provide: API_BASE_URL,
       useValue: environment.API_BASE_URL,
+    },
+    {
+      provide: STATIC_BASE_URL,
+      useValue: environment.STATIC_BASE_URL,
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,

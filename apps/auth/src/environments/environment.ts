@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API_BASE_URL: 'http://api.trustrace.local:5000/',
+  STATIC_BASE_URL: 'http://app.trustrace.local:8080/',
 };
 
 /*

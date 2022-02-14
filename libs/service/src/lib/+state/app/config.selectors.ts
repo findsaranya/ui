@@ -9,6 +9,11 @@ export const getConfigLoaded = createSelector(
   (state: State) => state.loaded
 );
 
+export const getNavigation = createSelector(
+  getConfigState,
+  (state: State) => state.navigation
+);
+
 export const getConfigError = createSelector(
   getConfigState,
   (state: State) => state.error

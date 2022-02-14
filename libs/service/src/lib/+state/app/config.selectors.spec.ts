@@ -21,6 +21,11 @@ describe('Config Selectors', () => {
       expect(result).toBeFalsy();
     });
 
+    it('getNavigation() should return null', () => {
+      const result = ConfigSelectors.getNavigation(state);
+      expect(result).toBeNull();
+    });
+
     it('getConfigError() should return the current "error" state', () => {
       state[CONFIG_FEATURE_KEY].error = errorMessage;
       const result = ConfigSelectors.getConfigError(state);
