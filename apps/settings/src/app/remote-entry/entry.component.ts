@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'tt-settings-entry',
   template: `
-    <!--color code missing  696865 -->
+    <!-- TODO color code missing  696865 -->
     <p class="text-lg font-bold">
       <span class="text-gray-700">Welcome,</span>
       <span> {{ name$ | async }}</span>
