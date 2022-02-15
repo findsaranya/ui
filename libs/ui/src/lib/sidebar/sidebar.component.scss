@@ -1,0 +1,117 @@
+.sidebar {
+  @apply w-60 fixed z-50 top-0 bottom-0 left-60 -ml-60 border-none overflow-y-auto 
+  bg-gray-1000 whitespace-nowrap transition-all duration-[0.3s] ease-[ease-in-out] overflow-x-hidden;
+  &::-webkit-scrollbar {
+    @apply w-[4px];
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300 rounded-7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500;
+  }
+}
+
+.collapsed {
+  @apply w-[75px] hover:w-60;
+
+  .navigation-pin,
+  .label,
+  .arrow,
+  .nested,
+  .custom.logo {
+    @apply hidden;
+  }
+
+  &:hover {
+    .navigation-pin,
+    .label,
+    .arrow,
+    .nested {
+      @apply block;
+    }
+  }
+}
+
+.logo-block {
+  @apply flex;
+  &:hover {
+    .navigation-pin {
+      @apply z-0;
+    }
+  }
+  .logo {
+    @apply p-[10px];
+  }
+}
+
+.navigation-pin {
+  @apply absolute right-5 top-4 block -z-10 cursor-pointer hover:z-0 hover:cursor-pointer;
+  span {
+    @apply text-lg text-white-default p-[10px] rounded-md hover:bg-gray-800;
+  }
+  .unpin {
+    @apply bg-gray-700;
+  }
+}
+
+@mixin menu-active {
+  @apply text-sm bg-gray-800 rounded-md text-white-default;
+  svg path {
+    @apply fill-white-default;
+  }
+}
+
+.navigation {
+  @apply flex flex-col h-[calc(100vh-5rem)] select-none;
+  .list-group {
+    @apply px-3 pt-[10px];
+    a {
+      @apply text-gray-600 text-sm;
+    }
+    .tt-icon {
+      @apply text-[22px] p-[14px];
+    }
+    a.router-link-active {
+      @include menu-active;
+    }
+    a:hover {
+      @include menu-active;
+    }
+  }
+}
+
+.nested-menu {
+  a {
+    @apply cursor-pointer;
+  }
+  .arrow {
+    @apply ml-2;
+  }
+  ul.submenu {
+    @apply hidden h-0;
+  }
+}
+
+.nested-menu.expand {
+  > a,
+  span {
+    @apply bg-gray-800 rounded-md text-white-default;
+    svg path {
+      @apply fill-white-default;
+    }
+  }
+  .submenu {
+    @apply block h-auto ml-10;
+    a {
+      @apply block p-2 hover:bg-transparent;
+    }
+  }
+  .arrow {
+    @apply transform rotate-90;
+  }
+
+  a.child-router-link-active {
+    @apply text-white-default;
+  }
+}

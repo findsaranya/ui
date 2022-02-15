@@ -1,0 +1,18 @@
+* {
+  @apply transition-[margin-left] duration-[0.2s] ease-[ease-in-out];
+}
+.main-container {
+  @apply ml-60 h-screen bg-gray-200;
+}
+
+.section {
+  @apply overflow-x-hidden overflow-y-auto relative overflow-hidden  px-9 py-7 h-[calc(100vh-4rem)];
+}
+
+.user-label {
+  @apply text-gray-1000 rounded-full block h-10 w-10 items-center text-center bg-green-100 text-lg font-bold p-1;
+}
+
+.collapsed {
+  @apply ml-[75px];
+}

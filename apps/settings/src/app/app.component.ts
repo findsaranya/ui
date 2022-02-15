@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'tt-webapp-root',
+  selector: 'tt-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'settings';
+  collapsed: boolean | null = null;
+
+  onCollapse(e: boolean): void {
+    this.collapsed = e;
+  }
 }

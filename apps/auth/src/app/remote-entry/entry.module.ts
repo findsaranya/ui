@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { RemoteEntryComponent } from './entry.component';
 import { BasicAuthComponent } from './basic-auth/basic-auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { STATIC_BASE_URL } from '@tt-webapp/service';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [RemoteEntryComponent, BasicAuthComponent],
@@ -20,6 +22,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       },
     ]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STATIC_BASE_URL,
+      useValue: environment.STATIC_BASE_URL,
+    },
+  ],
 })
 export class RemoteEntryModule {}

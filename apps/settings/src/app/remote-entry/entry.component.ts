@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { AppState, Auth } from '@tt-webapp/service';
+import { AppState, Auth, STATIC_BASE_URL } from '@tt-webapp/service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'tt-webapp-settings-entry',
-  template: `<div class="remote-entry">
-      <h2>settings's Remote Entry Component</h2>
-    </div>
-    <div>
-      <p>Hello {{ name$ | async }}</p>
-    </div>
+  selector: 'tt-settings-entry',
+  template: `
+    <!-- TODO color code missing  696865 -->
+    <p class="text-lg font-bold">
+      <span class="text-gray-700">Welcome,</span>
+      <span> {{ name$ | async }}</span>
+    </p>
 
-    <button type="button" (click)="logout()">Logout</button> `,
+    <div class="mt-3">
+      <img src="{{ staticUrl }}static/img/dashboard.jpg" alt="logo" />
+    </div>
+  `,
   styles: [
     `
       .remote-entry {
@@ -25,7 +28,15 @@ import { Observable } from 'rxjs';
 })
 export class RemoteEntryComponent {
   name$: Observable<string>;
-  constructor(private store: Store<AppState>) {
+
+  get staticUrl() {
+    return this._staticUrl;
+  }
+
+  constructor(
+    private store: Store<AppState>,
+    @Inject(STATIC_BASE_URL) private _staticUrl: string
+  ) {
     this.name$ = this.store.pipe(select(Auth.fullName));
   }
 

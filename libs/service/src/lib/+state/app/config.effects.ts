@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import * as ConfigActions from './config.actions';
 
-import { catchError, map, of, switchMap } from 'rxjs';
-import { IApplicationConfigResponce } from '.';
+import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { ConfigService } from './config.service';
 
 @Injectable()
@@ -15,7 +15,8 @@ export class ConfigEffects {
         return this.configService.applicationConfig().pipe(
           map((config: IApplicationConfigResponce) => {
             return ConfigActions.loadConfigSuccess({
-              config: config.data,
+              appConfig: config.data,
+              navigationConfig: null,
             });
           }),
           catchError((e) => {
@@ -31,16 +32,36 @@ export class ConfigEffects {
     this.actions$.pipe(
       ofType(ConfigActions.initApplicationConfigWithAuth),
       switchMap(() => {
-        return this.configService.applicationConfigWithAuth().pipe(
-          map((config: IApplicationConfigResponce) => {
+        const request = [
+          this.configService.applicationConfigWithAuth(),
+          this.configService.getNavigationData(),
+        ];
+        return forkJoin(request).pipe(
+          map((configResponse) => {
+            const [applicationConfig, navigationConfig] = configResponse as [
+              IApplicationConfigResponce,
+              INavigationResponse
+            ];
             return ConfigActions.loadConfigSuccess({
-              config: config.data,
+              appConfig: applicationConfig.data,
+              navigationConfig: navigationConfig.data,
             });
           }),
           catchError(() => of(ConfigActions.initApplicationConfig()))
         );
       })
     )
+  );
+
+  handleNavigationPinToggle$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ConfigActions.navigationPinToggle),
+        switchMap((action) =>
+          this.configService.updateNavigationPinState(action.collapsed)
+        )
+      ),
+    { dispatch: false }
   );
 
   constructor(

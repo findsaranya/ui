@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'tt-webapp-unauthorized',
+  selector: 'tt-unauthorized',
   templateUrl: './unauthorized.component.html',
   styleUrls: ['./unauthorized.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
