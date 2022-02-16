@@ -38,6 +38,7 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     // check  login / refresh token api
+    // TODO refresh token request fails redirect to login page
     if (request.url.includes('refreshtoken') || request.url.includes('login')) {
       if (request.url.includes('refreshtoken')) {
         return next.handle(request).pipe(catchError(this.errorHandler));
