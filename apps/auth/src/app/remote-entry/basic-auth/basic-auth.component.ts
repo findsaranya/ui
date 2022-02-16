@@ -1,8 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { AppState, Auth, STATIC_BASE_URL } from '@tt-webapp/service';
+import { environment } from '../../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -17,6 +19,102 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
   authSubscription: Subscription | null;
   message$: Observable<string | null | undefined>;
 
+  date = new Date();
+
+  // Todo collect the active language from the URL & If its production
+  languageControl = new FormGroup({ selection: new FormControl('en') });
+
+  languages: { code: string; languageName: string }[] = [
+    {
+      code: 'bn',
+      languageName: 'Bangla',
+    },
+    {
+      code: 'zh',
+      languageName: 'Chinese',
+    },
+    {
+      code: 'zh-Hant',
+      languageName: 'Chinese (Taiwan)',
+    },
+    {
+      code: 'en',
+      languageName: 'English',
+    },
+    {
+      code: 'et',
+      languageName: 'Estonian',
+    },
+    {
+      code: 'fr',
+      languageName: 'French',
+    },
+    {
+      code: 'hi',
+      languageName: 'Hindi',
+    },
+    {
+      code: 'it',
+      languageName: 'Italian',
+    },
+    {
+      code: 'ja',
+      languageName: 'Japanese',
+    },
+    {
+      code: 'kn',
+      languageName: 'Kannada',
+    },
+    {
+      code: 'lv',
+      languageName: 'Latvian',
+    },
+    {
+      code: 'lt',
+      languageName: 'Lithuanian',
+    },
+    {
+      code: 'ml',
+      languageName: 'Malayalam',
+    },
+    {
+      code: 'pl',
+      languageName: 'Polish',
+    },
+    {
+      code: 'pt',
+      languageName: 'Portuguese',
+    },
+    {
+      code: 'ro',
+      languageName: 'Romanian',
+    },
+    {
+      code: 'es',
+      languageName: 'Spanish',
+    },
+    {
+      code: 'sv',
+      languageName: 'Swedish',
+    },
+    {
+      code: 'ta',
+      languageName: 'Tamil',
+    },
+    {
+      code: 'te',
+      languageName: 'Telugu',
+    },
+    {
+      code: 'tr',
+      languageName: 'Turkish',
+    },
+    {
+      code: 'vi',
+      languageName: 'Vietnamese',
+    },
+  ];
+
   get staticUrl() {
     return this._staticUrl;
   }
@@ -24,7 +122,8 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private store: Store<AppState>,
-    @Inject(STATIC_BASE_URL) private _staticUrl: string
+    @Inject(STATIC_BASE_URL) private _staticUrl: string,
+    private router: Router
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -58,6 +157,11 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
     }
     const { email = null, password = null } = this.loginForm.value;
     this.store.dispatch(Auth.loginStart({ email, password }));
+  }
+
+  onLanguageChange(): void {
+    if (environment.production)
+      this.router.navigateByUrl(`/${this.languageControl.get('selection')}`);
   }
 
   ngOnDestroy(): void {

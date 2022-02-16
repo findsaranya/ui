@@ -8,27 +8,27 @@
       "code": "en"
     },
     "locales": {
-      "bn": "apps/auth/src/locale/messages.xlf",
-      "zh-Hant": "apps/auth/src/locale/messages.xlf",
-      "zh": "apps/auth/src/locale/messages.xlf",
-      "et": "apps/auth/src/locale/messages.xlf",
-      "fr": "apps/auth/src/locale/messages.xlf",
-      "hi": "apps/auth/src/locale/messages.xlf",
-      "it": "apps/auth/src/locale/messages.xlf",
-      "ja": "apps/auth/src/locale/messages.xlf",
-      "kn": "apps/auth/src/locale/messages.xlf",
-      "lv": "apps/auth/src/locale/messages.xlf",
-      "lt": "apps/auth/src/locale/messages.xlf",
-      "ml": "apps/auth/src/locale/messages.xlf",
-      "pl": "apps/auth/src/locale/messages.xlf",
-      "pt": "apps/auth/src/locale/messages.xlf",
-      "ro": "apps/auth/src/locale/messages.xlf",
-      "es": "apps/auth/src/locale/messages.xlf",
-      "sv": "apps/auth/src/locale/messages.xlf",
-      "ta": "apps/auth/src/locale/messages.xlf",
-      "te": "apps/auth/src/locale/messages.xlf",
-      "tr": "apps/auth/src/locale/messages.xlf",
-      "vi": "apps/auth/src/locale/messages.xlf"
+      "bn": "apps/auth/src/locale/messages.bn.xlf",
+      "zh-Hant": "apps/auth/src/locale/messages.zh-Hant.xlf",
+      "zh": "apps/auth/src/locale/messages.zh.xlf",
+      "et": "apps/auth/src/locale/messages.et.xlf",
+      "fr": "apps/auth/src/locale/messages.fr.xlf",
+      "hi": "apps/auth/src/locale/messages.hi.xlf",
+      "it": "apps/auth/src/locale/messages.it.xlf",
+      "ja": "apps/auth/src/locale/messages.ja.xlf",
+      "kn": "apps/auth/src/locale/messages.kn.xlf",
+      "lv": "apps/auth/src/locale/messages.lv.xlf",
+      "lt": "apps/auth/src/locale/messages.lt.xlf",
+      "ml": "apps/auth/src/locale/messages.ml.xlf",
+      "pl": "apps/auth/src/locale/messages.pl.xlf",
+      "pt": "apps/auth/src/locale/messages.pt.xlf",
+      "ro": "apps/auth/src/locale/messages.ro.xlf",
+      "es": "apps/auth/src/locale/messages.es.xlf",
+      "sv": "apps/auth/src/locale/messages.sv.xlf",
+      "ta": "apps/auth/src/locale/messages.ta.xlf",
+      "te": "apps/auth/src/locale/messages.te.xlf",
+      "tr": "apps/auth/src/locale/messages.tr.xlf",
+      "vi": "apps/auth/src/locale/messages.vi.xlf"
     }
   },
   "targets": {
@@ -113,7 +113,10 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "localize": [
+            "en"
+          ]
         }
       },
       "defaultConfiguration": "production"
