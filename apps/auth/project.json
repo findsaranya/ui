@@ -3,6 +3,34 @@
   "root": "apps/auth",
   "sourceRoot": "apps/auth/src",
   "prefix": "tt-webapp",
+  "i18n": {
+    "sourceLocale": {
+      "code": "en"
+    },
+    "locales": {
+      "bn": "apps/auth/src/locale/messages.xlf",
+      "zh-Hant": "apps/auth/src/locale/messages.xlf",
+      "zh": "apps/auth/src/locale/messages.xlf",
+      "et": "apps/auth/src/locale/messages.xlf",
+      "fr": "apps/auth/src/locale/messages.xlf",
+      "hi": "apps/auth/src/locale/messages.xlf",
+      "it": "apps/auth/src/locale/messages.xlf",
+      "ja": "apps/auth/src/locale/messages.xlf",
+      "kn": "apps/auth/src/locale/messages.xlf",
+      "lv": "apps/auth/src/locale/messages.xlf",
+      "lt": "apps/auth/src/locale/messages.xlf",
+      "ml": "apps/auth/src/locale/messages.xlf",
+      "pl": "apps/auth/src/locale/messages.xlf",
+      "pt": "apps/auth/src/locale/messages.xlf",
+      "ro": "apps/auth/src/locale/messages.xlf",
+      "es": "apps/auth/src/locale/messages.xlf",
+      "sv": "apps/auth/src/locale/messages.xlf",
+      "ta": "apps/auth/src/locale/messages.xlf",
+      "te": "apps/auth/src/locale/messages.xlf",
+      "tr": "apps/auth/src/locale/messages.xlf",
+      "vi": "apps/auth/src/locale/messages.xlf"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
@@ -52,7 +80,32 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/auth/webpack.prod.config.js"
-          }
+          },
+          "i18nMissingTranslation": "error",
+          "localize": [
+            "bn",
+            "zh-Hant",
+            "zh",
+            "en",
+            "et",
+            "fr",
+            "hi",
+            "it",
+            "ja",
+            "kn",
+            "lv",
+            "lt",
+            "ml",
+            "pl",
+            "pt",
+            "ro",
+            "es",
+            "sv",
+            "ta",
+            "te",
+            "tr",
+            "vi"
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -84,7 +137,8 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "auth:build"
+        "browserTarget": "auth:build",
+        "outputPath": "apps/auth/src/locale/"
       }
     },
     "lint": {
