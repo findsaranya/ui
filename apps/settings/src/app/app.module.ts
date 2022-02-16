@@ -8,11 +8,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import {
+  API_BASE_URL,
+  Auth,
+  ROOT_REDUCER,
+  TokenInterceptor,
+} from '@tt-webapp/service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       [
         {
@@ -25,8 +38,28 @@ import { RouterModule } from '@angular/router';
       ],
       { initialNavigation: 'enabledBlocking' }
     ),
+    StoreModule.forRoot(ROOT_REDUCER, {
+      metaReducers: !environment.production ? [] : [],
+      runtimeChecks: {
+        strictActionImmutability: true,
+        strictStateImmutability: true,
+      },
+    }),
+    EffectsModule.forRoot([Auth.AuthEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
+  providers: [
+    Auth.AuthService,
+    {
+      provide: API_BASE_URL,
+      useValue: environment.API_BASE_URL,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

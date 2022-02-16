@@ -3,9 +3,14 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { IApplicationConfigResponce } from '.';
+import { IApplicationConfigResponce, INavigationResponse } from '.';
 import { API_BASE_URL } from '../../injection/tokens';
-import { apiBaseUrl, apps, appsWithAuth } from './config.data';
+import {
+  apiBaseUrl,
+  apps,
+  appsWithAuth,
+  sideNavSampleData,
+} from './config.data';
 
 import { ConfigService } from './config.service';
 
@@ -54,7 +59,7 @@ describe('ConfigService', () => {
       data: appsWithAuth,
     };
     service.applicationConfigWithAuth().subscribe((config) => {
-      expect(config.data.length).toEqual(2);
+      expect(config.data.length).toEqual(3);
       expect(config.data[0].id).toEqual('AUTH');
       done();
     });
@@ -65,5 +70,35 @@ describe('ConfigService', () => {
     expect(req.request.method).toEqual('GET');
 
     req.flush(appConfigMock);
+  });
+
+  it('should return navigation config', (done) => {
+    const appConfigMock: INavigationResponse = {
+      data: sideNavSampleData,
+      message: '',
+    };
+    service.getNavigationData().subscribe((config) => {
+      expect(config.data.collapsed).toBeTruthy();
+      expect(config.data.menus.bottomOrder.length).toEqual(3);
+      expect(config.data.menus.topOrder.length).toEqual(6);
+      done();
+    });
+
+    const req = httpTestingController.expectOne(apiBaseUrl + 'api/ui/menus');
+    expect(req.request.method).toEqual('GET');
+
+    req.flush(appConfigMock);
+  });
+
+  it('should patch navigation pin state ', (done) => {
+    service.updateNavigationPinState(false).subscribe((config) => {
+      expect(config).not.toBeUndefined();
+      done();
+    });
+    const req = httpTestingController.expectOne(
+      apiBaseUrl + 'api/ui/menus/collapse'
+    );
+    expect(req.request.method).toEqual('PATCH');
+    req.flush({});
   });
 });

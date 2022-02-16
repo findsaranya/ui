@@ -1,0 +1,27 @@
+<tt-sidebar
+  [navigation]="navigation$ | async"
+  (collapsedEvent)="onCollapse($event)"
+  [staticUrl]="staticUrl"
+></tt-sidebar>
+
+<main
+  class="main-container"
+  [ngClass]="{ collapsed: (navigation$ | async)?.collapsed }"
+>
+  <header class="shadow-md">
+    <div class="px-9">
+      <div class="flex items-center h-16">
+        <div class="flex flex-1">
+          <!-- TODO Design #202020 #F6F6F6 color code missing -->
+          <h3 class="text-lg font-bold text-gray-1000">Dashboard</h3>
+        </div>
+        <div>
+          <span class="user-label"> {{ (name$ | async)?.[0] }} </span>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="section">
+    <router-outlet></router-outlet>
+  </section>
+</main>

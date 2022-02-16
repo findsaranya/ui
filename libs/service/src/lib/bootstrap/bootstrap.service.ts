@@ -5,7 +5,7 @@ import { AppState } from '../+state/app.store';
 import * as Config from '../+state/app';
 import * as Auth from '../+state/auth';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { IMicroFrontendConfig } from '../mfe/mfe.model';
+import { IMicroFrontendConfig, INavigation } from '../+state/app/config.models';
 import { loadRemoteModule } from '@angular-architects/module-federation-runtime/';
 
 @Injectable()
@@ -15,6 +15,10 @@ export class BootstrapService {
   appConfig: (Observable<Config.State> | Observable<Auth.State>)[];
   loginLogoutLoaded = false;
   initialRoutes: Routes;
+  loadedRoutes: { root: Routes; child: Routes } = {
+    child: [],
+    root: [],
+  };
   constructor(
     private store: Store<AppState>,
     private router: Router,
@@ -62,12 +66,18 @@ export class BootstrapService {
         this.listenLoginLogout(!auth.loggedIn);
         this.appConfigLoaded = true;
         this.loadApplicationConfig(appConfig)
-          .then(this.startApplication.bind(this, auth))
+          .then(
+            this.startApplication.bind(
+              this,
+              auth,
+              appConfig.navigation as INavigation
+            )
+          )
           .catch(this.configErrorHandler.bind(this));
       });
   }
 
-  private startApplication(auth: Auth.State): void {
+  private startApplication(auth: Auth.State, navigation: INavigation): void {
     const next = this.activatedRoute.snapshot.queryParams['next'];
     this.appInitialized();
     if (!auth.loggedIn) return;
@@ -79,17 +89,18 @@ export class BootstrapService {
       window.location.pathname === '/' ||
       window.location.pathname === '/login'
     )
-      // ToDo Default landing page setup
-      this.router.navigate(['settings']);
+      // TODO Default landing page setup
+      this.router.navigate([navigation.defaultRoute]);
   }
 
   private loadApplicationConfig(appConfig: Config.State): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
+        this.loadedRoutes = this.buildRoutes(
+          appConfig.coreApplications as IMicroFrontendConfig[]
+        );
         this.router.resetConfig([
-          ...this.buildRoutes(
-            appConfig.coreApplications as IMicroFrontendConfig[]
-          ),
+          ...this.loadedRoutes.root,
           ...this.initialRoutes,
         ]);
         resolve();
@@ -99,17 +110,32 @@ export class BootstrapService {
     });
   }
 
-  private buildRoutes(options: IMicroFrontendConfig[]): Routes {
-    const routes: Routes = options.map((d) => ({
-      path: d.routePath,
-      loadChildren: () => {
-        if (d.companyType !== 'DEFAULT' && !d.subscribed) {
-          return import('@tt-webapp/ui').then((m) => m.NotSubscribedModule);
-        }
-        return loadRemoteModule(d).then((m) => m[d.ngModuleName]);
-      },
-    }));
-    return routes;
+  private buildRoutes(options: IMicroFrontendConfig[]): {
+    root: Routes;
+    child: Routes;
+  } {
+    const root: Routes = [];
+    const child: Routes = [];
+
+    options.forEach((option) => {
+      const path = option.routePath;
+      if (option.companyType !== 'DEFAULT') {
+        child.push({
+          path,
+          loadChildren: () =>
+            !option.subscribed
+              ? import('@tt-webapp/ui').then((m) => m.NotSubscribedModule)
+              : loadRemoteModule(option).then((m) => m[option.ngModuleName]),
+        });
+      } else {
+        root.push({
+          path,
+          loadChildren: () =>
+            loadRemoteModule(option).then((m) => m[option.ngModuleName]),
+        });
+      }
+    });
+    return { root, child };
   }
 
   private configErrorHandler(error: string): void {
