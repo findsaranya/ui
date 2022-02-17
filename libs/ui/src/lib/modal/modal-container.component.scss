@@ -1,6 +1,15 @@
 .ttui-modal-container {
   @apply block p-6 overflow-auto outline-none w-full h-full 
   min-h-inherit max-h-inherit shadow-md rounded-xl bg-white-default;
+  &::-webkit-scrollbar {
+    @apply w-1;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300 rounded-7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-500;
+  }
 }
 .ttui-modal-title {
   @apply block mt-0 mx-0 mb-6 text-2xl font-bold tracking-primary;
@@ -19,4 +28,7 @@
 }
 .ttui-modal-actions {
   @apply py-2 flex flex-wrap min-h-50 items-center justify-end box-content -mb-6;
+  button:first-child() {
+    @apply mr-1;
+  }
 }
