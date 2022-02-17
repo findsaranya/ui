@@ -28,7 +28,7 @@
 }
 .ttui-modal-actions {
   @apply py-2 flex flex-wrap min-h-50 items-center justify-end box-content -mb-6;
-  button:first-child() {
-    @apply mr-1;
+  button:first-child {
+    @apply mr-2;
   }
 }
