@@ -152,10 +152,36 @@ module.exports = {
         30: '1.875rem',
         40: '2.5rem',
         50: '3.125rem',
+        70: '4.375rem',
       },
       borderRadius: {
         '7px': '0.438rem',
         '5px': '0.313rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 2s linear forwards',
+        'fade-out': 'fadeOut 0.3s linear 2s forwards',
+      },
+      rotate: {
+        135: '135deg',
+      },
+      keyframes: {
+        fadeIn: {
+          from: {
+            opacity: 1,
+          },
+          to: {
+            opacity: 0,
+          },
+        },
+        fadeOut: {
+          from: {
+            opacity: 0,
+          },
+          to: {
+            opacity: 1,
+          },
+        },
       },
     },
   },
