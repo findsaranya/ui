@@ -1,0 +1,28 @@
+.ttui-file-view-content-container {
+  @apply flex w-full border bg-gray-200 text-black-default text-left rounded-5px justify-between mb-4 items-center pr-2 hover: cursor-pointer hover:bg-gray-300;
+
+  .ttui-file-view-content {
+    @apply flex items-center w-5/6;
+
+    .ttui-file-view-title {
+      @apply ml-2 w-5/6 break-words text-base font-semibold text-gray-1000;
+    }
+  }
+
+  .ttui-file-view-loader {
+    @apply h-5 w-5 bg-transparent border-2 border-deepSaffron-100 mr-5 border-t-deepSaffron-default select-none text-[0] outline-none rounded-full animate-spin;
+  }
+
+  .ttui-icon-fade-in {
+    @apply opacity-100 mr-5 animate-fade-in;
+  }
+
+  .ttui-icon-fade-out {
+    @apply opacity-0 animate-fade-out flex justify-around min-w-50;
+  }
+
+  .ttui-stack-icon {
+    @apply absolute top-0 right-0;
+  }
+
+}
