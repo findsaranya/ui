@@ -48,6 +48,8 @@ export class FileUploadComponent {
   @Input() data: IData = {
     uploadCallback: () => new Observable<unknown>(),
     uploadCompleteCallback: () => ({}),
+    deleteCallback: () => new Observable<unknown>(),
+    deleteCompleteCallback: () => ({}),
   };
 
   // TODO: Need to update in Global config.
@@ -74,6 +76,9 @@ export class FileUploadComponent {
       const targetFile = <File>(
         (event.target as HTMLInputElement).files?.item(0)
       );
+      if (!targetFile) {
+        return;
+      }
       const errorMsg = this.validateFile(targetFile);
       const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
       this.fileData.push({
@@ -96,6 +101,9 @@ export class FileUploadComponent {
       this.uploadMultipleFiles(dataTransferFiles);
     } else {
       const dataTransferFile = <File>event.dataTransfer?.files.item(0);
+      if (!dataTransferFile) {
+        return;
+      }
       const errorMsg = this.validateFile(dataTransferFile);
       const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
       this.fileData.push({
@@ -125,9 +133,10 @@ export class FileUploadComponent {
       return;
     }
     this.data.uploadCallback(singleFileData.file).subscribe({
-      next: () => {
+      next: (response: unknown) => {
         this.updateFileStatus(singleFileData.fileId, EFileStatus.success);
         this.detectChanges.markForCheck();
+        this.data.uploadCompleteCallback(response);
       },
       error: (error: HttpErrorResponse) => {
         this.updateFileStatus(

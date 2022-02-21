@@ -1,53 +1,73 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   Input,
-  Output,
-  EventEmitter,
   HostBinding,
+  ChangeDetectorRef,
+  Renderer2,
 } from '@angular/core';
-import { IFileData } from '../file.model';
+import { Observable } from 'rxjs';
+import { EFileStatus, IFileActionCallbackData, IFileData } from '../file.model';
 
 @Component({
   selector: 'tt-ui-file-view',
   templateUrl: './file-view.component.html',
   styleUrls: ['./file-view.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class FileViewComponent {
   @Input() fileData: IFileData[] = [];
 
   @Input() action: 'multiple' | 'default' = 'default';
 
-  @Output() DownloadAction: EventEmitter<FileList> =
-    new EventEmitter<FileList>();
+  @Input() fileActionCallbackData: IFileActionCallbackData = {
+    deleteCallback: () => new Observable<unknown>(),
+    deleteCompleteCallback: () => ({}),
+  };
 
-  @Output() DeleteAction: EventEmitter<FileList> = new EventEmitter<FileList>();
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private renderer: Renderer2
+  ) {}
 
   @HostBinding('class') get classes(): string {
     return 'ttui-file-view';
   }
 
-  onDownload(event: Event, file: File) {
+  onDownload(file: File) {
     const blob = new Blob([file]);
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = this.renderer.createElement('a');
     a.href = url;
     a.download = file.name;
     a.click();
     URL.revokeObjectURL(url);
-    //To-do returning undefined
-    this.DownloadAction.emit(
-      <FileList>(event.target as HTMLInputElement).files
-    );
   }
 
-  onDelete(event: Event, item: IFileData) {
-    this.fileData = this.fileData.filter((file) => file.fileId !== item.fileId);
-    //To-do returning undefined
-    this.DeleteAction.emit(<FileList>(event.target as HTMLInputElement).files);
+  onDelete(item: IFileData) {
+    const fileItem = item.file;
+    const fileStatus = item.fileStatus;
+    if (fileStatus === EFileStatus.success) {
+      this.fileActionCallbackData.deleteCallback(fileItem.name).subscribe({
+        next: (response: unknown) => {
+          console.log(response);
+          this.fileData = this.fileData.filter(
+            (file) => file.fileId !== item.fileId
+          );
+          this.changeDetector.markForCheck();
+          this.fileActionCallbackData.deleteCompleteCallback(response);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+        },
+      });
+    } else if (fileStatus === EFileStatus.error) {
+      this.fileData = this.fileData.filter(
+        (file) => file.fileId !== item.fileId
+      );
+      this.changeDetector.markForCheck();
+    }
   }
 
   getFileType(file: File) {

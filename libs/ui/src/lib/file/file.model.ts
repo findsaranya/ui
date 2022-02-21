@@ -32,6 +32,13 @@ export interface IFileData {
 export interface IData {
   uploadCallback: (file: File) => Observable<unknown>;
   uploadCompleteCallback: (response: unknown) => void;
+  deleteCallback: (payload: unknown) => Observable<unknown>;
+  deleteCompleteCallback: (response: unknown) => void;
+}
+
+export interface IFileActionCallbackData {
+  deleteCallback: (param: unknown) => Observable<unknown>;
+  deleteCompleteCallback: (response: unknown) => void;
 }
 
 export interface IUploadFileStatus {

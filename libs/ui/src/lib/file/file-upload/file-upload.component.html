@@ -45,7 +45,14 @@
     </p>
   </div>
 
-  <tt-ui-file-view [fileData]="fileData" [action]="action"></tt-ui-file-view>
+  <tt-ui-file-view
+    [fileData]="fileData"
+    [action]="action"
+    [fileActionCallbackData]="{
+      deleteCallback: data.deleteCallback,
+      deleteCompleteCallback: data.deleteCompleteCallback
+    }"
+  ></tt-ui-file-view>
 </div>
 
 <ng-template #dragAndDrop>

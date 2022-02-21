@@ -17,7 +17,7 @@
         [from]="'view'"
       ></tt-ui-file-type>
       <div class="ttui-file-view-title">
-        {{ item.file.name }}
+        {{ item.file?.name }}
       </div>
     </div>
     <div
@@ -59,10 +59,10 @@
       >
         <div
           *ngIf="action === 'multiple' && item.fileStatus === 'success'"
-          (click)="onDownload($event, item.file)"
+          (click)="onDownload(item.file)"
           tabindex="0"
-          (keyup.enter)="onDownload($event, item.file)"
-          (keyup.space)="onDownload($event, item.file)"
+          (keyup.enter)="onDownload(item.file)"
+          (keyup.space)="onDownload(item.file)"
           class="cursor-pointer mr-7"
         >
           <svg
@@ -81,9 +81,9 @@
           </svg>
         </div>
         <div
-          (click)="onDelete($event, item)"
-          (keyup.enter)="onDelete($event, item)"
-          (keyup.space)="onDelete($event, item)"
+          (click)="onDelete(item)"
+          (keyup.enter)="onDelete(item)"
+          (keyup.space)="onDelete(item)"
           class="cursor-pointer"
           tabindex="0"
         >
