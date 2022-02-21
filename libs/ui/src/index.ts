@@ -47,6 +47,18 @@ export * from './lib/textarea/textarea.module';
 export * from './lib/radio/radio-group/radio-group.directive';
 export * from './lib/radio/radio-button/radio-button.component';
 export * from './lib/radio/radio.module';
+//content modal
+export * from './lib/modal/modal.module';
+export * from './lib/modal/modal.service';
+export * from './lib/modal/modalref';
+export * from './lib/modal/modalconfig.model';
+export * from './lib/modal/modal-title.directive';
+export * from './lib/modal/modal-container.component';
+export {
+  ModalComponent,
+  ModalMainComponent,
+  PromptComponent,
+} from './lib/modal/modalstories-component/modal-component/modal-component.component';
 // File
 export * from './lib/file/file-upload/file-upload.component';
 export * from './lib/file/file-view/file-view.component';

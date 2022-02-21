@@ -153,6 +153,10 @@ module.exports = {
         40: '2.5rem',
         50: '3.125rem',
         70: '4.375rem',
+        inherit: 'inherit',
+      },
+      maxHeight: {
+        inherit: 'inherit',
       },
       borderRadius: {
         '7px': '0.438rem',
