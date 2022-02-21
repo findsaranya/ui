@@ -47,3 +47,8 @@ export * from './lib/textarea/textarea.module';
 export * from './lib/radio/radio-group/radio-group.directive';
 export * from './lib/radio/radio-button/radio-button.component';
 export * from './lib/radio/radio.module';
+// File
+export * from './lib/file/file-upload/file-upload.component';
+export * from './lib/file/file-view/file-view.component';
+export * from './lib/file/file-type/file-type.component';
+export * from './lib/file/file.module';

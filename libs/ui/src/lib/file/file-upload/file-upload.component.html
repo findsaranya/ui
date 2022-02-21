@@ -1,4 +1,3 @@
-<p>file-upload works!</p>
 <div class="ttui-file-upload">
   <input
     type="file"
@@ -53,13 +52,13 @@
   <div
     class="ttui-file-drag-drop-container"
     [ngClass]="{ 'ttui-file-drag-drop-disabled': disabled }"
-    tabindex="0"
   >
     <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
     <div
       [ngClass]="
         fileIcon ? 'ttui-file-drag-drop-filetype' : 'ttui-file-drag-drop'
       "
+      tabindex="0"
       (click)="$event.stopPropagation(); $event.preventDefault(); input.click()"
       (keyup.enter)="input.click()"
       (keyup.space)="input.click()"

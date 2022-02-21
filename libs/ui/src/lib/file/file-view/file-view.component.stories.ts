@@ -1,11 +1,10 @@
-import { errorMessage } from './../../../../../service/src/lib/+state/app/config.data';
-import { FileTypeComponent } from './../tt-file-type/tt-file-type.component';
+import { FileTypeComponent } from './../file-type/file-type.component';
 import { FileViewComponent } from './../file-view/file-view.component';
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, Story } from '@storybook/angular';
+import { moduleMetadata, Meta } from '@storybook/angular';
 
 export default {
-  title: 'Components/FileViewComponent',
+  title: 'Components/File View',
   component: FileViewComponent,
   decorators: [
     moduleMetadata({

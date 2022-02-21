@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  ChangeDetectorRef,
   EventEmitter,
   HostBinding,
 } from '@angular/core';
@@ -26,8 +25,6 @@ export class FileViewComponent {
     new EventEmitter<FileList>();
 
   @Output() DeleteAction: EventEmitter<FileList> = new EventEmitter<FileList>();
-
-  constructor(private detectChanges: ChangeDetectorRef) {}
 
   @HostBinding('class') get classes(): string {
     return 'ttui-file-view';

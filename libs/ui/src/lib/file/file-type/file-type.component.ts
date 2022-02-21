@@ -13,7 +13,7 @@ import { IFileData } from '../file.model';
   templateUrl: './file-type.component.html',
   styleUrls: ['./file-type.component.scss'],
   encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class FileTypeComponent implements OnChanges {
   @Input() fileIcon: 'file' | 'image' | 'pdf' | 'xlsx' | null = 'file';

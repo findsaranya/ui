@@ -1,5 +1,5 @@
 .ttui-file-view-content-container {
-  @apply flex w-full border bg-gray-200 text-black-default text-left rounded-5px justify-between mb-4 items-center pr-2 hover: cursor-pointer hover:bg-gray-300;
+  @apply flex w-full border bg-gray-200 text-black-default text-left rounded-5px justify-between mb-4 items-center pr-2 hover:cursor-pointer hover:bg-gray-300;
 
   .ttui-file-view-content {
     @apply flex items-center w-5/6;
@@ -24,5 +24,4 @@
   .ttui-stack-icon {
     @apply absolute top-0 right-0;
   }
-
 }

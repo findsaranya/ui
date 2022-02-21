@@ -22,7 +22,7 @@ const data = {
 };
 
 export default {
-  title: 'Components/FileUploadComponent',
+  title: 'Components/File Upload',
   component: FileUploadComponent,
   decorators: [
     moduleMetadata({
