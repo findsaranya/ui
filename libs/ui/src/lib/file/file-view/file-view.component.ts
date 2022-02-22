@@ -8,7 +8,12 @@ import {
   Renderer2,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EFileStatus, IFileActionCallbackData, IFileData } from '../file.model';
+import {
+  EFileStatus,
+  FileAction,
+  IFileActionCallbackData,
+  IFileData,
+} from '../file.model';
 
 @Component({
   selector: 'tt-ui-file-view',
@@ -19,7 +24,7 @@ import { EFileStatus, IFileActionCallbackData, IFileData } from '../file.model';
 export class FileViewComponent {
   @Input() fileData: IFileData[] = [];
 
-  @Input() action: 'multiple' | 'default' = 'default';
+  @Input() fileAction: FileAction = 'default';
 
   @Input() fileActionCallbackData: IFileActionCallbackData = {
     deleteCallback: () => new Observable<unknown>(),

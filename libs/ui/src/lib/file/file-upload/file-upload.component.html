@@ -15,7 +15,7 @@
     class="ttui-file-upload-container"
     [ngClass]="{ 'ttui-file-upload-disabled': disabled }"
     tabindex="-1"
-    *ngIf="uploadType === 'upload'; else dragAndDrop"
+    *ngIf="uploadType === 'selection'; else dragAndDrop"
   >
     <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
     <button
@@ -47,7 +47,7 @@
 
   <tt-ui-file-view
     [fileData]="fileData"
-    [action]="action"
+    [fileAction]="fileAction"
     [fileActionCallbackData]="{
       deleteCallback: data.deleteCallback,
       deleteCompleteCallback: data.deleteCompleteCallback
@@ -81,7 +81,7 @@
         <tt-ui-file-type
           [fileIcon]="fileIcon"
           [disabled]="disabled"
-          [from]="'upload'"
+          [getData]="'upload'"
         ></tt-ui-file-type>
       </div>
       <div class="ttui-file-drag-drop-content">

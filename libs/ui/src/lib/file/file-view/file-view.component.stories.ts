@@ -13,7 +13,7 @@ export default {
     }),
   ],
   argTypes: {
-    action: {
+    fileAction: {
       name: 'action',
       type: { name: 'string' },
       defaultValue: null,
@@ -84,7 +84,7 @@ export const MultipleFiles = (args: FileViewComponent) => ({
 });
 
 MultipleFiles.args = {
-  action: 'default',
+  fileAction: 'default',
   fileData: multipleFileData,
 } as Partial<FileViewComponent>;
 MultipleFiles.storyName = 'Multiple files';
@@ -97,7 +97,7 @@ export const Primary = (args: FileViewComponent) => ({
 });
 
 Primary.args = {
-  action: 'default',
+  fileAction: 'default',
   fileData: successFileData,
 } as Partial<FileViewComponent>;
 Primary.storyName = 'Success';
@@ -110,7 +110,7 @@ export const Secondary = (args: FileViewComponent) => ({
 });
 
 Secondary.args = {
-  action: 'default',
+  fileAction: 'default',
   fileData: errorFileData,
 } as Partial<FileViewComponent>;
 Secondary.storyName = 'Error';
@@ -123,7 +123,7 @@ export const Pending = (args: FileViewComponent) => ({
 });
 
 Pending.args = {
-  action: 'default',
+  fileAction: 'default',
   fileData: pendingFileData,
 } as Partial<FileViewComponent>;
 Pending.storyName = 'Pending';

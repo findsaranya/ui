@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   ElementRef,
@@ -9,7 +8,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FileAcceptTypes, IData, IFileData, EFileStatus } from '../file.model';
+import {
+  FileAcceptTypes,
+  IFileCallbackData,
+  IFileData,
+  EFileStatus,
+  FileUploadType,
+  FileIconType,
+  FileAction,
+} from '../file.model';
 
 let uniqueId = 0;
 
@@ -17,15 +24,14 @@ let uniqueId = 0;
   selector: 'tt-ui-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent {
   @Input() title = 'Attachments';
 
-  @Input() uploadType: 'upload' | 'dragAndDrop' = 'upload';
+  @Input() uploadType: FileUploadType = 'selection';
 
-  @Input() fileIcon: 'file' | 'image' | 'pdf' | 'xlsx' | null = null;
+  @Input() fileIcon: FileIconType | null = null;
 
   @Input() dragAndDropText = 'Drag & Drop or Click here';
 
@@ -37,7 +43,7 @@ export class FileUploadComponent {
 
   @Input() id = `ttui-file-upload-${++uniqueId}`;
 
-  @Input() action: 'multiple' | 'default' = 'default';
+  @Input() fileAction: FileAction = 'default';
 
   @Input() name = '';
 
@@ -45,7 +51,7 @@ export class FileUploadComponent {
 
   @Input() required = false;
 
-  @Input() data: IData = {
+  @Input() data: IFileCallbackData = {
     uploadCallback: () => new Observable<unknown>(),
     uploadCompleteCallback: () => ({}),
     deleteCallback: () => new Observable<unknown>(),
@@ -55,13 +61,13 @@ export class FileUploadComponent {
   // TODO: Need to update in Global config.
   @Input() maxFileSize = 5;
 
+  @Input() helpText = 'Accepts all files. Maximum file size is 5MB.';
+
   fileData: IFileData[] = [];
 
   files: File[] = [];
 
   @ViewChild('input') inputElement?: ElementRef<HTMLInputElement>;
-
-  @Input() helpText = 'Accepts all files. Maximum file size is 5MB.';
 
   constructor(private detectChanges: ChangeDetectorRef) {}
 

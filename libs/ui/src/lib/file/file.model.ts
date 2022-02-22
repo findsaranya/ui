@@ -22,6 +22,14 @@ export type FileAcceptTypes =
   | '.jpg'
   | '.jpeg';
 
+export type FileUploadType = 'selection' | 'dragAndDrop';
+
+export type FileIconType = 'file' | 'image' | 'pdf' | 'xlsx';
+
+export type GetDataType = 'upload' | 'view';
+
+export type FileAction = 'multiple' | 'default';
+
 export interface IFileData {
   fileId: number;
   file: File;
@@ -29,7 +37,7 @@ export interface IFileData {
   errorMessage?: string;
 }
 
-export interface IData {
+export interface IFileCallbackData {
   uploadCallback: (file: File) => Observable<unknown>;
   uploadCompleteCallback: (response: unknown) => void;
   deleteCallback: (payload: unknown) => Observable<unknown>;
@@ -39,10 +47,4 @@ export interface IData {
 export interface IFileActionCallbackData {
   deleteCallback: (param: unknown) => Observable<unknown>;
   deleteCompleteCallback: (response: unknown) => void;
-}
-
-export interface IUploadFileStatus {
-  fileId: number;
-  fileStatus: 'pending' | 'error' | 'success';
-  errorMsg?: string;
 }

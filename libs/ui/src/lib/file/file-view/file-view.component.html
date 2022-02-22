@@ -14,7 +14,7 @@
       <tt-ui-file-type
         [fileIcon]="getFileType(item.file)"
         [fileData]="item"
-        [from]="'view'"
+        [getData]="'view'"
       ></tt-ui-file-type>
       <div class="ttui-file-view-title">
         {{ item.file?.name }}
@@ -54,11 +54,11 @@
         class="ttui-icon-fade-out"
         [ngClass]="{
           'ttui-stack-icon': item.fileStatus === 'success',
-          'mr-5': action === 'multiple' && item.fileStatus === 'success'
+          'mr-5': fileAction === 'multiple' && item.fileStatus === 'success'
         }"
       >
         <div
-          *ngIf="action === 'multiple' && item.fileStatus === 'success'"
+          *ngIf="fileAction === 'multiple' && item.fileStatus === 'success'"
           (click)="onDownload(item.file)"
           tabindex="0"
           (keyup.enter)="onDownload(item.file)"

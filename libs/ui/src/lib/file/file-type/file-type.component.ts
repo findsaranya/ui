@@ -1,38 +1,33 @@
 import {
   Component,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
   OnChanges,
 } from '@angular/core';
-import { IFileData } from '../file.model';
+import { FileIconType, GetDataType, IFileData } from '../file.model';
 
 @Component({
   selector: 'tt-ui-file-type',
   templateUrl: './file-type.component.html',
   styleUrls: ['./file-type.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class FileTypeComponent implements OnChanges {
-  @Input() fileIcon: 'file' | 'image' | 'pdf' | 'xlsx' | null = 'file';
+  @Input() fileIcon: FileIconType | null = 'file';
 
   @Input() disabled = false;
 
-  @Input() from: 'upload' | 'view' = 'upload';
+  @Input() getData: GetDataType = 'view';
 
-  @Input() fileData: IFileData | undefined = undefined;
+  @Input() fileData?: IFileData;
 
-  imgSrc: string | ArrayBuffer | null | undefined = undefined;
-
-  isSvg: boolean | undefined = false;
+  imgSrc?: string | ArrayBuffer | null;
 
   constructor(private detectChanges: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
     const file = this.fileData?.file;
-    this.isSvg = file?.type.includes('svg');
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {

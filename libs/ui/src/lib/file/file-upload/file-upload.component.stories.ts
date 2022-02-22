@@ -12,13 +12,17 @@ const uploadData = (upload: File) => {
   });
 };
 
-const uploadComplete = (): void => {
-  console.log('Upload completed.');
-};
+const uploadComplete = () => ({});
+
+const downloadData = () => new Observable<unknown>();
+
+const downloadComplete = () => ({});
 
 const data = {
   uploadCallback: uploadData.bind(this),
   uploadCompleteCallback: uploadComplete.bind(this),
+  deleteCallback: downloadData.bind(this),
+  deleteCompleteCallback: downloadComplete.bind(this),
 };
 
 export default {
@@ -51,7 +55,7 @@ export default {
         options: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
       },
     },
-    action: {
+    fileAction: {
       name: 'action',
       type: { name: 'string' },
       defaultValue: null,
@@ -75,7 +79,7 @@ const Template: Story<FileUploadComponent> = (args: FileUploadComponent) => ({
 export const Primary = Template.bind({});
 Primary.args = {
   acceptTypes: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
-  action: 'default',
+  fileAction: 'default',
   buttonText: 'File Upload',
   data: data,
   disabled: false,
@@ -89,7 +93,7 @@ Primary.storyName = 'File upload';
 export const Secondary = Template.bind({});
 Secondary.args = {
   acceptTypes: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
-  action: 'default',
+  fileAction: 'default',
   data: data,
   dragAndDropText: ' Drag & Drop or Click here ',
   disabled: false,

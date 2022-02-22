@@ -35,7 +35,7 @@
     [ngClass]="{ 'ttui-file-type-disabled': disabled }"
   >
     <svg
-      [ngClass]="[from === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@
     [ngClass]="{ 'ttui-file-type-disabled': disabled }"
   >
     <svg
-      [ngClass]="[from === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@
   </div>
   <div *ngSwitchDefault [ngClass]="{ 'ttui-file-type-disabled': disabled }">
     <svg
-      [ngClass]="[from === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
