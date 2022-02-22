@@ -71,7 +71,7 @@ export class FileUploadComponent {
 
   constructor(private detectChanges: ChangeDetectorRef) {}
 
-  handleChangeEvent(event: Event) {
+  handleChangeEvent(event: Event): void {
     this.removeFiles();
     if (this.isMultiple) {
       const targetFiles = Array.from(
@@ -100,7 +100,7 @@ export class FileUploadComponent {
     }
   }
 
-  handleDragEvent(event: DragEvent) {
+  handleDragEvent(event: DragEvent): void {
     this.removeFiles();
     if (this.isMultiple) {
       const dataTransferFiles = Array.from(<FileList>event.dataTransfer?.files);
@@ -125,7 +125,7 @@ export class FileUploadComponent {
     }
   }
 
-  removeFiles() {
+  removeFiles(): void {
     if (this.files.length !== 0) {
       this.files = [];
     }
@@ -134,7 +134,7 @@ export class FileUploadComponent {
     }
   }
 
-  uploadSingleFile(singleFileData: IFileData) {
+  uploadSingleFile(singleFileData: IFileData): void {
     if (!singleFileData) {
       return;
     }
@@ -171,7 +171,7 @@ export class FileUploadComponent {
     });
   }
 
-  uploadMultipleFiles(files: File[]) {
+  uploadMultipleFiles(files: File[]): void {
     if (!files || files.length === 0) {
       return;
     }
@@ -192,7 +192,7 @@ export class FileUploadComponent {
     });
   }
 
-  validateFile(file: File) {
+  validateFile(file: File): string | undefined {
     if (!file) {
       return;
     }
@@ -206,7 +206,7 @@ export class FileUploadComponent {
     } else if (fileSize > this.maxFileSize) {
       return 'File size exceeds.';
     } else {
-      return undefined;
+      return;
     }
   }
 }

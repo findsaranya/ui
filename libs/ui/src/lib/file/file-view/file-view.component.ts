@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import {
   EFileStatus,
   FileAction,
+  FileIconType,
   IFileActionCallbackData,
   IFileData,
 } from '../file.model';
@@ -40,7 +41,7 @@ export class FileViewComponent {
     return 'ttui-file-view';
   }
 
-  onDownload(file: File) {
+  onDownload(file: File): void {
     const blob = new Blob([file]);
     const url = URL.createObjectURL(blob);
     const a = this.renderer.createElement('a');
@@ -50,7 +51,7 @@ export class FileViewComponent {
     URL.revokeObjectURL(url);
   }
 
-  onDelete(item: IFileData) {
+  onDelete(item: IFileData): void {
     const fileItem = item.file;
     const fileStatus = item.fileStatus;
     if (fileStatus === EFileStatus.success) {
@@ -75,7 +76,7 @@ export class FileViewComponent {
     }
   }
 
-  getFileType(file: File) {
+  getFileType(file: File): FileIconType {
     if (file?.type.includes('image')) {
       return 'image';
     } else if (file?.type.includes('pdf')) {
