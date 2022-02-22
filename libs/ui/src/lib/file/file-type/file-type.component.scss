@@ -5,7 +5,7 @@
   img {
     @apply rounded-md rounded-r-sm mr-4 select-none;
   }
-  .ttui-file-type-disabled path {
+  &.ttui-file-type-disabled path {
     @apply fill-gray-500;
   }
 

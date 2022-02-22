@@ -1,8 +1,9 @@
-<div class="ttui-file-type-container" [ngSwitch]="fileIcon">
-  <div
-    *ngSwitchCase="'image'"
-    [ngClass]="{ 'ttui-file-type-disabled': disabled }"
-  >
+<div
+  class="ttui-file-type-container"
+  [ngSwitch]="fileIcon"
+  [ngClass]="{ 'ttui-file-type-disabled': disabled }"
+>
+  <div *ngSwitchCase="'image'">
     <div *ngIf="fileData?.fileStatus !== 'success' || !imgSrc; else loadImage">
       <svg
         class="ttui-upload-icon"
@@ -30,12 +31,9 @@
       </svg>
     </div>
   </div>
-  <div
-    *ngSwitchCase="'pdf'"
-    [ngClass]="{ 'ttui-file-type-disabled': disabled }"
-  >
+  <div *ngSwitchCase="'pdf'">
     <svg
-      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="fromDataType"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -74,12 +72,9 @@
       </defs>
     </svg>
   </div>
-  <div
-    *ngSwitchCase="'xlsx'"
-    [ngClass]="{ 'ttui-file-type-disabled': disabled }"
-  >
+  <div *ngSwitchCase="'xlsx'">
     <svg
-      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="fromDataType"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -105,9 +100,9 @@
       </defs>
     </svg>
   </div>
-  <div *ngSwitchDefault [ngClass]="{ 'ttui-file-type-disabled': disabled }">
+  <div *ngSwitchDefault>
     <svg
-      [ngClass]="[getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon']"
+      [ngClass]="fromDataType"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

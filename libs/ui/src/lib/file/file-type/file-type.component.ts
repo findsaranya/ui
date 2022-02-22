@@ -37,4 +37,8 @@ export class FileTypeComponent implements OnChanges {
       reader.readAsDataURL(file);
     }
   }
+
+  get fromDataType(): string {
+    return this.getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon';
+  }
 }

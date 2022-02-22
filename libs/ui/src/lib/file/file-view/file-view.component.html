@@ -5,10 +5,7 @@
 >
   <div
     class="ttui-file-view-content-container"
-    [ngClass]="[
-      item.fileStatus === 'error' ? 'border-red-500' : 'border-gray-300 ',
-      getFileType(item.file) === 'image' ? 'min-h-70' : 'min-h-50'
-    ]"
+    [ngClass]="getContainerClass(item)"
   >
     <div class="ttui-file-view-content">
       <tt-ui-file-type
@@ -50,13 +47,7 @@
           fill="white"
         />
       </svg>
-      <div
-        class="ttui-icon-fade-out"
-        [ngClass]="{
-          'ttui-stack-icon': item.fileStatus === 'success',
-          'mr-5': fileAction === 'multiple' && item.fileStatus === 'success'
-        }"
-      >
+      <div class="ttui-icon-fade-out" [ngClass]="getActionClass(item)">
         <div
           *ngIf="fileAction === 'multiple' && item.fileStatus === 'success'"
           (click)="onDownload(item.file)"

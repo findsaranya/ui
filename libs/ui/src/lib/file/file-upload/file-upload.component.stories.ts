@@ -49,7 +49,7 @@ export default {
         options: ['file', 'image', 'pdf', 'xlsx', null],
       },
     },
-    acceptTypes: {
+    acceptableFileTypes: {
       control: {
         type: 'multi-select',
         options: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
@@ -78,7 +78,15 @@ const Template: Story<FileUploadComponent> = (args: FileUploadComponent) => ({
 
 export const Primary = Template.bind({});
 Primary.args = {
-  acceptTypes: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
+  acceptableFileTypes: [
+    '.xls',
+    '.xlsx',
+    '.csv',
+    '.pdf',
+    '.png',
+    '.jpg',
+    '.jpeg',
+  ],
   fileAction: 'default',
   buttonText: 'File Upload',
   data: data,
@@ -92,7 +100,15 @@ Primary.storyName = 'File upload';
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  acceptTypes: ['.xls', '.xlsx', '.csv', '.pdf', '.png', '.jpg', '.jpeg'],
+  acceptableFileTypes: [
+    '.xls',
+    '.xlsx',
+    '.csv',
+    '.pdf',
+    '.png',
+    '.jpg',
+    '.jpeg',
+  ],
   fileAction: 'default',
   data: data,
   dragAndDropText: ' Drag & Drop or Click here ',

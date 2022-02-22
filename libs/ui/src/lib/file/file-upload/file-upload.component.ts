@@ -9,10 +9,10 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  FileAcceptTypes,
+  AcceptableFileTypes,
   IFileCallbackData,
   IFileData,
-  EFileStatus,
+  FileUploadStatus,
   FileUploadType,
   FileIconType,
   FileAction,
@@ -35,7 +35,7 @@ export class FileUploadComponent {
 
   @Input() dragAndDropText = 'Drag & Drop or Click here';
 
-  @Input() acceptTypes: FileAcceptTypes[] = [];
+  @Input() acceptableFileTypes: AcceptableFileTypes[] = [];
 
   @Input() buttonText = 'Upload Files';
 
@@ -61,75 +61,84 @@ export class FileUploadComponent {
   // TODO: Need to update in Global config.
   @Input() maxFileSize = 5;
 
-  @Input() helpText = 'Accepts all files. Maximum file size is 5MB.';
+  @Input()
+  helpText = `Accepts all files. Maximum file size is ${this.maxFileSize}MB.`;
 
   fileData: IFileData[] = [];
 
   files: File[] = [];
 
-  @ViewChild('input') inputElement?: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput') inputElement?: ElementRef<HTMLInputElement>;
 
-  constructor(private detectChanges: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
+
+  get dragAndDropType(): string {
+    return this.fileIcon
+      ? 'ttui-file-drag-drop-filetype'
+      : 'ttui-file-drag-drop';
+  }
 
   handleChangeEvent(event: Event): void {
+    const eventTarget = event.target as HTMLInputElement;
     if (this.isMultiple) {
-      const targetFiles = Array.from(
-        <FileList>(event.target as HTMLInputElement).files
-      );
+      const targetFiles = Array.from(eventTarget.files || []);
       this.uploadMultipleFiles(targetFiles);
     } else {
-      const targetFile = <File>(
-        (event.target as HTMLInputElement).files?.item(0)
-      );
+      const targetFile = eventTarget.files?.item(0);
       if (!targetFile) {
         return;
       } else {
         this.removeFiles();
       }
       const errorMsg = this.validateFile(targetFile);
-      const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
+      const fileStatus = errorMsg
+        ? FileUploadStatus.error
+        : FileUploadStatus.pending;
       this.fileData.push({
         fileId: 0,
         file: targetFile,
         fileStatus: fileStatus,
         errorMessage: errorMsg,
       });
-      this.detectChanges.markForCheck();
-      if (fileStatus === EFileStatus.pending) {
+      this.changeDetector.markForCheck();
+      if (fileStatus === FileUploadStatus.pending) {
         this.uploadSingleFile(this.fileData[0]);
       }
     }
   }
 
   handleDragEvent(event: DragEvent): void {
+    const eventTarget = event.dataTransfer;
     if (this.isMultiple) {
-      const dataTransferFiles = Array.from(<FileList>event.dataTransfer?.files);
+      const dataTransferFiles = Array.from(eventTarget?.files || []);
       this.uploadMultipleFiles(dataTransferFiles);
     } else {
-      const dataTransferFile = <File>event.dataTransfer?.files.item(0);
+      const dataTransferFile = eventTarget?.files.item(0);
       if (!dataTransferFile) {
         return;
       }
       const errorMsg = this.validateFile(dataTransferFile);
-      const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
+      const fileStatus = errorMsg
+        ? FileUploadStatus.error
+        : FileUploadStatus.pending;
       this.fileData.push({
         fileId: 0,
         file: dataTransferFile,
         fileStatus: fileStatus,
         errorMessage: errorMsg,
       });
-      this.detectChanges.markForCheck();
-      if (fileStatus === EFileStatus.pending) {
+      this.changeDetector.markForCheck();
+      if (fileStatus === FileUploadStatus.pending) {
         this.uploadSingleFile(this.fileData[0]);
       }
     }
   }
 
   removeFiles(): void {
-    if (this.files.length !== 0) {
+    if (this.files.length) {
       this.files = [];
     }
-    if (this.fileData.length !== 0) {
+    if (this.fileData.length) {
       this.fileData = [];
     }
   }
@@ -140,44 +149,44 @@ export class FileUploadComponent {
     }
     this.data.uploadCallback(singleFileData.file).subscribe({
       next: (response: unknown) => {
-        this.updateFileStatus(singleFileData.fileId, EFileStatus.success);
-        this.detectChanges.markForCheck();
+        this.updateFileStatus(singleFileData.fileId, FileUploadStatus.success);
+        this.changeDetector.markForCheck();
         this.data.uploadCompleteCallback(response);
       },
       error: (error: HttpErrorResponse) => {
         this.updateFileStatus(
           singleFileData.fileId,
-          EFileStatus.error,
+          FileUploadStatus.error,
           error.message
         );
-        this.detectChanges.markForCheck();
+        this.changeDetector.markForCheck();
       },
     });
   }
 
   private updateFileStatus(
     fileId: number,
-    fileStatus: EFileStatus,
+    fileStatus: FileUploadStatus,
     errorMessage?: string
   ): void {
     this.fileData = this.fileData.map((eachFileData) => {
       if (eachFileData.fileId === fileId) {
         eachFileData.fileStatus = fileStatus;
-        if (errorMessage) {
-          eachFileData.errorMessage = errorMessage;
-        }
+        eachFileData.errorMessage = errorMessage;
       }
       return eachFileData;
     });
   }
 
   uploadMultipleFiles(files: File[]): void {
-    if (!files || files.length === 0) {
+    if (!files?.length) {
       return;
     }
     files.forEach((file: File) => {
       const errorMsg = this.validateFile(file);
-      const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
+      const fileStatus = errorMsg
+        ? FileUploadStatus.error
+        : FileUploadStatus.pending;
       this.fileData.push({
         fileId: this.fileData.length - 1,
         file: file,
@@ -187,7 +196,7 @@ export class FileUploadComponent {
     });
 
     this.fileData.forEach((singleFileData: IFileData) => {
-      if (singleFileData.fileStatus === EFileStatus.pending) {
+      if (singleFileData.fileStatus === FileUploadStatus.pending) {
         this.uploadSingleFile(singleFileData);
       }
     });
@@ -199,10 +208,10 @@ export class FileUploadComponent {
     }
     const fileName = file.name;
     const fileSize = file.size / 1024 / 1024;
-    const fileExtension = <FileAcceptTypes>(
+    const fileExtension = <AcceptableFileTypes>(
       fileName.slice(Math.max(0, fileName.lastIndexOf('.')) || Infinity)
     );
-    if (!this.acceptTypes.includes(fileExtension)) {
+    if (!this.acceptableFileTypes.includes(fileExtension)) {
       return 'Unsupported File.';
     } else if (fileSize > this.maxFileSize) {
       return 'File size exceeds.';

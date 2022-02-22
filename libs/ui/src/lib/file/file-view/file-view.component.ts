@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  EFileStatus,
+  FileUploadStatus,
   FileAction,
   FileIconType,
   IFileActionCallbackData,
@@ -42,8 +42,24 @@ export class FileViewComponent {
     private renderer: Renderer2
   ) {}
 
-  @HostBinding('class') get classes(): string {
+  @HostBinding('class') get class(): string {
     return 'ttui-file-view';
+  }
+
+  getContainerClass(fileData: IFileData): string {
+    return [
+      fileData.fileStatus === 'error' ? 'border-red-500' : 'border-gray-300 ',
+      this.getFileType(fileData.file) === 'image' ? 'min-h-70' : 'min-h-50',
+    ].join(' ');
+  }
+
+  getActionClass(fileData: IFileData): string {
+    return [
+      fileData.fileStatus === 'success' ? 'ttui-stack-icon' : null,
+      this.fileAction === 'multiple' && fileData.fileStatus === 'success'
+        ? 'mr-5'
+        : null,
+    ].join(' ');
   }
 
   onDownload(file: File): void {
@@ -59,7 +75,7 @@ export class FileViewComponent {
   onDelete(item: IFileData): void {
     const fileItem = item.file;
     const fileStatus = item.fileStatus;
-    if (fileStatus === EFileStatus.success) {
+    if (fileStatus === FileUploadStatus.success) {
       this.fileActionCallbackData.deleteCallback(fileItem.name).subscribe({
         next: (response: unknown) => {
           this.fileData = this.fileData.filter(
@@ -71,10 +87,10 @@ export class FileViewComponent {
           this.fileActionCallbackData.deleteCompleteCallback(response);
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error);
+          this.fileActionCallbackData.deleteCompleteCallback(error);
         },
       });
-    } else if (fileStatus === EFileStatus.error) {
+    } else if (fileStatus === FileUploadStatus.error) {
       this.fileData = this.fileData.filter(
         (file) => file.file.name !== item.file.name
       );
@@ -83,14 +99,9 @@ export class FileViewComponent {
   }
 
   getFileType(file: File): FileIconType {
-    if (file?.type.includes('image')) {
-      return 'image';
-    } else if (file?.type.includes('pdf')) {
-      return 'pdf';
-    } else if (file?.type.includes('spreadsheet')) {
-      return 'xlsx';
-    } else {
-      return 'file';
-    }
+    const fileIcon = ['image', 'pdf', 'xlsx'].find((fileIconType) =>
+      file?.type.includes(fileIconType)
+    ) as FileIconType;
+    return fileIcon ? fileIcon : 'file';
   }
 }

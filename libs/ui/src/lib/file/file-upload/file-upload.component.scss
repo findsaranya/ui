@@ -1,14 +1,11 @@
-.ttui-file-upload {
-  // @apply
-}
-
 .ttui-file-upload-container {
   @apply flex flex-col space-y-3 mb-4;
 
   .ttui-file-upload-button {
     @apply text-sm font-bold transition-colors cursor-pointer flex items-center justify-center;
     @apply w-full px-4 min-w-40 min-h-40 rounded-lg space-x-2;
-    @apply text-white-default bg-gray-1000 hover:bg-gray-900 focus:shadow-default  active:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
+    @apply text-white-default bg-gray-1000 hover:bg-gray-900 focus:shadow-default;
+    @apply active:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 
     svg path {
       @apply fill-white-default;

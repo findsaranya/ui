@@ -1,19 +1,19 @@
 import { Observable } from 'rxjs';
 
-export enum EFileStatus {
+export enum FileUploadStatus {
   pending = 'pending',
   error = 'error',
   success = 'success',
 }
 
-export enum EFileIcon {
+export enum FileIcon {
   file = 'file',
   image = 'image',
   pdf = 'pdf',
   xlsx = 'xlsx',
 }
 
-export type FileAcceptTypes =
+export type AcceptableFileTypes =
   | '.xls'
   | '.xlsx'
   | '.csv'
@@ -33,7 +33,7 @@ export type FileAction = 'multiple' | 'default';
 export interface IFileData {
   fileId: number;
   file: File;
-  fileStatus: EFileStatus;
+  fileStatus: FileUploadStatus;
   errorMessage?: string;
 }
 
