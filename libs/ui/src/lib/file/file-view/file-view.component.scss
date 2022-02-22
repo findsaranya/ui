@@ -5,7 +5,7 @@
     @apply flex items-center w-3/4;
 
     .ttui-file-view-title {
-      @apply ml-2 w-5/6 break-words text-base font-semibold text-gray-1000 my-2;
+      @apply ml-2 w-3/4 whitespace-nowrap overflow-hidden text-ellipsis break-words text-base font-semibold text-gray-1000 my-2;
     }
   }
 

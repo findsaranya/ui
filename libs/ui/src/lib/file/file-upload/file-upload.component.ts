@@ -72,7 +72,6 @@ export class FileUploadComponent {
   constructor(private detectChanges: ChangeDetectorRef) {}
 
   handleChangeEvent(event: Event): void {
-    this.removeFiles();
     if (this.isMultiple) {
       const targetFiles = Array.from(
         <FileList>(event.target as HTMLInputElement).files
@@ -84,6 +83,8 @@ export class FileUploadComponent {
       );
       if (!targetFile) {
         return;
+      } else {
+        this.removeFiles();
       }
       const errorMsg = this.validateFile(targetFile);
       const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
@@ -101,7 +102,6 @@ export class FileUploadComponent {
   }
 
   handleDragEvent(event: DragEvent): void {
-    this.removeFiles();
     if (this.isMultiple) {
       const dataTransferFiles = Array.from(<FileList>event.dataTransfer?.files);
       this.uploadMultipleFiles(dataTransferFiles);
@@ -175,16 +175,17 @@ export class FileUploadComponent {
     if (!files || files.length === 0) {
       return;
     }
-    this.fileData = files.map((file: File, index: number) => {
+    files.forEach((file: File) => {
       const errorMsg = this.validateFile(file);
       const fileStatus = errorMsg ? EFileStatus.error : EFileStatus.pending;
-      return {
-        fileId: index,
+      this.fileData.push({
+        fileId: this.fileData.length - 1,
         file: file,
         fileStatus: fileStatus,
         errorMessage: errorMsg,
-      };
+      });
     });
+
     this.fileData.forEach((singleFileData: IFileData) => {
       if (singleFileData.fileStatus === EFileStatus.pending) {
         this.uploadSingleFile(singleFileData);

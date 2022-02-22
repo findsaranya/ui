@@ -6,6 +6,8 @@ import {
   HostBinding,
   ChangeDetectorRef,
   Renderer2,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -24,6 +26,9 @@ import {
 })
 export class FileViewComponent {
   @Input() fileData: IFileData[] = [];
+
+  @Output()
+  fileDataChange: EventEmitter<IFileData[]> = new EventEmitter();
 
   @Input() fileAction: FileAction = 'default';
 
@@ -57,11 +62,12 @@ export class FileViewComponent {
     if (fileStatus === EFileStatus.success) {
       this.fileActionCallbackData.deleteCallback(fileItem.name).subscribe({
         next: (response: unknown) => {
-          console.log(response);
           this.fileData = this.fileData.filter(
-            (file) => file.fileId !== item.fileId
+            (file) => file.file.name !== item.file.name
           );
           this.changeDetector.markForCheck();
+          this.fileDataChange.emit(this.fileData);
+
           this.fileActionCallbackData.deleteCompleteCallback(response);
         },
         error: (error: HttpErrorResponse) => {
@@ -70,7 +76,7 @@ export class FileViewComponent {
       });
     } else if (fileStatus === EFileStatus.error) {
       this.fileData = this.fileData.filter(
-        (file) => file.fileId !== item.fileId
+        (file) => file.file.name !== item.file.name
       );
       this.changeDetector.markForCheck();
     }
