@@ -2,6 +2,7 @@ import { FileTypeComponent } from './../file-type/file-type.component';
 import { FileViewComponent } from './../file-view/file-view.component';
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Meta } from '@storybook/angular';
+import { Observable } from 'rxjs';
 
 export default {
   title: 'Components/File View',
@@ -29,6 +30,20 @@ export default {
     },
   },
 } as Meta<FileViewComponent>;
+
+const downloadComplete = () => ({});
+
+const downloadData = (fileName: unknown) => {
+  return new Observable((observer) => {
+    observer.next(fileName);
+    observer.complete();
+  });
+};
+
+const fileDeleteCallback = {
+  deleteCallback: downloadData.bind(this),
+  deleteCompleteCallback: downloadComplete.bind(this),
+};
 
 const successFile = new File([''], 'sample file.pdf');
 
@@ -78,7 +93,7 @@ const multipleFileData = [
 
 export const MultipleFiles = (args: FileViewComponent) => ({
   template: ` <tt-ui-file-view
-    [fileData]="fileData"
+    [fileData]="fileData"  [fileDeleteCallback]="fileDeleteCallback"
   ></tt-ui-file-view>`,
   props: { ...args },
 });
@@ -86,12 +101,13 @@ export const MultipleFiles = (args: FileViewComponent) => ({
 MultipleFiles.args = {
   fileAction: 'default',
   fileData: multipleFileData,
+  fileDeleteCallback: fileDeleteCallback,
 } as Partial<FileViewComponent>;
 MultipleFiles.storyName = 'Multiple files';
 
 export const Primary = (args: FileViewComponent) => ({
   template: ` <tt-ui-file-view
-    [fileData]="fileData"
+    [fileData]="fileData"  [fileDeleteCallback]="fileDeleteCallback"
   ></tt-ui-file-view>`,
   props: { ...args },
 });
@@ -99,12 +115,13 @@ export const Primary = (args: FileViewComponent) => ({
 Primary.args = {
   fileAction: 'default',
   fileData: successFileData,
+  fileDeleteCallback: fileDeleteCallback,
 } as Partial<FileViewComponent>;
 Primary.storyName = 'Success';
 
 export const Secondary = (args: FileViewComponent) => ({
   template: ` <tt-ui-file-view
-    [fileData]="fileData"
+    [fileData]="fileData"  [fileDeleteCallback]="fileDeleteCallback"
   ></tt-ui-file-view>`,
   props: { ...args },
 });
@@ -112,12 +129,13 @@ export const Secondary = (args: FileViewComponent) => ({
 Secondary.args = {
   fileAction: 'default',
   fileData: errorFileData,
+  fileDeleteCallback: fileDeleteCallback,
 } as Partial<FileViewComponent>;
 Secondary.storyName = 'Error';
 
 export const Pending = (args: FileViewComponent) => ({
   template: ` <tt-ui-file-view
-    [fileData]="fileData"
+    [fileData]="fileData"  [fileDeleteCallback]="fileDeleteCallback"
   ></tt-ui-file-view>`,
   props: { ...args },
 });
@@ -125,5 +143,6 @@ export const Pending = (args: FileViewComponent) => ({
 Pending.args = {
   fileAction: 'default',
   fileData: pendingFileData,
+  fileDeleteCallback: fileDeleteCallback,
 } as Partial<FileViewComponent>;
 Pending.storyName = 'Pending';

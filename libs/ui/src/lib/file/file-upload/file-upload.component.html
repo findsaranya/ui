@@ -5,7 +5,6 @@
     [accept]="acceptableFileTypes"
     [multiple]="isMultiple"
     [id]="id"
-    [name]="name"
     [disabled]="disabled"
     [required]="required"
     (change)="handleChangeEvent($event)"
@@ -46,9 +45,9 @@
   <tt-ui-file-view
     [(fileData)]="fileData"
     [fileAction]="fileAction"
-    [fileActionCallbackData]="{
-      deleteCallback: data.deleteCallback,
-      deleteCompleteCallback: data.deleteCompleteCallback
+    [fileDeleteCallback]="{
+      deleteCallback: fileActionCallback.deleteCallback,
+      deleteCompleteCallback: fileActionCallback.deleteCompleteCallback
     }"
   ></tt-ui-file-view>
 </div>

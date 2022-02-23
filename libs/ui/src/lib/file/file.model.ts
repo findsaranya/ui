@@ -37,14 +37,14 @@ export interface IFileData {
   errorMessage?: string;
 }
 
-export interface IFileCallbackData {
+export interface IFileActionCallback {
   uploadCallback: (file: File) => Observable<unknown>;
   uploadCompleteCallback: (response: unknown) => void;
   deleteCallback: (payload: unknown) => Observable<unknown>;
   deleteCompleteCallback: (response: unknown) => void;
 }
 
-export interface IFileActionCallbackData {
+export interface IFileDeleteCallback {
   deleteCallback: (param: unknown) => Observable<unknown>;
   deleteCompleteCallback: (response: unknown) => void;
 }

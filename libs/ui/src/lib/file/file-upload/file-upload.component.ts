@@ -1,4 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { v4 as uid } from 'uuid';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -7,18 +9,16 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import {
   AcceptableFileTypes,
-  IFileCallbackData,
+  IFileActionCallback,
+  IFileDeleteCallback,
   IFileData,
   FileUploadStatus,
   FileUploadType,
   FileIconType,
   FileAction,
 } from '../file.model';
-
-let uniqueId = 0;
 
 @Component({
   selector: 'tt-ui-file-upload',
@@ -41,17 +41,15 @@ export class FileUploadComponent {
 
   @Input() isMultiple = false;
 
-  @Input() id = `ttui-file-upload-${++uniqueId}`;
+  @Input() id = `ttui-file-upload-${uid()}`;
 
   @Input() fileAction: FileAction = 'default';
-
-  @Input() name = '';
 
   @Input() disabled = false;
 
   @Input() required = false;
 
-  @Input() data: IFileCallbackData = {
+  @Input() fileActionCallback: IFileActionCallback = {
     uploadCallback: () => new Observable<unknown>(),
     uploadCompleteCallback: () => ({}),
     deleteCallback: () => new Observable<unknown>(),
@@ -116,6 +114,8 @@ export class FileUploadComponent {
       const dataTransferFile = eventTarget?.files.item(0);
       if (!dataTransferFile) {
         return;
+      } else {
+        this.removeFiles();
       }
       const errorMsg = this.validateFile(dataTransferFile);
       const fileStatus = errorMsg
@@ -147,11 +147,11 @@ export class FileUploadComponent {
     if (!singleFileData) {
       return;
     }
-    this.data.uploadCallback(singleFileData.file).subscribe({
+    this.fileActionCallback.uploadCallback(singleFileData.file).subscribe({
       next: (response: unknown) => {
         this.updateFileStatus(singleFileData.fileId, FileUploadStatus.success);
         this.changeDetector.markForCheck();
-        this.data.uploadCompleteCallback(response);
+        this.fileActionCallback.uploadCompleteCallback(response);
       },
       error: (error: HttpErrorResponse) => {
         this.updateFileStatus(

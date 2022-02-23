@@ -1,3 +1,4 @@
+import { FileIconType, GetDataType, IFileData } from '../file.model';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -5,7 +6,6 @@ import {
   Input,
   OnChanges,
 } from '@angular/core';
-import { FileIconType, GetDataType, IFileData } from '../file.model';
 
 @Component({
   selector: 'tt-ui-file-type',

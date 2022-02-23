@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -9,12 +10,11 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import {
   FileUploadStatus,
   FileAction,
   FileIconType,
-  IFileActionCallbackData,
+  IFileDeleteCallback,
   IFileData,
 } from '../file.model';
 
@@ -27,15 +27,15 @@ import {
 export class FileViewComponent {
   @Input() fileData: IFileData[] = [];
 
-  @Output()
-  fileDataChange: EventEmitter<IFileData[]> = new EventEmitter();
-
   @Input() fileAction: FileAction = 'default';
 
-  @Input() fileActionCallbackData: IFileActionCallbackData = {
+  @Input() fileDeleteCallback: IFileDeleteCallback = {
     deleteCallback: () => new Observable<unknown>(),
     deleteCompleteCallback: () => ({}),
   };
+
+  @Output()
+  fileDataChange: EventEmitter<IFileData[]> = new EventEmitter();
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -76,23 +76,27 @@ export class FileViewComponent {
     const fileItem = item.file;
     const fileStatus = item.fileStatus;
     if (fileStatus === FileUploadStatus.success) {
-      this.fileActionCallbackData.deleteCallback(fileItem.name).subscribe({
+      this.fileDeleteCallback.deleteCallback(fileItem.name).subscribe({
         next: (response: unknown) => {
           this.fileData = this.fileData.filter(
-            (file) => file.file.name !== item.file.name
+            (file) =>
+              !(
+                file.file.name === item.file.name && file.fileId === item.fileId
+              )
           );
           this.changeDetector.markForCheck();
           this.fileDataChange.emit(this.fileData);
 
-          this.fileActionCallbackData.deleteCompleteCallback(response);
+          this.fileDeleteCallback.deleteCompleteCallback(response);
         },
         error: (error: HttpErrorResponse) => {
-          this.fileActionCallbackData.deleteCompleteCallback(error);
+          this.fileDeleteCallback.deleteCompleteCallback(error);
         },
       });
     } else if (fileStatus === FileUploadStatus.error) {
       this.fileData = this.fileData.filter(
-        (file) => file.file.name !== item.file.name
+        (file) =>
+          !(file.file.name === item.file.name && file.fileId === item.fileId)
       );
       this.changeDetector.markForCheck();
     }

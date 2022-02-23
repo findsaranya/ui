@@ -12,17 +12,20 @@ const uploadData = (upload: File) => {
   });
 };
 
-const uploadComplete = () => ({});
+const uploadOrDownloadComplete = () => ({});
 
-const downloadData = () => new Observable<unknown>();
+const downloadData = (fileName: unknown) => {
+  return new Observable((observer) => {
+    observer.next(fileName);
+    observer.complete();
+  });
+};
 
-const downloadComplete = () => ({});
-
-const data = {
+const fileDeleteCallback = {
   uploadCallback: uploadData.bind(this),
-  uploadCompleteCallback: uploadComplete.bind(this),
+  uploadCompleteCallback: uploadOrDownloadComplete.bind(this),
   deleteCallback: downloadData.bind(this),
-  deleteCompleteCallback: downloadComplete.bind(this),
+  deleteCompleteCallback: uploadOrDownloadComplete.bind(this),
 };
 
 export default {
@@ -89,7 +92,7 @@ Primary.args = {
   ],
   fileAction: 'default',
   buttonText: 'File Upload',
-  data: data,
+  fileActionCallback: fileDeleteCallback,
   disabled: false,
   helpText: 'Accepts all files. Maximum file size is 5MB.',
   isMultiple: false,
@@ -110,7 +113,7 @@ Secondary.args = {
     '.jpeg',
   ],
   fileAction: 'default',
-  data: data,
+  fileActionCallback: fileDeleteCallback,
   dragAndDropText: ' Drag & Drop or Click here ',
   disabled: false,
   fileIcon: 'image',
