@@ -11,18 +11,22 @@ import {
   selector: 'tt-ui-file-type',
   templateUrl: './file-type.component.html',
   styleUrls: ['./file-type.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileTypeComponent implements OnChanges {
-  @Input() fileIcon: FileIconType | null = 'file';
+  @Input() fileIcon: FileIconType = 'file';
 
   @Input() disabled = false;
 
   @Input() getData: GetDataType = 'view';
 
-  @Input() fileData?: IFileData;
+  @Input() fileData!: IFileData;
 
   imgSrc?: string | ArrayBuffer | null;
+
+  get fromDataType(): string {
+    return this.getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon';
+  }
 
   constructor(private detectChanges: ChangeDetectorRef) {}
 
@@ -36,9 +40,5 @@ export class FileTypeComponent implements OnChanges {
       };
       reader.readAsDataURL(file);
     }
-  }
-
-  get fromDataType(): string {
-    return this.getData === 'view' ? 'ttui-view-icon' : 'ttui-upload-icon';
   }
 }

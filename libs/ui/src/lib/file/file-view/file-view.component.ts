@@ -1,3 +1,4 @@
+import { FileIcon } from './../file.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -22,9 +23,11 @@ import {
   selector: 'tt-ui-file-view',
   templateUrl: './file-view.component.html',
   styleUrls: ['./file-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileViewComponent {
+  private fileIconList = [FileIcon.image, FileIcon.pdf, FileIcon.xlsx];
+
   @Input() fileData: IFileData[] = [];
 
   @Input() fileAction: FileAction = 'default';
@@ -46,29 +49,29 @@ export class FileViewComponent {
     return 'ttui-file-view';
   }
 
-  getContainerClass(fileData: IFileData): string {
-    return [
-      fileData.fileStatus === 'error' ? 'border-red-500' : 'border-gray-300 ',
-      this.getFileType(fileData.file) === 'image' ? 'min-h-70' : 'min-h-50',
-    ].join(' ');
+  getContainerClass(fileData: IFileData): { [key in string]: boolean } {
+    return {
+      'border-gray-300': fileData.fileStatus !== 'error',
+      'border-red-500': fileData.fileStatus === 'error',
+      'min-h-70': this.getFileType(fileData.file) === 'image',
+    };
   }
 
-  getActionClass(fileData: IFileData): string {
-    return [
-      fileData.fileStatus === 'success' ? 'ttui-stack-icon' : null,
-      this.fileAction === 'multiple' && fileData.fileStatus === 'success'
-        ? 'mr-5'
-        : null,
-    ].join(' ');
+  getActionClass(fileData: IFileData): { [key in string]: boolean } {
+    return {
+      'ttui-stack-icon': fileData.fileStatus === 'success',
+      'mr-5':
+        this.fileAction === 'multiple' && fileData.fileStatus === 'success',
+    };
   }
 
   onDownload(file: File): void {
     const blob = new Blob([file]);
     const url = URL.createObjectURL(blob);
-    const a = this.renderer.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    a.click();
+    const anchorElement = this.renderer.createElement('a') as HTMLAnchorElement;
+    anchorElement.href = url;
+    anchorElement.download = file.name;
+    anchorElement.click();
     URL.revokeObjectURL(url);
   }
 
@@ -103,9 +106,9 @@ export class FileViewComponent {
   }
 
   getFileType(file: File): FileIconType {
-    const fileIcon = ['image', 'pdf', 'xlsx'].find((fileIconType) =>
-      file?.type.includes(fileIconType)
-    ) as FileIconType;
-    return fileIcon ? fileIcon : 'file';
+    const fileIcon: FileIconType | undefined = this.fileIconList.find(
+      (fileIconType: FileIconType) => file?.type.includes(fileIconType)
+    );
+    return fileIcon || 'file';
   }
 }

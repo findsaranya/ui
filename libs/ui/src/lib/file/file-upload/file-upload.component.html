@@ -45,10 +45,7 @@
   <tt-ui-file-view
     [(fileData)]="fileData"
     [fileAction]="fileAction"
-    [fileDeleteCallback]="{
-      deleteCallback: fileActionCallback.deleteCallback,
-      deleteCompleteCallback: fileActionCallback.deleteCompleteCallback
-    }"
+    [fileDeleteCallback]="fileDeleteCallback"
   ></tt-ui-file-view>
 </div>
 

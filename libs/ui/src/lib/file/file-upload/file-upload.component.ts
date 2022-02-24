@@ -5,9 +5,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ElementRef,
   Input,
-  ViewChild,
+  OnInit,
 } from '@angular/core';
 import {
   AcceptableFileTypes,
@@ -26,7 +25,7 @@ import {
   styleUrls: ['./file-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit {
   @Input() title = 'Attachments';
 
   @Input() uploadType: FileUploadType = 'selection';
@@ -56,9 +55,9 @@ export class FileUploadComponent {
     deleteCompleteCallback: () => ({}),
   };
 
-  // TODO: Need to update in Global config.
   @Input() maxFileSize = 5;
 
+  //TODO: localize function required
   @Input()
   helpText = `Accepts all files. Maximum file size is ${this.maxFileSize}MB.`;
 
@@ -66,14 +65,43 @@ export class FileUploadComponent {
 
   files: File[] = [];
 
-  @ViewChild('fileInput') inputElement?: ElementRef<HTMLInputElement>;
-
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  fileDeleteCallback!: IFileDeleteCallback;
 
   get dragAndDropType(): string {
     return this.fileIcon
       ? 'ttui-file-drag-drop-filetype'
       : 'ttui-file-drag-drop';
+  }
+
+  constructor(private changeDetector: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.fileDeleteCallback = {
+      deleteCallback: this.fileActionCallback.deleteCallback,
+      deleteCompleteCallback: this.fileActionCallback.deleteCompleteCallback,
+    };
+  }
+
+  private handleSingleFileChange(targetFile: File | null | undefined): void {
+    if (!targetFile) {
+      return;
+    } else {
+      this.removeFiles();
+    }
+    const errorMsg = this.validateFile(targetFile);
+    const fileStatus = errorMsg
+      ? FileUploadStatus.error
+      : FileUploadStatus.pending;
+    this.fileData.push({
+      fileId: 0,
+      file: targetFile,
+      fileStatus: fileStatus,
+      errorMessage: errorMsg,
+    });
+    this.changeDetector.markForCheck();
+    if (!errorMsg) {
+      this.uploadSingleFile(this.fileData[0]);
+    }
   }
 
   handleChangeEvent(event: Event): void {
@@ -83,25 +111,7 @@ export class FileUploadComponent {
       this.uploadMultipleFiles(targetFiles);
     } else {
       const targetFile = eventTarget.files?.item(0);
-      if (!targetFile) {
-        return;
-      } else {
-        this.removeFiles();
-      }
-      const errorMsg = this.validateFile(targetFile);
-      const fileStatus = errorMsg
-        ? FileUploadStatus.error
-        : FileUploadStatus.pending;
-      this.fileData.push({
-        fileId: 0,
-        file: targetFile,
-        fileStatus: fileStatus,
-        errorMessage: errorMsg,
-      });
-      this.changeDetector.markForCheck();
-      if (fileStatus === FileUploadStatus.pending) {
-        this.uploadSingleFile(this.fileData[0]);
-      }
+      this.handleSingleFileChange(targetFile);
     }
   }
 
@@ -112,25 +122,7 @@ export class FileUploadComponent {
       this.uploadMultipleFiles(dataTransferFiles);
     } else {
       const dataTransferFile = eventTarget?.files.item(0);
-      if (!dataTransferFile) {
-        return;
-      } else {
-        this.removeFiles();
-      }
-      const errorMsg = this.validateFile(dataTransferFile);
-      const fileStatus = errorMsg
-        ? FileUploadStatus.error
-        : FileUploadStatus.pending;
-      this.fileData.push({
-        fileId: 0,
-        file: dataTransferFile,
-        fileStatus: fileStatus,
-        errorMessage: errorMsg,
-      });
-      this.changeDetector.markForCheck();
-      if (fileStatus === FileUploadStatus.pending) {
-        this.uploadSingleFile(this.fileData[0]);
-      }
+      this.handleSingleFileChange(dataTransferFile);
     }
   }
 

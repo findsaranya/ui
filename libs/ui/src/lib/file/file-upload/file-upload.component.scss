@@ -1,25 +1,24 @@
 .ttui-file-upload-container {
   @apply flex flex-col space-y-3 mb-4;
+}
+.ttui-file-upload-button {
+  @apply text-sm font-bold transition-colors cursor-pointer flex items-center justify-center;
+  @apply w-full px-4 min-w-40 min-h-40 rounded-lg space-x-2;
+  @apply text-white-default bg-gray-1000 hover:bg-gray-900 focus:shadow-default;
+  @apply active:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
 
-  .ttui-file-upload-button {
-    @apply text-sm font-bold transition-colors cursor-pointer flex items-center justify-center;
-    @apply w-full px-4 min-w-40 min-h-40 rounded-lg space-x-2;
-    @apply text-white-default bg-gray-1000 hover:bg-gray-900 focus:shadow-default;
-    @apply active:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
-
-    svg path {
-      @apply fill-white-default;
-    }
+  svg path {
+    @apply fill-white-default;
   }
+}
 
-  .ttui-file-upload-help-text {
-    @apply text-xs font-regular text-gray-800;
-  }
+.ttui-file-upload-help-text {
+  @apply text-xs font-regular text-gray-800;
+}
 
-  &.ttui-file-upload-disabled {
-    .ttui-file-upload-button svg path {
-      @apply fill-gray-500;
-    }
+.ttui-file-upload-disabled {
+  .ttui-file-upload-button svg path {
+    @apply fill-gray-500;
   }
 }
 
@@ -31,52 +30,51 @@
 
 .ttui-file-drag-drop-container {
   @apply mb-3 flex flex-col space-y-3;
+}
+.ttui-file-drag-drop-content {
+  @apply flex flex-col space-y-2;
+
+  .ttui-file-drag-drop-text {
+    @apply text-sm font-semibold text-gray-1000;
+  }
+
+  .ttui-file-drag-drop-help-text {
+    @apply text-xs font-regular text-gray-800;
+  }
+}
+
+.ttui-file-drag-drop-filetype {
+  @extend %ttui-file-drag-drop;
+  @apply py-5 flex-col justify-center space-y-6;
 
   .ttui-file-drag-drop-content {
-    @apply flex flex-col space-y-2;
-
-    .ttui-file-drag-drop-text {
-      @apply text-sm font-semibold text-gray-1000;
-    }
-
-    .ttui-file-drag-drop-help-text {
-      @apply text-xs font-regular text-gray-800;
-    }
+    @apply items-center;
   }
+}
 
-  .ttui-file-drag-drop-filetype {
-    @extend %ttui-file-drag-drop;
-    @apply py-5 flex-col justify-center space-y-6;
+.ttui-file-drag-drop {
+  @extend %ttui-file-drag-drop;
+  @apply py-3 px-5 flex-row space-x-6;
 
-    .ttui-file-drag-drop-content {
-      @apply items-center;
-    }
+  svg path {
+    @apply fill-black-default;
   }
+}
 
+.ttui-file-drag-drop-disabled {
+  .ttui-file-drag-drop-filetype,
   .ttui-file-drag-drop {
-    @extend %ttui-file-drag-drop;
-    @apply py-3 px-5 flex-row space-x-6;
+    @apply border-none bg-gray-300 cursor-not-allowed;
+  }
 
-    svg path {
-      @apply fill-black-default;
+  .ttui-file-drag-drop-content {
+    .ttui-file-drag-drop-text,
+    .ttui-file-drag-drop-help-text {
+      @apply text-gray-500;
     }
   }
 
-  &.ttui-file-drag-drop-disabled {
-    .ttui-file-drag-drop-filetype,
-    .ttui-file-drag-drop {
-      @apply border-none bg-gray-300 cursor-not-allowed;
-    }
-
-    .ttui-file-drag-drop-content {
-      .ttui-file-drag-drop-text,
-      .ttui-file-drag-drop-help-text {
-        @apply text-gray-500;
-      }
-    }
-
-    .ttui-file-drag-drop svg path {
-      @apply fill-gray-500;
-    }
+  .ttui-file-drag-drop svg path {
+    @apply fill-gray-500;
   }
 }

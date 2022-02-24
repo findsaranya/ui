@@ -1,6 +1,6 @@
 .ttui-file-view-content-container {
   @apply flex w-full border bg-gray-200 text-black-default text-left rounded-5px;
-  @apply justify-between mb-4 items-center pr-2 hover:cursor-pointer hover:bg-gray-300;
+  @apply justify-between min-h-50 mb-4 items-center pr-2 hover:cursor-pointer hover:bg-gray-300;
 
   .ttui-file-view-content {
     @apply flex items-center w-3/4;
