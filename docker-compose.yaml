@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  fashion-host:
+    build:
+      context: ./apps/fashion/
+      dockerfile: Dockerfile
+    container_name: fashion_host_app
+    ports:
+      - "80:80"
+    volumes:
+      - type: bind
+        source: ./dist/apps/fashion
+        target: /var/www/html/fashion
+  auth-remote:
+    build:
+      context: ./apps/auth/
+      dockerfile: Dockerfile
+    container_name: auth_remote_app
+    ports:
+      - "4201:4201"
+    volumes:
+      - type: bind
+        source: ./dist/apps/auth
+        target: /var/www/html/auth
+  settings-remote:
+    build:
+      context: ./apps/settings/
+      dockerfile: Dockerfile
+    container_name: settings_remote_app
+    ports:
+      - "4202:4202"
+    volumes:
+      - type: bind
+        source: ./dist/apps/settings
+        target: /var/www/html/settings
