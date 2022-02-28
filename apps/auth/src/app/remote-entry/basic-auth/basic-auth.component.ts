@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { AppState, Auth, STATIC_BASE_URL } from '@tt-webapp/service';
 import { environment } from '../../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'tt-basic-auth',
@@ -22,7 +22,9 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
   date = new Date();
 
   // Todo collect the active language from the URL & If its production
-  languageControl = new FormGroup({ selection: new FormControl('en') });
+  languageControl = new FormGroup({
+    selection: new FormControl(this.activeLanguage),
+  });
 
   languages: { code: string; languageName: string }[] = [
     {
@@ -119,11 +121,15 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
     return this._staticUrl;
   }
 
+  get activeLanguage() {
+    return this.document.location.pathname.split('/')[1];
+  }
+
   constructor(
     private titleService: Title,
     private store: Store<AppState>,
     @Inject(STATIC_BASE_URL) private _staticUrl: string,
-    private router: Router
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -160,8 +166,13 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
   }
 
   onLanguageChange(): void {
-    if (environment.production)
-      this.router.navigateByUrl(`/${this.languageControl.get('selection')}`);
+    if (environment.production) {
+      const path = this.document.location.pathname.split('/');
+      path.shift();
+      path[0] = this.languageControl.get('selection')?.value;
+      this.document.location.href =
+        this.document.location.origin + '/' + path.join('/');
+    }
   }
 
   ngOnDestroy(): void {
