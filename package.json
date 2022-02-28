@@ -54,9 +54,12 @@
     "@nrwl/tao": "13.7.2",
     "@nrwl/workspace": "13.7.2",
     "@storybook/addon-essentials": "~6.4.17",
+    "@storybook/addon-interactions": "^6.4.19",
     "@storybook/angular": "~6.4.17",
     "@storybook/builder-webpack5": "~6.4.17",
+    "@storybook/jest": "^0.0.9",
     "@storybook/manager-webpack5": "~6.4.17",
+    "@storybook/testing-library": "^0.0.9",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
     "@types/uuid": "^8.3.4",
@@ -85,4 +88,3 @@
     "webpack": "5.65.0"
   }
 }
-
