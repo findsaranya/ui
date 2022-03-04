@@ -67,10 +67,18 @@ export class FileUploadComponent implements OnInit {
 
   fileDeleteCallback!: IFileDeleteCallback;
 
+  isDropZoneActive = false;
+
   get dragAndDropType(): string {
-    return this.fileIcon
-      ? 'ttui-file-drag-drop-filetype'
-      : 'ttui-file-drag-drop';
+    if (this.isDropZoneActive) {
+      return this.fileIcon
+        ? 'ttui-file-drag-drop-filetype ttui-drop-zone-highlighter'
+        : 'ttui-file-drag-drop ttui-drop-zone-highlighter';
+    } else {
+      return this.fileIcon
+        ? 'ttui-file-drag-drop-filetype ttui-drag-drop-default-color'
+        : 'ttui-file-drag-drop ttui-drag-drop-default-color';
+    }
   }
 
   constructor(private changeDetector: ChangeDetectorRef) {}
@@ -116,6 +124,8 @@ export class FileUploadComponent implements OnInit {
   }
 
   handleDragEvent(event: DragEvent): void {
+    this.preventDefaultBehavior(event, false);
+    this.isDropZoneActive = false;
     const eventTarget = event.dataTransfer;
     if (this.isMultiple) {
       const dataTransferFiles = Array.from(eventTarget?.files || []);
@@ -124,6 +134,12 @@ export class FileUploadComponent implements OnInit {
       const dataTransferFile = eventTarget?.files.item(0);
       this.handleSingleFileChange(dataTransferFile);
     }
+  }
+
+  preventDefaultBehavior(event: DragEvent, makeDropZoneActive: boolean): void {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isDropZoneActive = makeDropZoneActive;
   }
 
   removeFiles(): void {

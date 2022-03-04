@@ -1,6 +1,15 @@
 .ttui-file-upload-container {
   @apply flex flex-col space-y-3 mb-4;
 }
+
+.ttui-drop-zone-highlighter {
+  @apply bg-deepSaffron-50 border-deepSaffron-default;
+}
+
+.ttui-drag-drop-default-color {
+  @apply bg-gray-100 border-gray-500;
+}
+
 .ttui-file-upload-button {
   @apply text-sm font-bold transition-colors cursor-pointer flex items-center justify-center;
   @apply w-full px-4 min-w-40 min-h-40 rounded-lg space-x-2;
@@ -25,7 +34,7 @@
 %ttui-file-drag-drop {
   @apply min-h-fit min-w-fit flex items-center select-none cursor-pointer;
   @apply border border-dashed rounded-md;
-  @apply bg-gray-100 border-gray-500 hover:bg-gray-300;
+  @apply hover:bg-gray-300;
 }
 
 .ttui-file-drag-drop-container {

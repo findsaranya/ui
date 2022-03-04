@@ -8,6 +8,7 @@
     [disabled]="disabled"
     [required]="required"
     (change)="handleChangeEvent($event)"
+    (click)="fileInput.value = ''"
     #fileInput
   />
   <div
@@ -63,13 +64,9 @@
       "
       (keyup.enter)="fileInput.click()"
       (keyup.space)="fileInput.click()"
-      (dragover)="$event.stopPropagation(); $event.preventDefault()"
-      (dragleave)="$event.stopPropagation(); $event.preventDefault()"
-      (drop)="
-        $event.stopPropagation();
-        $event.preventDefault();
-        handleDragEvent($event)
-      "
+      (dragover)="preventDefaultBehavior($event, true)"
+      (dragleave)="preventDefaultBehavior($event, false)"
+      (drop)="handleDragEvent($event)"
     >
       <div class="ttui-file-type" *ngIf="fileIcon; else uploadSVG">
         <tt-ui-file-type
