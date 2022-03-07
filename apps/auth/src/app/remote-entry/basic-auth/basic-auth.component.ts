@@ -21,7 +21,7 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
 
   date = new Date();
 
-  // Todo collect the active language from the URL & If its production
+  // TODO collect the active language from the URL & If its production
   languageControl = new FormGroup({
     selection: new FormControl(this.activeLanguage),
   });
@@ -117,11 +117,11 @@ export class BasicAuthComponent implements OnInit, OnDestroy {
     },
   ];
 
-  get staticUrl() {
+  get staticUrl(): string {
     return this._staticUrl;
   }
 
-  get activeLanguage() {
+  get activeLanguage(): string {
     return this.document.location.pathname.split('/')[1];
   }
 
