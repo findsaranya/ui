@@ -1,0 +1,99 @@
+<div
+  class="ttui-file-view-container"
+  *ngFor="let item of fileData"
+  tabindex="0"
+>
+  <div
+    class="ttui-file-view-content-container"
+    [ngClass]="getContainerClass(item)"
+  >
+    <div class="ttui-file-view-content">
+      <tt-ui-file-type
+        [fileIcon]="getFileType(item.file)"
+        [fileData]="item"
+        [getData]="'view'"
+      ></tt-ui-file-type>
+      <div class="ttui-file-view-title">
+        {{ item.file?.name }}
+      </div>
+    </div>
+    <div
+      class="ttui-file-view-loader"
+      *ngIf="item.fileStatus === 'pending'; else showAction"
+    ></div>
+  </div>
+  <div *ngIf="item.fileStatus === 'error'" class="text-red-500 text-xs mb-4">
+    {{ item.errorMessage }}
+  </div>
+  <ng-template #showAction>
+    <div class="flex relative">
+      <svg
+        *ngIf="item.fileStatus === 'success'"
+        class="ttui-icon-fade-in"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z"
+          fill="#00E183"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M18.1068 7.22592C17.8055 6.92469 17.3171 6.92469 17.0159 7.22592L9.54344 14.6984L6.98278 12.1377C6.68155 11.8365 6.19316 11.8365 5.89194 12.1377C5.59071 12.439 5.59071 12.9274 5.89194 13.2286L8.95863 16.2953C9.28205 16.6187 9.80483 16.6187 10.1282 16.2953L18.1068 8.31676C18.408 8.01553 18.408 7.52715 18.1068 7.22592Z"
+          fill="white"
+        />
+      </svg>
+      <div class="ttui-icon-fade-out" [ngClass]="getActionClass(item)">
+        <div
+          *ngIf="fileAction === 'multiple' && item.fileStatus === 'success'"
+          (click)="onDownload(item.file)"
+          tabindex="0"
+          (keyup.enter)="onDownload(item.file)"
+          (keyup.space)="onDownload(item.file)"
+          class="cursor-pointer mr-7"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M9.0272 0C9.54857 0 9.97124 0.422661 9.97124 0.94404V9.62318L12.5912 7.11499C12.9678 6.75444 13.5654 6.76747 13.926 7.14408C14.2865 7.5207 14.2735 8.11829 13.8969 8.47884L9.68003 12.5158C9.3152 12.865 8.74009 12.8653 8.37496 12.5163L4.15075 8.47941C3.77382 8.11919 3.76027 7.52161 4.12049 7.14468C4.48071 6.76775 5.07829 6.7542 5.45522 7.11442L8.08316 9.62584L8.08316 0.94404C8.08316 0.422661 8.50582 0 9.0272 0ZM17.5563 13.1022C17.9984 13.3786 18.1327 13.9611 17.8563 14.4031L16.6533 16.327C16.2873 16.9117 15.6597 17.3247 14.9247 17.3247H3.10455C2.37664 17.3247 1.75545 16.9216 1.38813 16.3468C1.38812 16.3468 1.38815 16.3468 1.38813 16.3468C1.38789 16.3464 1.38761 16.346 1.38737 16.3456L0.14912 14.4117C-0.132019 13.9726 -0.00397617 13.3887 0.43511 13.1076C0.874197 12.8264 1.45805 12.9545 1.73919 13.3936L2.97897 15.3299C3.01381 15.3845 3.04809 15.4119 3.06907 15.4243C3.08899 15.436 3.1002 15.4366 3.10455 15.4366H14.9247C14.9275 15.4366 14.9389 15.4364 14.9601 15.4237C14.9822 15.4106 15.0174 15.3818 15.0524 15.326L16.2554 13.4021C16.5318 12.96 17.1143 12.8258 17.5563 13.1022Z"
+              fill="#212121"
+            />
+          </svg>
+        </div>
+        <div
+          (click)="onDelete(item)"
+          (keyup.enter)="onDelete(item)"
+          (keyup.space)="onDelete(item)"
+          class="cursor-pointer"
+          tabindex="0"
+        >
+          <svg
+            width="15"
+            height="18"
+            viewBox="0 0 15 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M0.713942 0C0.319643 0 0 0.319643 0 0.713942V3.20192C0 3.59622 0.319643 3.91587 0.713942 3.91587H13.5649C13.9592 3.91587 14.2788 3.59622 14.2788 3.20192V0.713942C14.2788 0.319643 13.9592 0 13.5649 0H0.713942ZM1.42788 2.48798V1.42788H12.851V2.48798H1.42788ZM1.90376 4.88943C1.50946 4.88943 1.18982 5.20907 1.18982 5.60337V17.2861C1.18982 17.6804 1.50946 18 1.90376 18H12.2884C12.6827 18 13.0023 17.6804 13.0023 17.2861V5.60337C13.0023 5.20907 12.6827 4.88943 12.2884 4.88943H1.90376ZM2.6177 16.5721V6.31731H11.5744V16.5721H2.6177ZM5.33291 7.90529C5.72721 7.90529 6.04685 8.22493 6.04685 8.61923V14.4303C6.04685 14.8246 5.72721 15.1442 5.33291 15.1442C4.93861 15.1442 4.61897 14.8246 4.61897 14.4303V8.61923C4.61897 8.22493 4.93861 7.90529 5.33291 7.90529ZM9.57346 8.61923C9.57346 8.22493 9.25382 7.90529 8.85952 7.90529C8.46522 7.90529 8.14558 8.22493 8.14558 8.61923V14.4303C8.14558 14.8246 8.46522 15.1442 8.85952 15.1442C9.25382 15.1442 9.57346 14.8246 9.57346 14.4303V8.61923Z"
+              fill="#212121"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

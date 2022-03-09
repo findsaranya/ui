@@ -1,0 +1,100 @@
+<div class="ttui-file-upload">
+  <input
+    type="file"
+    class="hidden"
+    [accept]="acceptableFileTypes"
+    [multiple]="isMultiple"
+    [id]="id"
+    [disabled]="disabled"
+    [required]="required"
+    (change)="handleChangeEvent($event)"
+    (click)="fileInput.value = ''"
+    #fileInput
+  />
+  <div
+    class="ttui-file-upload-container"
+    [ngClass]="{ 'ttui-file-upload-disabled': disabled }"
+    tabindex="-1"
+    *ngIf="uploadType === 'selection'; else dragAndDrop"
+  >
+    <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
+    <button
+      class="ttui-file-upload-button"
+      (click)="fileInput.click()"
+      (keyup.enter)="fileInput.click()"
+      (keyup.space)="fileInput.click()"
+      [disabled]="disabled"
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M8.63607 2.40459C8.66033 2.38089 8.6868 2.35944 8.71515 2.34058C8.72245 2.33572 8.72985 2.33106 8.73733 2.32659C8.82274 2.27555 8.91911 2.25002 9.01547 2.25M8.63607 2.40459L5.39083 5.51114C5.17416 5.71855 5.16666 6.06234 5.37407 6.27901C5.58148 6.49568 5.92527 6.50319 6.14194 6.29578L8.47247 4.06484V11.1834C8.47247 11.4834 8.71562 11.7265 9.01556 11.7265C9.31551 11.7265 9.55866 11.4834 9.55866 11.1834V4.06336L11.8948 6.29608C12.1116 6.50331 12.4554 6.49553 12.6626 6.2787C12.8699 6.06186 12.8621 5.71808 12.6453 5.51084L9.39084 2.40048C9.34251 2.35429 9.28779 2.31874 9.22962 2.29381C9.16394 2.26562 9.09157 2.25 9.01556 2.25M15.4948 12.3163C15.2405 12.1573 14.9054 12.2345 14.7464 12.4889L13.8196 13.971C13.7361 14.1043 13.6332 14.143 13.5649 14.143H4.45769C4.38864 14.143 4.28842 14.1054 4.20561 13.9756L3.25054 12.4839C3.0888 12.2313 2.75292 12.1577 2.50031 12.3194C2.24771 12.4812 2.17405 12.817 2.33579 13.0696L3.28998 14.5599L3.29022 14.5603C3.54415 14.958 3.968 15.2292 4.45769 15.2292H13.5649C14.0589 15.2292 14.4872 14.9518 14.7404 14.5472L15.6673 13.0647C15.8263 12.8104 15.7491 12.4753 15.4948 12.3163Z"
+        />
+      </svg>
+      <span>{{ buttonText }}</span>
+    </button>
+    <p class="ttui-file-upload-help-text">{{ helpText }}</p>
+  </div>
+
+  <tt-ui-file-view
+    [(fileData)]="fileData"
+    [fileAction]="fileAction"
+    [fileDeleteCallback]="fileDeleteCallback"
+  ></tt-ui-file-view>
+</div>
+
+<ng-template #dragAndDrop>
+  <div
+    class="ttui-file-drag-drop-container"
+    [ngClass]="{ 'ttui-file-drag-drop-disabled': disabled }"
+  >
+    <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
+    <div
+      [ngClass]="dragAndDropType"
+      tabindex="0"
+      (click)="
+        $event.stopPropagation(); $event.preventDefault(); fileInput.click()
+      "
+      (keyup.enter)="fileInput.click()"
+      (keyup.space)="fileInput.click()"
+      (dragover)="preventDefaultBehavior($event, true)"
+      (dragleave)="preventDefaultBehavior($event, false)"
+      (drop)="handleDragEvent($event)"
+    >
+      <div class="ttui-file-type" *ngIf="fileIcon; else uploadSVG">
+        <tt-ui-file-type
+          [fileIcon]="fileIcon"
+          [disabled]="disabled"
+          [getData]="'upload'"
+        ></tt-ui-file-type>
+      </div>
+      <div class="ttui-file-drag-drop-content">
+        <span class="ttui-file-drag-drop-text">{{ dragAndDropText }}</span>
+        <p class="ttui-file-drag-drop-help-text">{{ helpText }}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #uploadSVG>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M11.5147 3.20615C11.6453 3.0786 11.8238 3 12.0208 3C12.1223 3 12.219 3.02091 12.3067 3.05866C12.3841 3.09188 12.4568 3.1392 12.5211 3.20064L16.8604 7.34778C17.1495 7.6241 17.1598 8.08248 16.8835 8.37159C16.6072 8.66071 16.1488 8.67109 15.8597 8.39477L12.7449 5.41781V14.9112C12.7449 15.3112 12.4207 15.6354 12.0208 15.6354C11.6208 15.6354 11.2966 15.3112 11.2966 14.9112V5.41979L8.18925 8.39437C7.90036 8.67092 7.44198 8.66091 7.16543 8.37201C6.88888 8.08312 6.89888 7.62473 7.18778 7.34819L11.5147 3.20615ZM20.6597 16.4218C20.3206 16.2097 19.8738 16.3127 19.6618 16.6518L18.4261 18.628C18.3148 18.8058 18.1775 18.8573 18.0865 18.8573H5.94359C5.85152 18.8573 5.7179 18.8072 5.60748 18.6341L4.33405 16.6453C4.1184 16.3085 3.67056 16.2102 3.33375 16.4259C2.99695 16.6415 2.89873 17.0894 3.11438 17.4262L4.38664 19.4132L4.38695 19.4137C4.72554 19.944 5.29067 20.3055 5.94359 20.3055H18.0865C18.7452 20.3055 19.3162 19.9357 19.6538 19.3962L20.8898 17.4196C21.1018 17.0806 20.9988 16.6338 20.6597 16.4218Z"
+    />
+  </svg>
+</ng-template>

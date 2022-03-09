@@ -1,0 +1,19 @@
+.ttui-file-type-container {
+  svg {
+    @apply m-2;
+  }
+  img {
+    @apply rounded-md rounded-r-sm mr-4 select-none;
+  }
+  &.ttui-file-type-disabled path {
+    @apply fill-gray-500;
+  }
+
+  .ttui-upload-icon {
+    @apply w-12 h-12;
+  }
+
+  .ttui-view-icon {
+    @apply w-8 h-8;
+  }
+}

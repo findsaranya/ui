@@ -59,3 +59,8 @@ export {
   ModalMainComponent,
   PromptComponent,
 } from './lib/modal/modalstories-component/modal-component/modal-component.component';
+// File
+export * from './lib/file/file-upload/file-upload.component';
+export * from './lib/file/file-view/file-view.component';
+export * from './lib/file/file-type/file-type.component';
+export * from './lib/file/file.module';
