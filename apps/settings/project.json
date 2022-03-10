@@ -3,6 +3,34 @@
   "root": "apps/settings",
   "sourceRoot": "apps/settings/src",
   "prefix": "tt-webapp",
+  "i18n": {
+    "sourceLocale": {
+      "code": "en"
+    },
+    "locales": {
+      "bn": "apps/settings/src/locale/messages.bn.xlf",
+      "zh-Hant": "apps/settings/src/locale/messages.zh-Hant.xlf",
+      "zh": "apps/settings/src/locale/messages.zh.xlf",
+      "et": "apps/settings/src/locale/messages.et.xlf",
+      "fr": "apps/settings/src/locale/messages.fr.xlf",
+      "hi": "apps/settings/src/locale/messages.hi.xlf",
+      "it": "apps/settings/src/locale/messages.it.xlf",
+      "ja": "apps/settings/src/locale/messages.ja.xlf",
+      "kn": "apps/settings/src/locale/messages.kn.xlf",
+      "lv": "apps/settings/src/locale/messages.lv.xlf",
+      "lt": "apps/settings/src/locale/messages.lt.xlf",
+      "ml": "apps/settings/src/locale/messages.ml.xlf",
+      "pl": "apps/settings/src/locale/messages.pl.xlf",
+      "pt": "apps/settings/src/locale/messages.pt.xlf",
+      "ro": "apps/settings/src/locale/messages.ro.xlf",
+      "es": "apps/settings/src/locale/messages.es.xlf",
+      "sv": "apps/settings/src/locale/messages.sv.xlf",
+      "ta": "apps/settings/src/locale/messages.ta.xlf",
+      "te": "apps/settings/src/locale/messages.te.xlf",
+      "tr": "apps/settings/src/locale/messages.tr.xlf",
+      "vi": "apps/settings/src/locale/messages.vi.xlf"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
@@ -52,7 +80,32 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/settings/webpack.prod.config.js"
-          }
+          },
+          "i18nMissingTranslation": "error",
+          "localize": [
+            "bn",
+            "zh-Hant",
+            "zh",
+            "en",
+            "et",
+            "fr",
+            "hi",
+            "it",
+            "ja",
+            "kn",
+            "lv",
+            "lt",
+            "ml",
+            "pl",
+            "pt",
+            "ro",
+            "es",
+            "sv",
+            "ta",
+            "te",
+            "tr",
+            "vi"
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -84,7 +137,8 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "settings:build"
+        "browserTarget": "settings:build",
+        "outputPath": "apps/settings/src/locale/"
       }
     },
     "lint": {

@@ -12,11 +12,20 @@
               />
             </a>
           </div>
-          <div>
-            <select class="px-2 py-4 rounded-[16px]">
-              <option value="en">English</option>
+          <form [formGroup]="languageControl">
+            <select
+              class="px-2 py-4 rounded-[16px] w-24 overflow-ellipsis"
+              formControlName="selection"
+              (change)="onLanguageChange()"
+            >
+              <option
+                *ngFor="let language of languages"
+                [value]="language.code"
+              >
+                {{ language.languageName }}
+              </option>
             </select>
-          </div>
+          </form>
         </div>
       </div>
     </nav>
@@ -26,10 +35,13 @@
         class="hidden lg:flex w-3/6 items-center aside pl-12 lg:pl-20 relative"
       >
         <div class="flex flex-col">
-          <p class="text-[3.5rem] font-bold w-9/12 pb-2 leading-[4rem]">
+          <p
+            class="text-[3.5rem] font-bold w-9/12 pb-2 leading-[4rem]"
+            i18n="main header| Transparency"
+          >
             Become a transparent supplier.
           </p>
-          <p class="pt-6 pb-6 w-10/12 z-10">
+          <p class="pt-6 pb-6 w-10/12 z-10" i18n="Sub header | Transparency">
             To serve the growing demand for sustainable fashion products, your
             customer wants you to join <strong> trustrace.com</strong> and be a
             transparent supplier.
@@ -38,6 +50,7 @@
           <a
             class="z-10 py-3 text-base rounded-md font-medium transition-colors focus:ring-2 focus:ring-deepSaffron-100 bg-white-default hover:bg-white-750 text-gray-1000 disabled:bg-gray-500 disabled:text-gray-700 active:bg-deepSaffron-700 w-32 text-center"
             href=""
+            i18n="To know more about TrusTrace"
           >
             Know More
           </a>
@@ -107,13 +120,16 @@
       </div>
       <div class="flex flex-col w-full justify-center items-center">
         <div class="w-full px-8 lg:px-16 lg:w-8/12 2xl:w-3/6">
-          <h3 class="font-bold text-2xl pb-2">Login</h3>
-          <p class="pb-5">We are glad you are here. Login to your account</p>
+          <h3 class="font-bold text-2xl pb-2" i18n="login title">Login</h3>
+          <p class="pb-5" i18n="Login secondary title">
+            We are glad you are here. Login to your account
+          </p>
 
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="email"
+              i18n="From Label | Login page"
             >
               Registered Email ID
             </label>
@@ -123,10 +139,12 @@
               id="email"
               formControlName="email"
               placeholder="Enter your email id"
+              i18n-placeholder
             />
             <label
               class="block text-gray-700 text-sm font-bold mb-2 pt-4"
               for="password"
+              i18n="From Label | Login page"
             >
               Password
             </label>
@@ -135,17 +153,21 @@
               id="password"
               formControlName="password"
               placeholder="Password"
+              i18n-placeholder
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <button
               class="py-2 w-full my-6 text-base rounded-md font-medium transition-colors focus:ring-2 focus:ring-deepSaffron-100 capitalize bg-gray-1000 hover:bg-gray-900 text-white-default disabled:bg-gray-500 disabled:text-gray-700 active:bg-gray-700"
               type="submit"
+              i18n="From button | Login page"
             >
               Login
             </button>
           </form>
 
-          <a href="">Forget password?</a>
+          <a href="" i18n="User not remembered their password"
+            >Forget password?</a
+          >
           <ng-container *ngIf="message$ | async; let message">
             <div *ngIf="message">
               {{ message }}
@@ -155,9 +177,9 @@
         <div
           class="absolute sm:relative md:static lg:absolute bottom-0 text-center pb-2"
         >
-          &copy; 2021
-          <a href="https://trustrace.com" target="_blank">TrusTrace.com</a>. For
-          help: Please contact
+          &copy; {{ date | date: 'YYYY' }}
+          <a href="https://trustrace.com" target="_blank">TrusTrace.com</a>
+          <span i18n="Help"> For help: Please contact </span>
           <a href="mailto:yoda@trustrace.com">yoda@trustrace.com</a>
         </div>
       </div>
