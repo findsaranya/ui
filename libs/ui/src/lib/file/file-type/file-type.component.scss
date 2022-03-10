@@ -4,6 +4,7 @@
   }
   img {
     @apply rounded-md rounded-r-sm mr-4 select-none;
+    @apply object-cover h-[70px] w-[70px] bg-white-default;
   }
   &.ttui-file-type-disabled path {
     @apply fill-gray-500;

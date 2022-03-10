@@ -1,5 +1,5 @@
 .ttui-file-upload-container {
-  @apply flex flex-col space-y-3 mb-4;
+  @apply flex flex-col space-y-2.5 mb-4;
 }
 
 .ttui-drop-zone-highlighter {
@@ -13,16 +13,18 @@
 .ttui-file-upload-button {
   @apply text-sm font-bold transition-colors cursor-pointer flex items-center justify-center;
   @apply w-full px-4 min-w-40 min-h-40 rounded-lg space-x-2;
-  @apply text-white-default bg-gray-1000 hover:bg-gray-900 focus:shadow-default;
+  @apply text-white-default bg-gray-1000 hover:bg-gray-900;
   @apply active:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed;
-
+  &:focus-visible {
+    @apply outline-2 outline-deepSaffron-200 rounded-md;
+  }
   svg path {
     @apply fill-white-default;
   }
 }
 
 .ttui-file-upload-help-text {
-  @apply text-xs font-regular text-gray-800;
+  @apply text-xs font-regular text-gray-800 pointer-events-none;
 }
 
 .ttui-file-upload-disabled {
@@ -55,6 +57,9 @@
 .ttui-file-drag-drop-filetype {
   @extend %ttui-file-drag-drop;
   @apply py-5 flex-col justify-center space-y-6;
+  &:focus-visible {
+    @apply outline-2 outline-deepSaffron-200 rounded-md;
+  }
 
   .ttui-file-drag-drop-content {
     @apply items-center;
