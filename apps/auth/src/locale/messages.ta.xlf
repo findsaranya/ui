@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="28f2b4d6e931b735b9c09705303d05284a526a92" datatype="html">
+        <source> வெளிப்படையான சப்ளையர் ஆகுங்கள். </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+        <note priority="1" from="description"> Transparency</note>
+        <note priority="1" from="meaning">main header</note>
+      </trans-unit>
+      <trans-unit id="866e436d9596ce78b8a64bc896d73caef1fb4391" datatype="html">
+        <source> நிலையான ஃபேஷன் தயாரிப்புகளுக்கான வளர்ந்து வரும் தேவைக்கு சேவை செய்ய, உங்கள் வாடிக்கையாளர் <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/> trustrace.com<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> இல் சேர்ந்து ஒரு வெளிப்படையான சப்ளையராக இருக்க வேண்டும் என்று விரும்புகிறார். </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">45,48</context>
+        </context-group>
+        <note priority="1" from="description"> Transparency</note>
+        <note priority="1" from="meaning">Sub header </note>
+      </trans-unit>
+      <trans-unit id="44fe348b2cafa3103415c044caa2bcc58803cba4" datatype="html">
+        <source> மேலும் அறிய </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">55,59</context>
+        </context-group>
+        <note priority="1" from="description">To know more about TrusTrace</note>
+      </trans-unit>
+      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+        <source>உள்நுழைய</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">123,125</context>
+        </context-group>
+        <note priority="1" from="description">login title</note>
+      </trans-unit>
+      <trans-unit id="ef3700d2fdfd3b3dc03545e33eaedd34894e300a" datatype="html">
+        <source> நீங்கள் இங்கு வந்ததில் நாங்கள் மகிழ்ச்சியடைகிறோம். உங்கள் கணக்கில் உள்நுழைக </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">125,128</context>
+        </context-group>
+        <note priority="1" from="description">Login secondary title</note>
+      </trans-unit>
+      <trans-unit id="45c1493d7f91d7ebe5dc6625c40854f26a4e639b" datatype="html">
+        <source> பதிவு செய்யப்பட்ட மின்னஞ்சல் ஐடி </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">134,137</context>
+        </context-group>
+        <note priority="1" from="description"> Login page</note>
+        <note priority="1" from="meaning">From Label </note>
+      </trans-unit>
+      <trans-unit id="5439e8752d701ddcbc4ff7f6c6373742559a92c2" datatype="html">
+        <source>உங்கள் மின்னஞ்சல் ஐடியை உள்ளிடவும்</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">141,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="514b40ec0f2df0f4753c178c911ff9c7cd14b975" datatype="html">
+        <source> கடவுச்சொல் </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">148,152</context>
+        </context-group>
+        <note priority="1" from="description"> Login page</note>
+        <note priority="1" from="meaning">From Label </note>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>கடவுச்சொல்</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">155,157</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="004caf65aee8df2400dd7aa1b3e030d4ba1aa2f2" datatype="html">
+        <source> உள் நுழை </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">162,166</context>
+        </context-group>
+        <note priority="1" from="description"> Login page</note>
+        <note priority="1" from="meaning">From button </note>
+      </trans-unit>
+      <trans-unit id="83ff2212e5d22920b60e2c7a6b4deee756699fbf" datatype="html">
+        <source>கடவுச்சொல்லை மறந்துவிட்டீர்களா?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">167,170</context>
+        </context-group>
+        <note priority="1" from="description">User not remembered their password</note>
+      </trans-unit>
+       <trans-unit id="4e90cab583ef73c6b888339e017e70b50bcc16b3" datatype="html">
+        <source> உதவிக்கு </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/auth/src/app/remote-entry/basic-auth/basic-auth.component.html</context>
+          <context context-type="linenumber">180,181</context>
+        </context-group>
+        <note priority="1" from="description">Help</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

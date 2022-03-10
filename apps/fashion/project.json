@@ -3,10 +3,40 @@
   "root": "apps/fashion",
   "sourceRoot": "apps/fashion/src",
   "prefix": "tt-webapp",
+  "i18n": {
+    "sourceLocale": {
+      "code": "en"
+    },
+    "locales": {
+      "bn": "apps/fashion/src/locale/messages.bn.xlf",
+      "zh-Hant": "apps/fashion/src/locale/messages.zh-Hant.xlf",
+      "zh": "apps/fashion/src/locale/messages.zh.xlf",
+      "et": "apps/fashion/src/locale/messages.et.xlf",
+      "fr": "apps/fashion/src/locale/messages.fr.xlf",
+      "hi": "apps/fashion/src/locale/messages.hi.xlf",
+      "it": "apps/fashion/src/locale/messages.it.xlf",
+      "ja": "apps/fashion/src/locale/messages.ja.xlf",
+      "kn": "apps/fashion/src/locale/messages.kn.xlf",
+      "lv": "apps/fashion/src/locale/messages.lv.xlf",
+      "lt": "apps/fashion/src/locale/messages.lt.xlf",
+      "ml": "apps/fashion/src/locale/messages.ml.xlf",
+      "pl": "apps/fashion/src/locale/messages.pl.xlf",
+      "pt": "apps/fashion/src/locale/messages.pt.xlf",
+      "ro": "apps/fashion/src/locale/messages.ro.xlf",
+      "es": "apps/fashion/src/locale/messages.es.xlf",
+      "sv": "apps/fashion/src/locale/messages.sv.xlf",
+      "ta": "apps/fashion/src/locale/messages.ta.xlf",
+      "te": "apps/fashion/src/locale/messages.te.xlf",
+      "tr": "apps/fashion/src/locale/messages.tr.xlf",
+      "vi": "apps/fashion/src/locale/messages.vi.xlf"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/fashion",
         "index": "apps/fashion/src/index.html",
@@ -14,8 +44,14 @@
         "polyfills": "apps/fashion/src/polyfills.ts",
         "tsConfig": "apps/fashion/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/fashion/src/favicon.ico", "apps/fashion/src/assets"],
-        "styles": ["apps/fashion/src/styles.scss","libs/ui/src/styles.scss"],
+        "assets": [
+          "apps/fashion/src/favicon.ico",
+          "apps/fashion/src/assets"
+        ],
+        "styles": [
+          "apps/fashion/src/styles.scss",
+          "libs/ui/src/styles.scss"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/fashion/webpack.config.js"
@@ -44,7 +80,32 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/fashion/webpack.prod.config.js"
-          }
+          },
+          "i18nMissingTranslation": "error",
+          "localize": [
+            "bn",
+            "zh-Hant",
+            "zh",
+            "en",
+            "et",
+            "fr",
+            "hi",
+            "it",
+            "ja",
+            "kn",
+            "lv",
+            "lt",
+            "ml",
+            "pl",
+            "pt",
+            "ro",
+            "es",
+            "sv",
+            "ta",
+            "te",
+            "tr",
+            "vi"
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -53,6 +114,116 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
+        },
+        "bn": {
+          "localize": [
+            "bn"
+          ]
+        },
+        "zh-Hant": {
+          "localize": [
+            "zh-Hant"
+          ]
+        },
+        "zh": {
+          "localize": [
+            "zh"
+          ]
+        },
+        "en": {
+          "localize": [
+            "en"
+          ]
+        },
+        "et": {
+          "localize": [
+            "et"
+          ]
+        },
+        "fr": {
+          "localize": [
+            "fr"
+          ]
+        },
+        "hi": {
+          "localize": [
+            "hi"
+          ]
+        },
+        "it": {
+          "localize": [
+            "it"
+          ]
+        },
+        "ja": {
+          "localize": [
+            "ja"
+          ]
+        },
+        "kn": {
+          "localize": [
+            "kn"
+          ]
+        },
+        "lv": {
+          "localize": [
+            "lv"
+          ]
+        },
+        "lt": {
+          "localize": [
+            "lt"
+          ]
+        },
+        "ml": {
+          "localize": [
+            "ml"
+          ]
+        },
+        "pl": {
+          "localize": [
+            "pl"
+          ]
+        },
+        "pt": {
+          "localize": [
+            "pt"
+          ]
+        },
+        "ro": {
+          "localize": [
+            "ro"
+          ]
+        },
+        "es": {
+          "localize": [
+            "es"
+          ]
+        },
+        "sv": {
+          "localize": [
+            "sv"
+          ]
+        },
+        "ta": {
+          "localize": [
+            "ta"
+          ]
+        },
+        "te": {
+          "localize": [
+            "te"
+          ]
+        },
+        "tr": {
+          "localize": [
+            "tr"
+          ]
+        },
+        "vi": {
+          "localize": [
+            "vi"
+          ]
         }
       },
       "defaultConfiguration": "production"
@@ -75,7 +246,8 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "fashion:build"
+        "browserTarget": "fashion:build",
+        "outputPath": "apps/fashion/src/locale/"
       }
     },
     "lint": {
@@ -89,7 +261,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/fashion"],
+      "outputs": [
+        "coverage/apps/fashion"
+      ],
       "options": {
         "jestConfig": "apps/fashion/jest.config.js",
         "passWithNoTests": true
