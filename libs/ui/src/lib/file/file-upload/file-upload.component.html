@@ -17,7 +17,9 @@
     tabindex="-1"
     *ngIf="uploadType === 'selection'; else dragAndDrop"
   >
-    <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
+    <label class="text-sm font-medium pointer-events-none" [attr.for]="id">{{
+      title
+    }}</label>
     <button
       class="ttui-file-upload-button"
       (click)="fileInput.click()"
@@ -55,13 +57,15 @@
     class="ttui-file-drag-drop-container"
     [ngClass]="{ 'ttui-file-drag-drop-disabled': disabled }"
   >
-    <label class="text-sm font-medium" [attr.for]="id">{{ title }}</label>
+    <label class="text-sm font-medium pointer-events-none" [attr.for]="id">{{
+      title
+    }}</label>
     <div
       [ngClass]="dragAndDropType"
-      tabindex="0"
       (click)="
         $event.stopPropagation(); $event.preventDefault(); fileInput.click()
       "
+      tabindex="0"
       (keyup.enter)="fileInput.click()"
       (keyup.space)="fileInput.click()"
       (dragover)="preventDefaultBehavior($event, true)"

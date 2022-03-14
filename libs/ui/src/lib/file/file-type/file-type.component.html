@@ -5,7 +5,7 @@
 >
   <div *ngSwitchCase="'image'">
     <div *ngIf="imgSrc && imgSrc !== 'data:'; else loadSvg">
-      <img class="object-cover h-[70px] w-[70px]" [src]="imgSrc" alt="Image" />
+      <img [src]="imgSrc" alt="Image" />
     </div>
   </div>
   <div *ngSwitchCase="'pdf'">
