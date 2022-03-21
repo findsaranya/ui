@@ -31,7 +31,12 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["libs/ui/src/**/*.ts", "libs/ui/src/**/*.html"]
+        "lintFilePatterns": [
+          "libs/ui/**/**/*.ts",
+          "libs/ui/**/**/*.html",
+          "libs/ui/**/*.ts",
+          "libs/ui/**/*.html"
+        ]
       }
     },
     "storybook": {
@@ -60,7 +65,7 @@
           "configFolder": "libs/ui/.storybook"
         },
         "projectBuildConfig": "ui:build-storybook",
-        "styles":["libs/ui/src/styles.scss"]
+        "styles": ["libs/ui/src/styles.scss"]
       },
       "configurations": {
         "ci": {

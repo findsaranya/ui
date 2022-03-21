@@ -124,7 +124,9 @@ export class BootstrapService {
           path,
           loadChildren: () =>
             !option.subscribed
-              ? import('@tt-webapp/ui').then((m) => m.NotSubscribedModule)
+              ? import('@tt-webapp/ui/not-subscribed').then(
+                  (m) => m.NotSubscribedModule
+                )
               : loadRemoteModule(option).then((m) => m[option.ngModuleName]),
         });
       } else {

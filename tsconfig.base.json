@@ -16,7 +16,25 @@
     "baseUrl": ".",
     "paths": {
       "@tt-webapp/service": ["libs/service/src/index.ts"],
-      "@tt-webapp/ui": ["libs/ui/src/index.ts"]
+      "@tt-webapp/ui": ["libs/ui/src/index.ts"],
+      "@tt-webapp/ui/button": ["libs/ui/button/src/index.ts"],
+      "@tt-webapp/ui/checkbox": ["libs/ui/checkbox/src/index.ts"],
+      "@tt-webapp/ui/radio": ["libs/ui/radio/src/index.ts"],
+      "@tt-webapp/ui/form-field": ["libs/ui/form-field/src/index.ts"],
+      "@tt-webapp/ui/input": ["libs/ui/input/src/index.ts"],
+      "@tt-webapp/ui/textarea": ["libs/ui/textarea/src/index.ts"],
+      "@tt-webapp/ui/autocomplete": ["libs/ui/autocomplete/src/index.ts"],
+      "@tt-webapp/ui/option": ["libs/ui/option/src/index.ts"],
+      "@tt-webapp/ui/select": ["libs/ui/select/src/index.ts"],
+      "@tt-webapp/ui/file": ["libs/ui/file/src/index.ts"],
+      "@tt-webapp/ui/failed-to-load-application": [
+        "libs/ui/failed-to-load-application/src/index.ts"
+      ],
+      "@tt-webapp/ui/not-subscribed": ["libs/ui/not-subscribed/src/index.ts"],
+      "@tt-webapp/ui/page-not-found": ["libs/ui/page-not-found/src/index.ts"],
+      "@tt-webapp/ui/unauthorized": ["libs/ui/unauthorized/src/index.ts"],
+      "@tt-webapp/ui/sidebar": ["libs/ui/sidebar/src/index.ts"],
+      "@tt-webapp/ui/modal": ["libs/ui/modal/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

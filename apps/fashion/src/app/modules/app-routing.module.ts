@@ -14,7 +14,9 @@ import { WildcardAuthGuard } from '@tt-webapp/service';
       {
         path: 'error',
         loadChildren: () =>
-          import('@tt-webapp/ui').then((m) => m.FailedToLoadApplicationModule),
+          import('@tt-webapp/ui/failed-to-load-application').then(
+            (m) => m.FailedToLoadApplicationModule
+          ),
       },
       {
         path: 'logout',
@@ -24,7 +26,9 @@ import { WildcardAuthGuard } from '@tt-webapp/service';
       {
         path: '**',
         loadChildren: () =>
-          import('@tt-webapp/ui').then((m) => m.PageNotFoundModule),
+          import('@tt-webapp/ui/page-not-found').then(
+            (m) => m.PageNotFoundModule
+          ),
         canActivate: [WildcardAuthGuard],
       },
     ]),

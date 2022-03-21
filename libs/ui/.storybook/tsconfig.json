@@ -5,5 +5,9 @@
   },
 
   "exclude": ["../**/*.spec.ts"],
-  "include": ["../src/**/*", "*.js"]
+  "include": [
+    "*.js",
+    "../**/src/lib/*.stories.ts",
+    "../**/src/lib/**/*.stories.ts"
+  ]
 }

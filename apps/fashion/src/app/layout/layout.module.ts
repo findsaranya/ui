@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { SidebarModule } from '@tt-webapp/ui';
+import { SidebarModule } from '@tt-webapp/ui/sidebar';
 
 @NgModule({
   declarations: [LayoutComponent],
