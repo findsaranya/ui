@@ -34,7 +34,8 @@
       "@tt-webapp/ui/page-not-found": ["libs/ui/page-not-found/src/index.ts"],
       "@tt-webapp/ui/unauthorized": ["libs/ui/unauthorized/src/index.ts"],
       "@tt-webapp/ui/sidebar": ["libs/ui/sidebar/src/index.ts"],
-      "@tt-webapp/ui/modal": ["libs/ui/modal/src/index.ts"]
+      "@tt-webapp/ui/modal": ["libs/ui/modal/src/index.ts"],
+      "@tt-webapp/ui/prompt-modal": ["libs/ui/prompt-modal/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

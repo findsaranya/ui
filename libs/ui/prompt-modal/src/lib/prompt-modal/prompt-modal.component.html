@@ -1,0 +1,36 @@
+<div class="p-4">
+  <div class="flex">
+    <h2>{{ data.title }}</h2>
+    <span class="ml-auto cursor-pointer" (click)="actionDone('close')">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15.6667 1.59923C16.0307 1.23338 16.0307 0.640229 15.6667 0.274384C15.3026 -0.0914613 14.7124 -0.0914613 14.3484 0.274384L7.97364 6.68096L1.58558 0.370728C1.21843 0.00804965 0.628242 0.0131619 0.267365 0.382147C-0.0935122 0.751132 -0.0884254 1.34426 0.278727 1.70694L6.65533 8.00585L0.292177 14.4008C-0.071851 14.7666 -0.071851 15.3598 0.292177 15.7256C0.656205 16.0915 1.24641 16.0915 1.61044 15.7256L7.98496 9.31928L14.4144 15.6704C14.7816 16.0331 15.3718 16.028 15.7326 15.659C16.0935 15.29 16.0884 14.6969 15.7213 14.3342L9.30327 7.99438L15.6667 1.59923Z"
+          fill="#212121"
+        />
+      </svg>
+    </span>
+  </div>
+  <h6 class="pt-2 text-gray-700" *ngIf="data?.label">{{ data.label }}</h6>
+  <tt-modal-content class="pt-5 pb-7">
+    <p class="text-gray-800 ttui-text-primary">
+      {{ data.body }}
+    </p>
+  </tt-modal-content>
+
+  <tt-modal-actions>
+    <button #secondaryButton (click)="actionDone(data.secondaryButton)">
+      {{ data.secondaryButton }}
+    </button>
+    <button #primaryButton (click)="actionDone(data.primaryButton)">
+      {{ data.primaryButton }}
+    </button>
+  </tt-modal-actions>
+</div>
