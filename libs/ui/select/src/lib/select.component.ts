@@ -220,7 +220,6 @@ export class SelectComponent implements OnInit, OnDestroy, AfterContentInit {
     return this.tabIndex;
   }
   @HostListener('focus') onFocus(): void {
-    console.log('focus');
     if (!this.disabled) {
       this.focused = true;
     }
