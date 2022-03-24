@@ -12,7 +12,10 @@
 }
 
 .ttui-checkbox-layout {
-  @apply items-baseline align-middle inline-flex whitespace-nowrap;
+  @apply items-center align-middle inline-flex whitespace-nowrap;
+  .ttui-checkbox-label {
+    @apply text-gray-1000;
+  }
 }
 
 .ttui-checkbox-inner-container {
