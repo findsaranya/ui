@@ -23,5 +23,5 @@ input.ttui-input {
   @apply block w-full;
 }
 .ttui-text-input {
-  @apply text-sm leading-sm tracking-primary font-medium text-gray-1000;
+  @apply text-sm leading-sm tracking-primary font-medium text-gray-1000 mb-1 inline-block;
 }
