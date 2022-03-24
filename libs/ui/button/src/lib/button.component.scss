@@ -1,6 +1,6 @@
 .ttui-btn {
-  @apply text-sm inline-block transition-colors cursor-pointer
-             focus:shadow-default disabled:cursor-default;
+  @apply text-sm inline-block transition-colors cursor-pointer outline-none
+             focus-visible:shadow-default disabled:cursor-default;
 }
 .ttui-btn-primary {
   @apply bg-deepSaffron-default hover:bg-deepSaffron-500 text-white-default
