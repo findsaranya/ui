@@ -1,5 +1,5 @@
 .ttui-autocomplete-panel {
-  @apply w-full bg-white-default flex flex-col overflow-auto shadow-md max-h-[152px];
+  @apply w-full bg-white-default flex flex-col overflow-auto shadow-md max-h-[152px] rounded-7px;
   &::-webkit-scrollbar {
     @apply w-[4px];
   }

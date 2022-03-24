@@ -20,7 +20,9 @@ import { v4 as uid } from 'uuid';
   template: `
     <ng-template>
       <div class="ttui-autocomplete-panel" role="listbox" #panel>
-        <ng-content></ng-content>
+        <div [class.m-3]="options?.length || null">
+          <ng-content></ng-content>
+        </div>
       </div>
     </ng-template>
   `,
