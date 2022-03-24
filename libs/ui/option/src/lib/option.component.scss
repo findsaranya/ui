@@ -1,7 +1,7 @@
 .ttui-option {
   @apply relative flex align-middle max-w-full h-[40px] whitespace-nowrap 
   cursor-pointer box-border py-[11px] px-[12px] rounded-7px transition-all 
-   hover:bg-gray-200 my-1 mx-0;
+   hover:bg-gray-200 mt-1 mx-0;
 
   &-checkbox {
     @apply w-[18px] h-[18px] border-2 border-solid border-gray-1000 
