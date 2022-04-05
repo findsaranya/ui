@@ -25,13 +25,13 @@
          active:border-0 hover:bg-gray-200;
 }
 .ttui-lg {
-  @apply px-6  rounded-7px min-w-50 min-h-50 font-bold;
+  @apply px-6  rounded-lg min-w-50 min-h-50 font-bold;
 }
 .ttui-md {
-  @apply px-4 rounded-7px min-w-40 min-h-40 font-bold;
+  @apply px-4 rounded-lg min-w-40 min-h-40 font-bold;
 }
 .ttui-sm {
-  @apply px-3  rounded-5px min-w-30 min-h-30 font-medium;
+  @apply px-3  rounded-md min-w-30 min-h-30 font-medium;
 }
 .ttui-btn-block {
   @apply block w-full;

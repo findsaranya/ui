@@ -5,7 +5,7 @@
     @apply w-1;
   }
   &::-webkit-scrollbar-track {
-    @apply bg-gray-300 rounded-7px;
+    @apply bg-gray-300 rounded-lg;
   }
   &::-webkit-scrollbar-thumb {
     @apply bg-gray-500;
@@ -20,7 +20,7 @@
     @apply w-1;
   }
   &::-webkit-scrollbar-track {
-    @apply bg-gray-300 rounded-7px;
+    @apply bg-gray-300 rounded-lg;
   }
   &::-webkit-scrollbar-thumb {
     @apply bg-gray-500;

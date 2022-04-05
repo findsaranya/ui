@@ -1,11 +1,11 @@
 .ttui-option {
   @apply relative flex align-middle max-w-full h-[40px] whitespace-nowrap 
-  cursor-pointer box-border py-[11px] px-[12px] rounded-7px transition-all 
+  cursor-pointer box-border py-[11px] px-[12px] rounded-lg transition-all 
    hover:bg-gray-200 mt-1 mx-0;
 
   &-checkbox {
     @apply w-[18px] h-[18px] border-2 border-solid border-gray-1000 
-    rounded-5px inline-block my-0 mx-[10px] align-middle cursor-pointer relative;
+    rounded-md inline-block my-0 mx-[10px] align-middle cursor-pointer relative;
     &:after {
       @apply absolute opacity-0 content-[''] inline-block transition-opacity duration-[90] top-[3.3px]
         left-[3px] w-[8px] h-[3px] box-content transform -rotate-45 border-b-2 border-l-2 border-solid border-white-default;

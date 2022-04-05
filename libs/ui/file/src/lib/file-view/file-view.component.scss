@@ -1,5 +1,5 @@
 .ttui-file-view-content-container {
-  @apply flex w-full border bg-gray-200 text-black-default text-left rounded-5px;
+  @apply flex w-full border bg-gray-200 text-black-default text-left rounded-md;
   @apply justify-between min-h-50 mb-1 items-center pr-2 hover:cursor-pointer hover:bg-gray-300;
   &:focus-visible {
     @apply outline-2 outline-offset-2 outline-deepSaffron-200 rounded-md;

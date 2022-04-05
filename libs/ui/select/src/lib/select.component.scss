@@ -3,7 +3,7 @@
 }
 
 .ttui-select-trigger {
-  @apply border border-solid border-gray-400 rounded-7px py-5 px-4 cursor-pointer flex justify-between items-center 
+  @apply border border-solid border-gray-400 rounded-lg py-5 px-4 cursor-pointer flex justify-between items-center 
   text-gray-600 overflow-hidden bg-gray-100 transition-all duration-150 ease-linear 
   hover:border-deepSaffron-default hover:bg-gray-200;
   &.active {
@@ -28,13 +28,13 @@
 }
 .ttui-select-panel {
   @apply flex flex-col overflow-auto max-h-[9.5rem] border-2 border-gray-400
-  rounded-7px shadow-md bg-white-default;
+  rounded-lg shadow-md bg-white-default;
 
   &::-webkit-scrollbar {
     @apply w-[4px];
   }
   &::-webkit-scrollbar-track {
-    @apply bg-gray-300 rounded-7px;
+    @apply bg-gray-300 rounded-lg;
   }
   &::-webkit-scrollbar-thumb {
     @apply bg-gray-500;
