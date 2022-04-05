@@ -158,10 +158,6 @@ module.exports = {
       maxHeight: {
         inherit: 'inherit',
       },
-      borderRadius: {
-        '7px': '0.438rem',
-        '5px': '0.313rem',
-      },
       animation: {
         'fade-in': 'fadeIn 2s linear forwards',
         'fade-out': 'fadeOut 0.3s linear 2s forwards',
