@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Modal, Modalconfig } from '@tt-webapp/ui/modal';
+import { Modal, Modalconfig } from '@findsaranya/ui/modal';
 
 import {
   IPromptModel,

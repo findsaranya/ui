@@ -20,7 +20,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TTOptionSelectionChange, TTOptionBase } from '@tt-webapp/ui/option';
+import { TTOptionSelectionChange, TTOptionBase } from '@findsaranya/ui/option';
 import {
   defer,
   delay,

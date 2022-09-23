@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FormFieldModule } from '@tt-webapp/ui/form-field';
-import { InputModule } from '@tt-webapp/ui/input';
+import { FormFieldModule } from '@findsaranya/ui/form-field';
+import { InputModule } from '@findsaranya/ui/input';
 import { TextareaDirective } from './textarea.directive';
 
 @NgModule({

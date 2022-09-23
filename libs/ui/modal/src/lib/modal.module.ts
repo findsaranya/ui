@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { ButtonModule } from '@tt-webapp/ui/button';
+import { ButtonModule } from '@findsaranya/ui/button';
 import { ModalContainerComponent } from './modal-container.component';
 import {
   ModaTitleDirective,

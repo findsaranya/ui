@@ -6,7 +6,7 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core';
-import { ModalRef, TT_MODAL_DATA } from '@tt-webapp/ui/modal';
+import { ModalRef, TT_MODAL_DATA } from '@findsaranya/ui/modal';
 
 type ButtonType =
   | 'primary'

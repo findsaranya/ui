@@ -18,7 +18,10 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { OptionComponent, TTOptionSelectionChange } from '@tt-webapp/ui/option';
+import {
+  OptionComponent,
+  TTOptionSelectionChange,
+} from '@findsaranya/ui/option';
 import {
   defer,
   merge,
@@ -39,7 +42,7 @@ import {
   NumberInput,
 } from '@angular/cdk/coercion';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { OPTION_PARENT } from '@tt-webapp/ui/option';
+import { OPTION_PARENT } from '@findsaranya/ui/option';
 import { v4 as uid } from 'uuid';
 export class TTSelectChange {
   constructor(public source: SelectComponent, public value: any) {}

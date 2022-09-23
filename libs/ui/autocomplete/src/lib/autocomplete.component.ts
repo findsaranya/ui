@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { OPTION_PARENT, OptionComponent } from '@tt-webapp/ui/option';
+import { OPTION_PARENT, OptionComponent } from '@findsaranya/ui/option';
 import { v4 as uid } from 'uuid';
 @Component({
   selector: 'tt-autocomplete',
